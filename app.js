@@ -1,5 +1,3 @@
-/*jslint es6 */
-/*jslint node: true */
 "use strict";
 
 var createError = require('http-errors');
@@ -41,12 +39,12 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-var s = require('./gurukul/sheets');
-//s.listMajors();
-s.readRow(1);
-s.readRow(3);
-s.readRow(5);
-s.readRow(2);
+// var MongoDBO = require('./gurukul/3pinterface/MongoDBO');
+// var mdb = new MongoDBO('<MONGODB_HOST>', '<DB_NAME>');
+// mdb.readAll('Applicant').then((data) => {console.log(data);});
+
+// var GoogleSheets = require('./gurukul/3pinterface/GoogleSheets');
+// GoogleSheets.read("<SPREADSHEET_ID>", "<RANGE>", (err, data) => {console.log(err);console.log(data)});
 
 
 module.exports = app;

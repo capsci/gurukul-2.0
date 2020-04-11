@@ -6,6 +6,10 @@ Install project dependencies
 Run project
 >npm start
 
+Install MongoDB
+Start mongo
+>brew services start mongodb-community@4.2
+
 ### Secret
 Secret folder contains sensitive information relating to the app
 * token : generted when you first time start app and give access to the machine
@@ -26,17 +30,15 @@ Secret folder contains sensitive information relating to the app
 ## MileStone 3
 * Normalize MongoDB data and provide suggestions to relate
 
+## Mongo
+* DeprecationWarning : useUnifiedTopology
+
 ## Misc
 * Move secrets to seperate folder
 * .gitignore
 * Dev dependencies vs run dependencies
-* jslint - common configuration
+* eslint rules
 * Combile secret and global constants
-
-## Database Normalization
-* Step 1 : All in 1 document
-* Step 2 : Seperate application time; vs retrieval/dashboard fields
-* Step 3 : Schools, References go in seperate field
 
 # Queries
 
