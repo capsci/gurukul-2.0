@@ -12,4 +12,13 @@ class Applicant {
         self.notes = "";
         self.applicationRef = "applicationRef";
     }
+
+    validate() {
+        if (!this.name)
+            throw MESSAGE.EMPTY_FIELD("Name");
+        if (!this.phoneNumPrimary)
+            throw MESSAGE.EMPTY_FIELD("Primary Phone Num");
+        if (!this.emailPrimary)
+            throw MESSAGE.EMPTY_FIELD("Primary Email");
+    }
 }

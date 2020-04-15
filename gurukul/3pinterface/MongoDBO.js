@@ -50,4 +50,27 @@ module.exports = class MongoDBO {
         client.close();
         return ret;
     }
+
+    // Returns id of existing object or new object
+    async insertIfDoesNotExists(collection, document, query) {
+        var client = await MongoClient.connect(this.url);
+        var db = client.db(this.database);
+        var ret = await db.collection(collection).findOne(query)
+            .then((data) => {
+                if(data) {
+                    console.log(`Returning Existing ${collection} with ID : ${data._id}`);
+                    return data._id;
+                }
+                else {
+                    ret = db.collection(collection).insertOne(document)
+                            .then((resp) => {
+                                console.log(`Added New ${collection} with ID : ${resp.insertedId}`);
+                            return resp.insertedId;
+                            });
+                    return ret;
+                }
+        });
+        client.close();
+        return ret;
+    }
 }

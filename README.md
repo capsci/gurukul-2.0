@@ -19,16 +19,17 @@ Secret folder contains sensitive information relating to the app
 # TODO
 
 ## MileStone 1
-* Get Data from Google sheet
+* Get Data from Google sheet <span style="color:green">DONE</span>
 * populate local database
-* Everytime sheet is updated or new record is added; add/updadte record in local database also
+* Everytime sheet is updated or new record is added; add/updadte record in local database also <span style="color:orange">DROPPED</span>
 
 ## MileStone 2
 * Get filtered data
 * Add data to existing record
 
 ## MileStone 3
-* Normalize MongoDB data and provide suggestions to relate
+* Normalize MongoDB data <span style="color:green">DONE</span>
+* provide suggestions to relate
 
 ## Mongo
 * DeprecationWarning : useUnifiedTopology
@@ -38,7 +39,9 @@ Secret folder contains sensitive information relating to the app
 * .gitignore
 * Dev dependencies vs run dependencies
 * eslint rules
-* Combile secret and global constants
+* Doc for GoogleSheets and MongoDBO
+* Validation on inputs (if needed)
+* Do not print stacktrace. Hide code; give useful message
 
 # Queries
 

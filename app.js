@@ -39,12 +39,23 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
+var Secret = require('./secret/Constants');
+
 // var MongoDBO = require('./gurukul/3pinterface/MongoDBO');
-// var mdb = new MongoDBO('<MONGODB_HOST>', '<DB_NAME>');
-// mdb.readAll('Applicant').then((data) => {console.log(data);});
+// var mdb = new MongoDBO(Secret.Mongo.url, 'gurukul');
+// mdb.readAll('Applicant').then((data) => {
+//     console.log(data);
+// });
 
 // var GoogleSheets = require('./gurukul/3pinterface/GoogleSheets');
-// GoogleSheets.read("<SPREADSHEET_ID>", "<RANGE>", (err, data) => {console.log(err);console.log(data)});
+// GoogleSheets.read(Secret.Spreadsheet.ID, "Responses", (err, data) => {
+//     console.log(err);
+//     console.log(data)
+// });
 
+// var Address = require("./model/Address");
+// var a = new Address();
+// console.log(a.saveToDB());
+// a.saveToDB();
 
 module.exports = app;
