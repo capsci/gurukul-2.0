@@ -24,24 +24,29 @@ Secret folder contains sensitive information relating to the app
 * Everytime sheet is updated or new record is added; add/updadte record in local database also <span style="color:orange">DROPPED</span>
 
 ## MileStone 2
-* Get filtered data
-* Add data to existing record
+* Get filtered data from mongodb
+* Update data in existing record
 
 ## MileStone 3
 * Normalize MongoDB data <span style="color:green">DONE</span>
 * provide suggestions to relate
 
 ## Mongo
+* move to mongoose models
 * DeprecationWarning : useUnifiedTopology
 
 ## Misc
+* Change Google App name from Quickstart to Gurukul
 * Move secrets to seperate folder
 * .gitignore
-* Dev dependencies vs run dependencies
+* Separate Dev dependencies vs run dependencies
 * eslint rules
 * Doc for GoogleSheets and MongoDBO
 * Validation on inputs (if needed)
 * Do not print stacktrace. Hide code; give useful message
+  * GoogleSheets error is not rendered
+* try to avoid cors
+* structure vuejs code
 
 # Queries
 

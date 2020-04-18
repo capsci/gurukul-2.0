@@ -3,18 +3,20 @@
 var express = require('express');
 var router = express.Router();
 
-var GoogleSheets = require('./../../gurukul/3pinterface/GoogleSheets');
+var GoogleSheets = require('./../../my_modules/3pinterface/GoogleSheets');
 var Secret = require('./../../secret/Constants');
 
 /* GET data from Google Sheet page. */
 router.get('/', function (req, res, next) {
-    GoogleSheets.read(Secret.Spreadsheet.ID, "Responses",
+    GoogleSheets.read(Secret.Spreadsheet.ID, "Form Responses 1",
         (err, data) => {
+            console.log("Google response");
             console.log(data);
-            if (err)
-                res.render('error', { error: err });
-            else
-                res.render('googlesheets/populate', { rows: data });
+            console.log(err);
+            res.json({
+                error : err,
+                rows: data
+            })
         });
 });
 
