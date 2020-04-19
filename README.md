@@ -5,10 +5,16 @@ Install project dependencies
 
 Run project
 >npm start
+Run dev version
+>npm run dev
 
 Install MongoDB
 Start mongo
 >brew services start mongodb-community@4.2
+
+Run Vue
+>cd client
+>npm run serve
 
 ### Secret
 Secret folder contains sensitive information relating to the app

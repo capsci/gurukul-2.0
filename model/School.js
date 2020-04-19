@@ -1,26 +1,18 @@
-class School {
-    constructor() {
-        self.name = "My School/College Name";
-        self.addressRef = "addressRef";
-    }
+"use strict";
 
-    validate() {
-        if (!this.name)
-            throw MESSAGE.EMPTY_FIELD("Name");
-    }
+const mongoose = require('mongoose');
 
-    similarQuery() {
-        return {
-            'name' : this.name,
-        };
-    }
+const schoolSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    addressRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Address'
+    },
+});
 
-    async saveToDB() {
-        this.validate();
-        var dbo = new MongoDBO(Secret.Mongo.url, 'gurukul');
-        await dbo.insertIfDoesNotExists(COLLECTION.School, this,
-            this.similarQuery()).then((id) => {
-                return id;
-            });
-    }
-}
+module.exports = mongoose.model('School', schoolSchema, 'School');
+

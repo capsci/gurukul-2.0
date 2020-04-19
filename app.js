@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var googlesheetsRouter = require('./routes/googlesheets/index');
+var mongodbRouter = require('./routes/mongodb/index');
 var cors = require('cors');
 
 var app = express();
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/googlesheets', googlesheetsRouter);
+app.use('/mongodb', mongodbRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -59,5 +61,14 @@ var Secret = require('./secret/Constants');
 // var a = new Address();
 // console.log(a.saveToDB());
 // a.saveToDB();
+
+// Note : mongoose creates a singleton class
+const mongoose = require('mongoose');
+mongoose.connect(Secret.Mongo.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to database!'));
 
 module.exports = app;

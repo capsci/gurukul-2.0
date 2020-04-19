@@ -1,24 +1,67 @@
-class Applicant {
-    constructor() {
-        self.name = "FirstName"; // Format: FirstName MiddleName LastName
-        self.phoneNumPrimary = "919"; // US if possible
-        self.phoneNumSecondary = "095";
-        self.emailPrimary = "applicant@gmail.com";
-        self.emailSecondary = "applicantalternate@gmail.com";
-        self.schoolRef = "schoolRef";  //US Collge or Uninversity
-        self.scholarshipSemester = "Fall 2020"; //Format: [Spring|Fall] 20\d{2}
-        self.referrer1Ref = "referrer1Ref";
-        self.referrer2Ref = "referrer2Ref";
-        self.notes = "";
-        self.applicationRef = "applicationRef";
-    }
+"use strict";
 
-    validate() {
-        if (!this.name)
-            throw MESSAGE.EMPTY_FIELD("Name");
-        if (!this.phoneNumPrimary)
-            throw MESSAGE.EMPTY_FIELD("Primary Phone Num");
-        if (!this.emailPrimary)
-            throw MESSAGE.EMPTY_FIELD("Primary Email");
+const mongoose = require('mongoose');
+
+const applicantSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: true
+    },
+    middleName: {
+        type: String,
+        required: false
+    },
+    lastName: {
+        type: String,
+        required: false
+    },
+    // US if possible
+    phoneNumPrimary: {
+        type: String,
+        required: true
+    },
+    phoneNumSecondary: {
+        type: String,
+        required: false
+    },
+    emailPrimary: {
+        type: String,
+        required: true
+    },
+    emailSecondary: {
+        type: String,
+        required: false
+    },
+    //US Collge or Uninversity
+    schoolRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'School'
+    },
+    //Format: [Spring|Fall] 20\d{2}
+    scholarshipSemester: {
+        type: String,
+        required: true
+    },
+    referrer1Ref: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Referrer'
+    },
+    referrer2Ref: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Referrer'
+    },
+    notes: {
+        type: String,
+        required: false
+    },
+    applicationRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Application'
     }
-}
+});
+
+module.exports = mongoose.model('Applicant', applicantSchema, 'Applicant');

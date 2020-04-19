@@ -1,43 +1,53 @@
-class Referrer {
-    constructor (ref) {
-        this.id = ref;
-        this.name = "MyReferee Full Name";
-        this.position = "President/Member";
-        this.organization = "Organization";
-        this.addressRef = "addressRef";
-        this.phoneNumPrimary = "919";
-        this.phoneNumSecondary = "095";
-        this.emailPrimary = "ref1@gmail.com";
-        this.emailSecondary = "ref1sec@gmail.com";
-        this.notes = "";
-    }
+"use strict";
 
-    validate() {
-        if (!this.name)
-            throw MESSAGE.EMPTY_FIELD("Name");
-        if (!this.organization)
-            throw MESSAGE.EMPTY_FIELD("Organization");
-        if (!this.phoneNumPrimary)
-            throw MESSAGE.EMPTY_FIELD("Primary Phone Number");
-        if (!this.emailPrimary)
-            throw MESSAGE.EMPTY_FIELD("Primary Email");
-    }
+const mongoose = require('mongoose');
 
-    // Unique values which will determine if 2 documents are the same
-    similarQuery() {
-        return {
-            'name' : this.name,
-            'organization' : this.organization,
-            'emailPrimary' : this.emailPrimary
-        };
-    }
+const referrerSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: true
+    },
+    middleName: {
+        type: String,
+        required: false
+    },
+    lastName: {
+        type: String,
+        required: false
+    },
+    phoneNumPrimary: {
+        type: String,
+        required: true
+    },
+    phoneNumSecondary: {
+        type: String,
+        required: false
+    },
+    emailPrimary: {
+        type: String,
+        required: true
+    },
+    emailSecondary: {
+        type: String,
+        required: false
+    },
+    position: {
+        type: String,
+        required: false
+    },
+    organization: {
+        type: String,
+        required: false
+    },
+    addressRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Address'
+    },
+    notes: {
+        type: String,
+        required: false
+    },
+});
 
-    async saveToDB() {
-        this.validate();
-        var dbo = new MongoDBO(Secret.Mongo.url, 'gurukul');
-        await dbo.insertIfDoesNotExists(COLLECTION.Referrer, this,
-            this.similarQuery()).then((id) => {
-                return id;
-            });
-    }
-}
+module.exports = mongoose.model('Referrer', referrerSchema, 'Referrer');

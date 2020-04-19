@@ -10,9 +10,10 @@ var Secret = require('./../../secret/Constants');
 router.get('/', function (req, res, next) {
     GoogleSheets.read(Secret.Spreadsheet.ID, "Form Responses 1",
         (err, data) => {
-            console.log("Google response");
-            console.log(data);
-            console.log(err);
+            if(err) {
+                console.log(err);
+                res.status(500).json({ message: err.message });
+            }
             res.json({
                 error : err,
                 rows: data
