@@ -39,7 +39,7 @@ Secret folder contains sensitive information relating to the app
 
 ## Mongo
 * move to mongoose models
-* DeprecationWarning : useUnifiedTopology
+* DeprecationWarning : useUnifiedTopology <span style="color:green">DONE</span>
 
 ## Misc
 * Change Google App name from Quickstart to Gurukul

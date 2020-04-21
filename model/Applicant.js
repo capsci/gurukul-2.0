@@ -64,4 +64,12 @@ const applicantSchema = new mongoose.Schema({
     }
 });
 
+// Returns only ids
+// Takes email or list of email
+applicantSchema.statics.findByEmail = function(emails) {
+    return this.find({
+        $or : [ {emailPrimary: emails}, {emailSecondary: emails}]
+    }, {_id : 1});
+}
+
 module.exports = mongoose.model('Applicant', applicantSchema, 'Applicant');

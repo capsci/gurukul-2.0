@@ -7,37 +7,56 @@
         class="errors">
           Cannot Read Google Data
       </div>
-      <table v-else>
+      <div v-else>
+        <table>
           <tr
             v-for="(row,index) in gs_data.rows"
             v-bind:key="index">
-            <td> {{ row }} </td>
+                <td> {{ row }}</td>
+                <!-- <td> {{ row[spreadsheet_cols.referrer1] }}
+                  <br> {{ row[spreadsheet_cols.referrer2] }}
+                </td>
+                <div v-if="index == 4 ">
+                  {{ getEntryState(row, index) }}
+                </div> -->
           </tr>
-      </table>
+        </table>
+      </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Config from './../Config'
 
 export default {
   name: 'GSheetsData',
   data: function(){
     return {
-      gs_data: null
+      gs_data: null,
+      application_state: []
     }
   },
   methods: {
-    getGSData: function () {
+    initComponent: function () {
       axios
-        .get('http://localhost:3000/googlesheets')
-        .then(response => (
-            this.gs_data = response.data
-            ));
+        .get(Config.server.urls.googlesheets)
+        .then(response => {
+          this.gs_data = response.data;
+        }).catch(error => {
+          console.error(error.response);
+        });
+    },
+    getEntryState: function(row, index) {
+      axios
+        .post(Config.server.urls.application.exists, { row: row })
+        .then(response =>
+          (console.log(response.data)));
+      console.log(index);
     }
   },
   mounted: function() {
-      this.getGSData();
+    this.initComponent();
   }
 }
 </script>

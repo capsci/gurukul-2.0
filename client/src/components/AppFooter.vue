@@ -1,6 +1,6 @@
 <template>
     <div class="AppFooter">
-      Insert Footer Here
+      <!-- Insert Footer Here -->
     </div>
 </template>
 
