@@ -9,7 +9,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var googlesheetsRouter = require('./routes/googlesheets/index');
 var mongodbRouter = require('./routes/mongodb/index');
-var applicationRouter = require('./routes/application/index');
+var applicantRouter = require('./routes/model/applicant');
+var applicationRouter = require('./routes/model/application');
 
 var cors = require('cors');
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/googlesheets', googlesheetsRouter);
 app.use('/mongodb', mongodbRouter);
+app.use('/applicant', applicantRouter);
 app.use('/application', applicationRouter);
 
 // catch 404 and forward to error handler

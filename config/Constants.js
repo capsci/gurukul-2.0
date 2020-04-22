@@ -5,7 +5,7 @@ const SpreadsheetCol = {
     fullName: 1,
     usAddress: 2,
     email: 3,
-    phoneNumPrimary: 4,
+    phonePrimary: 4,
     parentAddress: 5,
     parentPhoneNum: 6,
     referrer1: 7,

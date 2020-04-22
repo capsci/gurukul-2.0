@@ -53,6 +53,7 @@ Secret folder contains sensitive information relating to the app
   * GoogleSheets error is not rendered
 * try to avoid cors
 * structure vuejs code
+* GoogleSheets page; what is getApplicantId throws error
 
 # Queries
 

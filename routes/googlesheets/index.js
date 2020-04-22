@@ -9,23 +9,16 @@ var GSheetsData = require('./../../modules/application/GSheetsData');
 router.get('/', function (req, res, next) {
     GSheetsData.getData((err,data) => {
         if(err) {
-            console.log(err.message);
             res.status(500).json({
-                error: err.message
+                error: err
             });
         }
         else {
             res.json({
-                error : err,
                 rows: data
             });
         }
     });
 });
-
-// router.get('/data', function (req, res, next) {
-//     GSheetsData.getData()
-
-// });
 
 module.exports = router;

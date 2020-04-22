@@ -57,7 +57,7 @@ const applicantSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    applicationRef: {
+    applicationRefs: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Application'
@@ -66,10 +66,18 @@ const applicantSchema = new mongoose.Schema({
 
 // Returns only ids
 // Takes email or list of email
-applicantSchema.statics.findByEmail = function(emails) {
-    return this.find({
+applicantSchema.statics.findByEmail = async function(emails) {
+    var ids = await this.find({
         $or : [ {emailPrimary: emails}, {emailSecondary: emails}]
     }, {_id : 1});
+    switch(ids.length) {
+        case 0:
+            return null;
+        case 1:
+            return ids[0]._id;
+        default:
+            throw 'Multiple Applicants found for given id';
+    }
 }
 
 module.exports = mongoose.model('Applicant', applicantSchema, 'Applicant');
