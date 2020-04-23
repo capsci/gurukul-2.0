@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <component :is="layout"></component>
+    <v-content>
+      <component :is="layout"></component>
+    </v-content>
   </v-app>
 </template>
 
@@ -19,5 +21,5 @@ export default {
     'import-data-layout': ImportData,
     'application-form-layout': ApplicationForm
   },
-}
+};
 </script>
