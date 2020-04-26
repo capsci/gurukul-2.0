@@ -21,14 +21,6 @@ const applicationSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
-    linkedinProfile: {
-        type: String,
-        required: false
-    },
-    facebookProfile: {
-        type: String,
-        required: false
-    },
     permanentAddress: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,
@@ -48,6 +40,27 @@ const applicationSchema = new mongoose.Schema({
     tutionFee: {
         type: Number,
         required: false
+    },
+    //US Collge or Uninversity
+    schoolRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'School'
+    },
+    //Format: [Spring|Fall] 20\d{2}
+    scholarshipSemester: {
+        type: String,
+        required: true
+    },
+    referrer1Ref: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Referrer'
+    },
+    referrer2Ref: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Referrer'
     },
     scholarships: {
         type: String,

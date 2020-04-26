@@ -28,8 +28,6 @@ function getStructuredDataFromGoogle(callback) {
                     courseTuitionFee: row[SpreadsheetCol.courseTuitionFee],
                     otherScholarships: row[SpreadsheetCol.otherScholarships],
                     docsEmailed: row[SpreadsheetCol.docsEmailed],
-                    _applicant_id: null, // For VueJS to store applicant_id later
-                    _appplications_prev: [], // For VueJS to store previous assistance applications
                 });
             });
         }
