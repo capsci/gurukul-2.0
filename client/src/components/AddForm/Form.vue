@@ -54,7 +54,7 @@
                                             {{ formSections.universityDetails.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <UniversityDetailsForm />
+                                    <UniversityDetailsForm v-bind:row="row"/>
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -70,8 +70,8 @@
                                             {{ formSections.referrers.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <ReferrerForm />
-                                    <ReferrerForm />
+                                    <ReferrerForm v-bind:referrer="row.referrer1"/>
+                                    <ReferrerForm v-bind:referrer="row.referrer2"/>
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -124,7 +124,7 @@
                                             {{ formSections.additionalDocs.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <AddictionalDocsForm />
+                                    <AddictionalDocsForm v-bind:uploadedDocs="row.docsEmailed"/>
                                 </v-card-text>
                             </v-card>
                         </v-window-item>

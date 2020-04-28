@@ -31,13 +31,17 @@ const applicationSchema = new mongoose.Schema({
         required: false,
         ref: 'Address'
     },
+    courseName: {
+        type: String,
+        required: false
+    },
     // In months
-    scholarshipCourseDuration: {
+    courseDuration: {
         type: Number,
         required: false
     },
     // aprox dollar
-    tutionFee: {
+    courseFee: {
         type: Number,
         required: false
     },
@@ -48,7 +52,7 @@ const applicationSchema = new mongoose.Schema({
         ref: 'School'
     },
     //Format: [Spring|Fall] 20\d{2}
-    scholarshipSemester: {
+    courseSemester: {
         type: String,
         required: true
     },

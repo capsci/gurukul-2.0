@@ -9,7 +9,7 @@
             </v-col>
             <v-col cols="4">
                 <v-switch
-                    v-model="docAddmissionLetter"
+                    v-model="docAdmissionLetter"
                     label="College Admission Letter"
                 ></v-switch>
             </v-col>
@@ -60,6 +60,30 @@
 <script>
 export default {
     name: 'AdditionalDocsForm',
-    props: ['row'],
+    props: ['uploadedDocs'],
+    data: function() {
+        return {
+            docI20: false,
+            docAdmissionLetter: false,
+            docPassport: false,
+            docVisa: false,
+            docResume: false,
+            docMMNAApplication: false,
+            docReference1: false,
+            docReference2: false,
+        }
+    },
+    methods: {
+        setDataFromGoogleRow: function() {
+            if (this.uploadedDocs.includes('I-20')) this.docI20=true;
+            if (this.uploadedDocs.includes('US University - Admission Letter')) this.docAdmissionLetter=true;
+            if (this.uploadedDocs.includes('Passport Copy')) this.docPassport=true;
+            if (this.uploadedDocs.includes('Visa Copy')) this.docVisa=true;
+            if (this.uploadedDocs.includes('MMNA Application Form')) this.docMMNAApplication=true;
+        },
+    },
+    mounted: function() {
+        this.setDataFromGoogleRow();
+    }
 }
 </script>

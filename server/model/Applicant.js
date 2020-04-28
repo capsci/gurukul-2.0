@@ -32,11 +32,11 @@ const applicantSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    linkedinProfile: {
+    linkedin: {
         type: String,
         required: false
     },
-    facebookProfile: {
+    facebook: {
         type: String,
         required: false
     },

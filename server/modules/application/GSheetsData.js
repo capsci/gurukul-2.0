@@ -23,7 +23,7 @@ function getStructuredDataFromGoogle(callback) {
                     referrer2: row[SpreadsheetCol.referrer2],
                     facebook: row[SpreadsheetCol.facebook],
                     linkedin: row[SpreadsheetCol.linkedin],
-                    courseInfo: row[SpreadsheetCol.courseInfo],
+                    courseName: row[SpreadsheetCol.courseName],
                     schoolNameAndAddress: row[SpreadsheetCol.schoolNameAndAddress],
                     courseTuitionFee: row[SpreadsheetCol.courseTuitionFee],
                     otherScholarships: row[SpreadsheetCol.otherScholarships],

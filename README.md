@@ -54,6 +54,7 @@ Secret folder contains sensitive information relating to the app
 * try to avoid cors
 * structure vuejs code
 * GoogleSheets page; what is getApplicantId throws error
+* Referrer/School autocomplete using [typehead.js](https://twitter.github.io/typeahead.js/)
 
 # Queries
 
