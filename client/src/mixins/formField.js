@@ -14,7 +14,6 @@ export const formField = {
         },
         extractNameFields: function(input) {
             var firstName, middleName, lastName;
-
             [firstName, middleName, lastName] = this.splitOnWhitespaceAndDelimeters(input);
             if (!lastName) {
                 lastName = middleName;
@@ -22,5 +21,10 @@ export const formField = {
             }
             return [firstName, middleName, lastName];
         },
+        camelize: function(input) {
+            return input.replace(/[\w']/g, function(match) {
+                return match.charAt(0).toUpperCase() + match.substr(1).toLowerCase();
+            });
+        }
     }
 };

@@ -40,11 +40,11 @@
                                 </v-card-title>
                                 <v-divider></v-divider>
                                 <v-card-text style="height: 700px">
-                                    <Form v-bind:row="row"/>
+                                    <Form v-bind:row="row" v-on:formUpdated="formUpdated"/>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn color="blue darken-1" text @click="addFormClicked = false">Close</v-btn>
-                                    <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                                    <v-btn color="blue darken-1" text @click="saveApplication">Save</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-dialog>
@@ -72,6 +72,7 @@ export default {
             applications_prev: null,
             error: null,
             addFormClicked: false,
+            formData: null,
         }
     },
     methods: {
@@ -102,6 +103,14 @@ export default {
         },
         addApplication: function() {
             this.addFormClicked = true;
+        },
+        saveApplication: function() {
+            console.log("Saving...");
+            console.log(this.formData);
+        },
+        // Emit methods for children
+        formUpdated: function(data) {
+            this.formData = data;
         }
     },
     mounted: function() {

@@ -9,7 +9,7 @@
                     tag="v-flex">
                     <v-item
                         v-for="section in formSections"
-                        :key="section"
+                        :key="section.title"
                         v-slot:default="{ active, toggle }">
                         <div>
                             <v-btn
@@ -38,7 +38,10 @@
                                             {{ formSections.applicant.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <ApplicantForm v-bind:row="row"/>
+                                    <ApplicantForm
+                                        v-bind:row="row"
+                                        v-bind:emitId="formSections.applicant.emitId"
+                                        @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -54,7 +57,10 @@
                                             {{ formSections.universityDetails.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <UniversityDetailsForm v-bind:row="row"/>
+                                    <UniversityDetailsForm
+                                        v-bind:row="row"
+                                        v-bind:emitId="formSections.universityDetails.emitId"
+                                        @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -70,8 +76,12 @@
                                             {{ formSections.referrers.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <ReferrerForm v-bind:referrer="row.referrer1"/>
-                                    <ReferrerForm v-bind:referrer="row.referrer2"/>
+                                    <ReferrerForm
+                                        v-bind:emitId="formSections.referrers.emitId[0]"
+                                        @updateForm="updateForm" />
+                                    <ReferrerForm
+                                        v-bind:emitId="formSections.referrers.emitId[1]"
+                                        @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -87,9 +97,15 @@
                                             {{ formSections.previousSchool.icon }}
                                         </v-icon>
                                     </v-row>
-                                            <PreviousSchoolDetailsForm />
-                                            <PreviousSchoolDetailsForm />
-                                            <PreviousSchoolDetailsForm />
+                                            <PreviousSchoolDetailsForm
+                                                v-bind:emitId="formSections.previousSchool.emitId[0]"
+                                                @updateForm="updateForm" />
+                                            <PreviousSchoolDetailsForm
+                                                v-bind:emitId="formSections.previousSchool.emitId[1]"
+                                                @updateForm="updateForm" />
+                                            <PreviousSchoolDetailsForm
+                                                v-bind:emitId="formSections.previousSchool.emitId[2]"
+                                                @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -105,10 +121,18 @@
                                             {{ formSections.writeup.icon}}
                                         </v-icon>
                                     </v-row>
-                                    <WriteupForm />
-                                    <WriteupForm />
-                                    <WriteupForm />
-                                    <WriteupForm />
+                                    <WriteupForm
+                                        v-bind:emitId="formSections.writeup.emitId[0]"
+                                        @updateForm="updateForm" />
+                                    <WriteupForm
+                                        v-bind:emitId="formSections.writeup.emitId[1]"
+                                        @updateForm="updateForm" />
+                                    <WriteupForm
+                                        v-bind:emitId="formSections.writeup.emitId[2]"
+                                        @updateForm="updateForm" />
+                                    <WriteupForm
+                                        v-bind:emitId="formSections.writeup.emitId[3]"
+                                        @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
@@ -124,10 +148,14 @@
                                             {{ formSections.additionalDocs.icon }}
                                         </v-icon>
                                     </v-row>
-                                    <AddictionalDocsForm v-bind:uploadedDocs="row.docsEmailed"/>
+                                    <AddictionalDocsForm
+                                        v-bind:uploadedDocs="row.docsEmailed"
+                                        v-bind:emitId="formSections.additionalDocs.emitId"
+                                        @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
+                        -->
                     </v-window>
                 </v-col>
             </v-row>
@@ -160,30 +188,44 @@ export default {
             formSections: {
                 applicant: {
                     title: 'Applicant Details',
-                    icon: 'mdi-file-document-edit'
+                    icon: 'mdi-file-document-edit',
+                    emitId: 'applicant'
                 },
                 universityDetails:{
                     title: 'University Details',
-                    icon: 'mdi-school'
+                    icon: 'mdi-school',
+                    emitId: 'schoolDetails'
                 },
                 referrers: {
                     title: 'Referrers',
-                    icon: 'mdi-account-tie'
+                    icon: 'mdi-account-tie',
+                    emitId: ['referrer1', 'referrer1']
                 },
                 previousSchool: {
                     title: 'Previous School Details',
-                    icon: 'mdi-book-multiple'
+                    icon: 'mdi-book-multiple',
+                    emitId: ['prevSchool1', 'prevSchool2', 'prevSchool3', 'prevSchool4'],
                 },
                 writeup: {
                     title: 'Writeups',
-                    icon: 'mdi-grease-pencil'
+                    icon: 'mdi-grease-pencil',
+                    emitId: ['writeup1', 'writeup2', 'writeup3', 'writeup4'],
                 },
                 additionalDocs: {
                     title: 'Additional Documents',
-                    icon: 'mdi-file-upload'
+                    icon: 'mdi-file-upload',
+                    emitId: 'additionalDocs'
                 }
             },
             selectedSection: 0,
+            formData: {},
+        }
+    },
+    methods: {
+        updateForm: function(data) {
+            var sectionKey = Object.keys(data)[0];
+            this.formData[sectionKey] = data[sectionKey];
+            this.$emit('formUpdated', this.formData);
         }
     }
 }
