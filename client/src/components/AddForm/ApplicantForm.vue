@@ -120,8 +120,8 @@ export default {
         AddressForm
     },
     watch: {
-        applicant: function() {
-            this.updateForm();
+        applicant: function(value) {
+            this.$emit('updateForm', {[this.emitId]: value});
         }
     },
     computed: {
@@ -180,9 +180,6 @@ export default {
             [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.row.email);
             this.facebook = this.row.facebook;
             this.linkedin = this.row.linkedin;
-        },
-        updateForm: function(){
-            this.$emit('updateForm', {[this.emitId]: this.applicant});
         },
         updateAddress: function(key, value) {
             this[key] = value;

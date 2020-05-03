@@ -60,7 +60,12 @@
 <script>
 export default {
     name: 'AdditionalDocsForm',
-    props: ['uploadedDocs'],
+    props: ['uploadedDocs', 'emitId'],
+    watch: {
+        additionalDocs: function(value) {
+            this.$emit('updateForm', {[this.emitId]: value});
+        }
+    },
     data: function() {
         return {
             docI20: false,
@@ -71,6 +76,20 @@ export default {
             docMMNAApplication: false,
             docReference1: false,
             docReference2: false,
+        }
+    },
+    computed: {
+        additionalDocs: function() {
+            return {
+                docI20: this.docI20,
+                docAdmissionLetter: this.docAdmissionLetter,
+                docPassport: this.docPassport,
+                docVisa: this.docVisa,
+                docResume: this.docResume,
+                docMMNAApplication: this.docMMNAApplication,
+                docReference1: this.docReference1,
+                docReference2: this.docReference2,
+            }
         }
     },
     methods: {

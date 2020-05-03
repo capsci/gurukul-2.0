@@ -123,15 +123,19 @@
                                     </v-row>
                                     <WriteupForm
                                         v-bind:emitId="formSections.writeup.emitId[0]"
-                                        @updateForm="updateForm" />
+                                        v-bind:question="formSections.writeup.question[0]"
+                                        @updateAnswer="updateForm" />
                                     <WriteupForm
                                         v-bind:emitId="formSections.writeup.emitId[1]"
+                                        v-bind:question="formSections.writeup.question[1]"
                                         @updateForm="updateForm" />
                                     <WriteupForm
                                         v-bind:emitId="formSections.writeup.emitId[2]"
+                                        v-bind:question="formSections.writeup.question[2]"
                                         @updateForm="updateForm" />
                                     <WriteupForm
                                         v-bind:emitId="formSections.writeup.emitId[3]"
+                                        v-bind:question="formSections.writeup.question[3]"
                                         @updateForm="updateForm" />
                                 </v-card-text>
                             </v-card>
@@ -155,7 +159,6 @@
                                 </v-card-text>
                             </v-card>
                         </v-window-item>
-                        -->
                     </v-window>
                 </v-col>
             </v-row>
@@ -199,7 +202,7 @@ export default {
                 referrers: {
                     title: 'Referrers',
                     icon: 'mdi-account-tie',
-                    emitId: ['referrer1', 'referrer1']
+                    emitId: ['referrer1', 'referrer2']
                 },
                 previousSchool: {
                     title: 'Previous School Details',
@@ -210,6 +213,10 @@ export default {
                     title: 'Writeups',
                     icon: 'mdi-grease-pencil',
                     emitId: ['writeup1', 'writeup2', 'writeup3', 'writeup4'],
+                    question: ['Your academic, extra curriculum and social achievements/ Membership / Experience/ Association with a Maheshwari / Rajasthani Association or a cause)',
+                    'How do you plan to associate with and contribute to MMNA in USA during your studies and in future?',
+                    'Justification for requesting educational loan scholarship and how are you planning to finance the education & related expenses? ',
+                    'Your future goals and career plans']
                 },
                 additionalDocs: {
                     title: 'Additional Documents',
