@@ -11,6 +11,9 @@ var googlesheetsRouter = require('./routes/googlesheets/index');
 var mongodbRouter = require('./routes/mongodb/index');
 var applicantRouter = require('./routes/model/applicant');
 var applicationRouter = require('./routes/model/application');
+var addressRouter = require('./routes/model/address');
+var referrerRouter = require('./routes/model/referrer');
+var schoolRouter = require('./routes/model/school');
 
 var cors = require('cors');
 
@@ -28,10 +31,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+// Data
 app.use('/googlesheets', googlesheetsRouter);
-app.use('/mongodb', mongodbRouter);
+
+// Models
 app.use('/applicant', applicantRouter);
 app.use('/application', applicationRouter);
+app.use('/address', addressRouter);
+app.use('/referrer', referrerRouter);
+app.use('/school', schoolRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -50,31 +58,6 @@ app.use(function (err, req, res, next) {
 });
 
 var Secret = require('./secret/Constants');
-
-// var MongoDBO = require('./gurukul/3pinterface/MongoDBO');
-// var mdb = new MongoDBO(Secret.Mongo.url, 'gurukul');
-// mdb.readAll('Applicant').then((data) => {
-//     console.log(data);
-// });
-
-// var GoogleSheets = require('./gurukul/3pinterface/GoogleSheets');
-// GoogleSheets.read(Secret.Spreadsheet.ID, "Responses", (err, data) => {
-//     console.log(err);
-//     console.log(data)
-// });
-
-// var Address = require("./model/Address");
-// var a = new Address();
-// console.log(a.saveToDB());
-// a.saveToDB();
-
-// var GSheetsData = require('./modules/application/GSheetsData');
-// GSheetsData.getData().then((err,data) => {
-//     console.log("Error:" + err);
-//     console.lof("Data: " + data.length);
-// });
-
-
 
 // Note : mongoose creates a singleton class
 const mongoose = require('mongoose');

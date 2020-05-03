@@ -38,21 +38,21 @@ Secret folder contains sensitive information relating to the app
 * provide suggestions to relate
 
 ## Mongo
-* move to mongoose models
+* move to mongoose models <span style="color:green">DONE</span>
 * DeprecationWarning : useUnifiedTopology <span style="color:green">DONE</span>
 
 ## Misc
 * Change Google App name from Quickstart to Gurukul
 * Move secrets to seperate folder
-* .gitignore
-* Separate Dev dependencies vs run dependencies
-* eslint rules
+* .gitignore <span style="color:green">DONE</span>
+* Separate Dev dependencies vs run dependencies <span style="color:green">DONE</span>
+* eslint rules <span style="color:green">DONE</span>
 * Doc for GoogleSheets and MongoDBO
 * Validation on inputs (if needed)
 * Do not print stacktrace. Hide code; give useful message
   * GoogleSheets error is not rendered
 * try to avoid cors
-* structure vuejs code
+* structure vuejs code <span style="color:green">DONE</span>
 * GoogleSheets page; what is getApplicantId throws error
 * Referrer/School autocomplete using [typehead.js](https://twitter.github.io/typeahead.js/)
 

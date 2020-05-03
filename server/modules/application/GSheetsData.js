@@ -35,6 +35,7 @@ function getStructuredDataFromGoogle(callback) {
     });
 }
 
+// TODO: Remove
 function getApplicantsFromEmail(emailString) {
     if(!emailString) {
         throw "Email Not Provided";

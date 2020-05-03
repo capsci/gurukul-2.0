@@ -48,7 +48,35 @@ const applicantSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Application'
-    }
+    },
+    //valid date format over 18 years
+    dob: {
+        type: Date,
+        required: false
+    },
+    //from predefined values
+    usVisaStatus: {
+        type: String,
+        required: false
+    },
+    inUSA: {
+        type: Boolean,
+        required: false
+    },
+    entryDateInUSA: {
+        type: Date,
+        required: false
+    },
+    permanentAddress: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Address'
+    },
+    usAddress: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Address'
+    },
 });
 
 // Returns only ids

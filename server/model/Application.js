@@ -3,34 +3,6 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
-    //valid date format over 18 years
-    dob: {
-        type: Date,
-        required: false
-    },
-    //from predefined values
-    usVisaStatus: {
-        type: String,
-        required: false
-    },
-    inUSA: {
-        type: Boolean,
-        required: false
-    },
-    entryDateInUSA: {
-        type: Date,
-        required: false
-    },
-    permanentAddress: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Address'
-    },
-    usAddress: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Address'
-    },
     courseName: {
         type: String,
         required: false
