@@ -1,24 +1,45 @@
-# client
+# Run
 
-## Project setup
-```
-npm install
-```
+Run server
+>npm run build
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Run server (dev)
+>npm run serve
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+# Setup
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Install client dependencies
+>npm install
+
+
+# Queries
+
+* See all applicants for the quater (pending applicants from prev quaters)
+  * Name
+  * Application Status
+  * Application Status Date
+  * Contact Phone
+  * Contact Email
+  * Assiatance Quater
+  * Duration of Course
+  * College Name
+  * Reference 1 Name
+  * Reference 2 Name
+  * Notes
+* See specific application
+  * All details
+  * Application Status
+  * Referral Status
+  * Notes
+* Repayment applications for year/quater or before
+  * Name
+  * Contact Phone
+  * Email
+  * Date Amount Give
+  * Scholarship Given
+  * Scholarship Pending
+  * Notes
+  * Contact After
+  * Reference 1 Name
+  * Reference 2 Name

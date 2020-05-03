@@ -1,28 +1,8 @@
 # Gurukul
 
-Install project dependencies
->npm install
+Applicant tracking system for scholarship provided by an organization
 
-Run project
->npm start
-Run dev version
->npm run dev
-
-Install MongoDB
-Start mongo
->brew services start mongodb-community@4.2
-
-Run Vue
->cd client
->npm run serve
-
-### Secret
-Secret folder contains sensitive information relating to the app
-* token : generted when you first time start app and give access to the machine
-* credentials : from Google Sheets API
-* Constants : Speciual constants like SpreadSheetID
-
-# TODO
+# MileStones
 
 ## MileStone 1
 * Get Data from Google sheet <span style="color:green">DONE</span>
@@ -55,35 +35,3 @@ Secret folder contains sensitive information relating to the app
 * structure vuejs code <span style="color:green">DONE</span>
 * GoogleSheets page; what is getApplicantId throws error
 * Referrer/School autocomplete using [typehead.js](https://twitter.github.io/typeahead.js/)
-
-# Queries
-
-* See all applicants for the quater (pending applicants from prev quaters)
-  * Name
-  * Application Status
-  * Application Status Date
-  * Contact Phone
-  * Contact Email
-  * Assiatance Quater
-  * Duration of Course
-  * College Name
-  * Reference 1 Name
-  * Reference 2 Name
-  * Notes
-* See specific application
-  * All details
-  * Application Status
-  * Referral Status
-  * Notes
-* Repayment applications for year/quater or before
-  * Name
-  * Contact Phone
-  * Email
-  * Date Amount Give
-  * Scholarship Given
-  * Scholarship Pending
-  * Notes
-  * Contact After
-  * Reference 1 Name
-  * Reference 2 Name
-
