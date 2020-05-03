@@ -25,6 +25,10 @@ export const formField = {
             return input.replace(/[\w']/g, function(match) {
                 return match.charAt(0).toUpperCase() + match.substr(1).toLowerCase();
             });
-        }
+        },
+        extractEmail: function(input) {
+            return input
+                .match(/([\w._]+@[\w._]+\.[\w._-]+)/gi);
+        },
     }
 };

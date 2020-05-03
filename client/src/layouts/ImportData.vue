@@ -18,7 +18,7 @@
 
 <script>
 import axios from 'axios';
-import Config from './../components/Config';
+import endpoint from './../services/endpoint';
 
 import GoogleSheetsRow from './../components/import-data/GoogleSheetsRow';
 
@@ -35,7 +35,7 @@ export default {
     methods: {
         getGoogleSheetData: function () {
         axios
-            .get(Config.server.urls.googlesheets)
+            .get(endpoint.googleData.get)
             .then(response => {
                 this.gs_data = response.data.rows;
             }).catch(error => {
