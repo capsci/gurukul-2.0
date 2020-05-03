@@ -7,6 +7,11 @@ const genericResponse = function(error, data, response) {
             .json({error: error});
     }
     else {
+        if( !data || data.length == 0 ) {
+            response
+                .sendStatus(204);
+            return;
+        }
         response
             .json(data);
     }

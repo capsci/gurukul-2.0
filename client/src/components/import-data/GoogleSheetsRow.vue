@@ -15,11 +15,15 @@
                         <span> {{row.referrer1}} </span>
                         <span> {{row.referrer2}} </span>
                         <span> {{row.docsEmailed}} </span>
-                        <div class="error-message">
-                            {{ error }}
+                        <div
+                            v-for="error in errors"
+                            v-bind:key="error">
+                            <span class="error-message">
+                                {{ error }}
+                            </span>
                         </div>
                     </v-col>
-                    <v-col v-if="!error" cols="1">
+                    <v-col v-if="errors.length == 0" cols="1">
                         <v-dialog
                             v-model="addFormClicked"
                             persistent scrollable
@@ -57,12 +61,14 @@
 
 <script>
 import axios from 'axios';
-import Config from './../Config';
+import endpoint from './../../services/endpoint';
 import Form from './../AddForm/Form';
+import { formField } from './../../mixins/formField'
 
 export default {
     name: 'GoogleSheetsRow',
     props: ['row'],
+    mixins: [formField],
     components: {
         Form
     },
@@ -70,29 +76,46 @@ export default {
         return {
             applicant_id: null,
             applications_prev: null,
-            error: null,
+            errors: [],
             addFormClicked: false,
             formData: null,
         }
     },
     methods: {
         setApplicantID: function() {
+            var emails = this.extractEmail(this.row.email);
+            if (!emails) {
+                this.errors
+                    .push(`Cannot extract email from string '${this.row.email}'`);
+                return;
+            }
+            var request = {
+                params: {
+                    email: emails,
+                }
+            };
             axios
-                .post(Config.server.urls.applicant.exists,
-                    { email: this.row.email })
+                .get(endpoint.applicant.findByEmail, request)
                 .then(response => {
-                    this.applicant_id = response.data.id;
-                    if (response.data.id != null) {
-                        this.setPrevApplications(response.data.id);
+                    if (!response.data) {
+                        return;
+                    }
+                    if (response.data > 1) {
+                        this.errors.push("Multiple applicant with email found");
+                        return;
+                    }
+                    this.applicant_id = response.data[0].id;
+                    if (this.applicant_id != null) {
+                        //this.setPrevApplications(this.applicant_id);
                     }
                 })
                 .catch(err => {
-                    this.error = err.response.data.error;
+                        this.errors.push(err.response.data.error)
                 });
         },
         setPrevApplications: function(applicant_id) {
             axios
-                .post(Config.server.urls.application.prev,
+                .post(endpoint.application.findById,
                     { applicant_id: applicant_id })
                 .then(response => {
                     this.appplications_prev = response.data.id;
