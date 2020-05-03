@@ -5,39 +5,50 @@ const mongoose = require('mongoose');
 const referrerSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     middleName: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     lastName: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     phoneNumPrimary: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     phoneNumSecondary: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     emailPrimary: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        lowercase: true,
     },
     emailSecondary: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
+        lowercase: true,
     },
     position: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     organization: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     addressRef: {
         type: mongoose.Schema.Types.ObjectId,
@@ -46,7 +57,8 @@ const referrerSchema = new mongoose.Schema({
     },
     notes: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
 });
 

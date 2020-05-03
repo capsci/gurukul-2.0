@@ -94,11 +94,11 @@ export default {
     },
     methods: {
         setDataFromGoogleRow: function() {
-            if (this.uploadedDocs.includes('I-20')) this.docI20=true;
-            if (this.uploadedDocs.includes('US University - Admission Letter')) this.docAdmissionLetter=true;
-            if (this.uploadedDocs.includes('Passport Copy')) this.docPassport=true;
-            if (this.uploadedDocs.includes('Visa Copy')) this.docVisa=true;
-            if (this.uploadedDocs.includes('MMNA Application Form')) this.docMMNAApplication=true;
+            this.docI20 = this.uploadedDocs.includes('I-20');
+            this.docAdmissionLetter = this.uploadedDocs.includes('US University - Admission Letter');
+            this.docPassport = this.uploadedDocs.includes('Passport Copy');
+            this.docVisa = this.uploadedDocs.includes('Visa Copy');
+            this.docMMNAApplication = this.uploadedDocs.includes('MMNA Application Form');
         },
     },
     mounted: function() {

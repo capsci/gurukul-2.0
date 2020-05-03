@@ -5,19 +5,23 @@ const mongoose = require('mongoose');
 const addressSchema = new mongoose.Schema({
     line1: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     line2: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     city: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     state: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     zipcode: {
         type: Number,
@@ -25,7 +29,8 @@ const addressSchema = new mongoose.Schema({
     },
     country: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     }
 });
 

@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const applicationSchema = new mongoose.Schema({
     courseName: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     // In months
     courseDuration: {
@@ -21,12 +22,14 @@ const applicationSchema = new mongoose.Schema({
     schoolRef: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'School'
+        ref: 'School',
+        trim: true,
     },
     //Format: [Spring|Fall] 20\d{2}
     courseSemester: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
     },
     referrer1Ref: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,38 +43,79 @@ const applicationSchema = new mongoose.Schema({
     },
     scholarships: {
         type: String,
-        required: false
+        required: false,
+        trim: true,
     },
     notes: {
         type: String,
+        required: false,
+        trim: true,
+    },
+    writeup: [
+        {
+            question: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            answer: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+        }
+    ],
+    prevEducation: [
+        {
+            schoolRef: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'School'
+            },
+            gpa: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            degree: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+        }
+    ],
+    docI20: {
+        type: Boolean,
         required: false
     },
-    prevEducation: {
-        type: Array,
+    docAdmissionLetter: {
+        type: Boolean,
         required: false
-    }
+    },
+    docPassport: {
+        type: Boolean,
+        required: false
+    },
+    docVisa: {
+        type: Boolean,
+        required: false
+    },
+    docResume: {
+        type: Boolean,
+        required: false
+    },
+    docMMNAApplication: {
+        type: Boolean,
+        required: false
+    },
+    docReference1: {
+        type: Boolean,
+        required: false
+    },
+    docReference2: {
+        type: Boolean,
+        required: false
+    },
 });
 
 module.exports = mongoose.model('Application', applicationSchema, 'Application');
-
-// class Application {
-//     constructor() {
-//         self.prevEducation = [
-//             {schoolRef: "schoolRef", major: "Degree/Major/Certificate", grade: "GPA/Grade"},
-//             {schoolRef: "schoolRef", major: "Degree/Major/Certificate", grade: "GPA/Grade"}
-//         ];
-//         // 4 questions
-//         self.wrtiteups = [ {question : "Question1", answer : "LongAnswer"},
-//                         {question : "Question2", answer : "ReallyLongAnswer"}];
-//                         self.scholarshipMajor = "MS CS/MBA";
-//         filesUploaded = {"i20" : false,
-//                           "resume" : false,
-//                           "passport" : false,
-//                           "visa" : false,
-//                           "admissionLetter" : false,
-//                           "referenceLetter1" : false,
-//                           "referenceLetter2" : false,
-//                           "mmnaApplicationForm" : false
-//             };
-//     }
-// }
