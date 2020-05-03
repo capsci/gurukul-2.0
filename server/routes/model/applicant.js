@@ -8,12 +8,10 @@ var callback = require('./callback');
 
 // Save Applicant
 router.post('/', function(req, res){
-    const applicant = Applicant(req.body);
+    let applicant = new Applicant(req.body.applicant);
     applicant
-        .save()
-        .select('_id')
-        .exec(function(error, data) {
-            callback.save(error, data, res);
+        .save(function(error, data) {            
+            callback.save(error, data, res);            
         });
 });
 

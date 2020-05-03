@@ -8,11 +8,9 @@ var callback = require('./callback');
 
 // Save Address
 router.post('/', function(req, res){
-    const address = Address(req.body);
+    const address = Address(req.body.address);
     address
-        .save()
-        .select('_id')
-        .exec(function(error, data) {
+        .save(function(error, data) {
             callback.save(error, data, res);
         });
 });

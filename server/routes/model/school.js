@@ -8,11 +8,9 @@ var callback = require('./callback');
 
 // Save School
 router.post('/', function(req, res){
-    const school = School(req.body);
+    const school = School(req.body.school);
     school
-        .save()
-        .select('_id')
-        .exec(function(error, data) {
+        .save(function(error, data) {
             callback.save(error, data, res);
         });
 });

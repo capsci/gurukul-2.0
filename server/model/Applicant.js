@@ -19,12 +19,12 @@ const applicantSchema = new mongoose.Schema({
         trim: true,
     },
     // US if possible
-    phoneNumPrimary: {
+    phonePrimary: {
         type: String,
         required: true,
         trim: true,
     },
-    phoneNumSecondary: {
+    phoneSecondary: {
         type: String,
         required: false,
         trim: true,

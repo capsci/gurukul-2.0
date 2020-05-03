@@ -8,11 +8,9 @@ var callback = require('./callback');
 
 // Save Referrer
 router.post('/', function(req, res){
-    const referrer = Referrer(req.body);
+    const referrer = Referrer(req.body.referrer);
     referrer
-        .save()
-        .select('_id')
-        .exec(function(error, data) {
+        .save(function(error, data) {
             callback.save(error, data, res);
         });
 });

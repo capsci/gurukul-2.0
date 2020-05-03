@@ -9,11 +9,9 @@ var callback = require('./callback');
 
 // Save Application
 router.post('/', function(req, res){
-    const application = Application(req.body);
+    const application = Application(req.body.application);
     application
-        .save()
-        .select('_id')
-        .exec(function(error, data) {
+        .save(function(error, data) {
             callback.save(error, data, res);
         });
 });

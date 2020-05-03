@@ -128,8 +128,43 @@ export default {
             this.addFormClicked = true;
         },
         saveApplication: function() {
-            console.log("Saving...");
             console.log(this.formData);
+            // TODO: Needs some central interface that can handle DB intraction with multiple collections
+                        
+            axios
+                .post(endpoint.address.save,
+                    { address: this.formData.applicant.usAddress })                
+                .catch(err => {
+                    this.error = err.response.data.error;
+                });            
+
+            axios
+                .post(endpoint.referrer.save,
+                    { referrer: this.formData.referrer })                
+                .catch(err => {
+                    this.error = err.response.data.error;
+                });
+
+            axios
+                .post(endpoint.school.save,
+                    { school: this.formData.schoolDetails })                
+                .catch(err => {
+                    this.error = err.response.data.error;
+                });
+
+            axios
+                .post(endpoint.application.save,
+                    { application: this.formData.application })                
+                .catch(err => {
+                    this.error = err.response.data.error;
+                });
+
+            axios
+                .post(endpoint.applicant.save,
+                    { applicant: this.formData.applicant })                
+                .catch(err => {
+                    this.error = err.response.data.error;
+                });
         },
         // Emit methods for children
         formUpdated: function(data) {
