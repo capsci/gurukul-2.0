@@ -35,6 +35,5 @@ function getStructuredDataFromGoogle(callback) {
 }
 
 module.exports = {
-    getData                : getStructuredDataFromGoogle,
-    getApplicantsFromEmail : getApplicantsFromEmail,
+    getData                : getStructuredDataFromGoogle
 };

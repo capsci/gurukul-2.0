@@ -60,7 +60,7 @@ const applicantSchema = new mongoose.Schema({
     },
     applicationRefs: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: 'Application'
     },
     //valid date format over 18 years
