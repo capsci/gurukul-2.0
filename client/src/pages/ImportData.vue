@@ -1,6 +1,5 @@
 <template>
-    <v-app>
-        <router-view></router-view>
+    <div>
         <v-content>
             <span
                 v-if="gs_data == null"
@@ -13,7 +12,7 @@
                 <GoogleSheetsRow v-bind:row="row" />
             </span>
         </v-content>
-    </v-app>
+    </div>
 </template>
 
 <script>

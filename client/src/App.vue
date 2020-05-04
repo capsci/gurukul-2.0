@@ -1,25 +1,22 @@
 <template>
-  <v-app>
-    <v-content>
-      <component :is="layout"></component>
-    </v-content>
-  </v-app>
+    <v-app>
+        <v-content>
+            <component :is="layout">
+                <router-view />
+            </component>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
 
-import ImportData from './layouts/ImportData';
-import ApplicationForm from './layouts/ApplicationForm';
+const default_layout = 'default';
 
 export default {
-  computed: {
-    layout() {
-      return this.$store.getters.layout
+    computed: {
+        layout() {
+            return (this.$route.meta.layout || default_layout) + '-layout';
+        }
     }
-  },
-  components: {
-    'import-data-layout': ImportData,
-    'application-form-layout': ApplicationForm
-  },
 };
 </script>
