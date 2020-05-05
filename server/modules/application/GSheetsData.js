@@ -1,11 +1,11 @@
 "use strict";
 
+var config = require('./../../secret/config.json');
 var GoogleSheets = require('./../../modules/interfaces/GoogleSheets');
-var Secret = require('./../../secret/Constants');
 var SpreadsheetCol = require('./../../config/Constants').SpreadsheetCol;
 
 function getStructuredDataFromGoogle(callback) {
-    return GoogleSheets.read(Secret.Spreadsheet.ID, "Form Responses 1!A2:Z1000", (err, data) => {
+    return GoogleSheets.read(config.GoogleSheets.id, config.GoogleSheets.range, (err, data) => {
         var newData = [];
         if (!err) {
             // Remove Header Row
