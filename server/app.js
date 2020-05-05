@@ -57,13 +57,15 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-var Secret = require('./secret/Constants');
+var config = require('./secret/config.json');
 
 // Note : mongoose creates a singleton class
 const mongoose = require('mongoose');
-mongoose.connect(Secret.Mongo.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true});
+mongoose
+    .connect(
+        config.mLab.uri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to database!'));
