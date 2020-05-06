@@ -5,7 +5,7 @@ Each of the files are described as below:
 
 # config.json
 
-```
+```json
 {
     "GoogleSheets": {
         "id": <SPREADSHEET_ID_OF_GOOGLE_SHEET>,
