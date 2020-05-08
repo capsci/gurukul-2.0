@@ -1,6 +1,35 @@
 <template>
     <div>
         <v-row>
+            <Autocomplete
+                :entries="collegeEntries"
+                :label="collegeEntriesLabel"
+                :additemtext="addCollegeItemText">
+                <template slot="itemTemplate" slot-scope="{ item }">
+                    <h3>{{item.name}}</h3>
+                    <h4>{{item.city}}, {{item.country}}</h4>
+                </template>
+                <template slot="selectionTemplate" slot-scope="{ item }">
+                    {{item.name}}, {{item.city}}
+                </template>
+            </Autocomplete>
+        </v-row>
+        <v-row>
+            <Autocomplete
+                :entries="referrerEntries"
+                :label="referrerEntriesLabel"
+                :additemtext="addReferrerItemText">
+                <template slot="itemTemplate" slot-scope="{ item }">
+                    <h3>{{item.firstName}} {{item.lastName}}</h3>
+                    <h4>{{item.position}}, {{item.organization}}</h4>
+                    <h4>{{item.email}}</h4>
+                </template>
+                <template slot="selectionTemplate" slot-scope="{ item }">
+                    {{item.firstName}} {{item.lastName}}, {{item.organization}}
+                </template>
+            </Autocomplete>
+        </v-row>
+        <v-row>
             <v-col cols="4">
                 <v-text-field
                     label="First Name"
@@ -110,14 +139,17 @@
 
 <script>
 import AddressForm from './AddressForm';
-import { formField } from './../../mixins/formField'
+import { formField } from './../../mixins/formField';
+
+import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'ApplicantForm',
     props: ['row', 'emitId'],
     mixins: [formField],
     components: {
-        AddressForm
+        AddressForm,
+        Autocomplete,
     },
     watch: {
         applicant: function(value) {
@@ -163,7 +195,33 @@ export default {
             usVisaStatus: null,
             usEntryDate: null,
             parentAddress: null,
-            usAddress: null
+            usAddress: null,
+            collegeEntriesLabel: "College Name",
+            collegeEntries: [
+                {name: 'North Carolina State University', city:'Raleigh', state: 'NC', country:'USA', colloquial: ['NCSU', 'NCState']},
+                {name: 'Massachusetts Institute of Technology', city:'Cambridge', state: 'MA', country:'USA', colloquial: ['MIT']},
+                {name: 'University of Washington', city:'Seattle', state: 'WA', country:'USA'},
+            ],
+            referrerEntriesLabel: "Referrer Name",
+            referrerEntries: [
+                {firstName: 'Tree', lastName: 'Hugger', phonePrimary: '1234', position:'President', organization:'SaveTheTrees', email:'plant1@forest.com', address:'betterworld'},
+                {firstName: 'Evil', lastName: 'Twin', phonePrimary: '4321', position:'Demolisher', organization:'FeedTheFactories', email:'burnall@coal.com', address:'RichesLand'},
+            ],
+            // Since passed props need to be data
+            addCollegeItemText: function(entry) {
+                var items = entry.colloquial || [];
+                return items
+                    .concat(entry.name)
+                    .filter(x => x!=null )
+                    .join(', ');
+            },
+            addReferrerItemText: function(entry) {
+                return [entry.firstName, entry.middleName,
+                        entry.lastName, entry.emailPrimary,
+                        entry.emailSecondary]
+                        .filter(x => x!=null )
+                        .join(', ');
+            }
         }
     },
     methods: {
@@ -183,7 +241,7 @@ export default {
         },
         updateAddress: function(key, value) {
             this[key] = value;
-        }
+        },
     },
     mounted: function() {
         this.setDataFromGoogleRow();
