@@ -19,12 +19,12 @@ const applicantSchema = new mongoose.Schema({
         trim: true,
     },
     // US if possible
-    phoneNumPrimary: {
+    phonePrimary: {
         type: String,
         required: true,
         trim: true,
     },
-    phoneNumSecondary: {
+    phoneSecondary: {
         type: String,
         required: false,
         trim: true,
@@ -53,46 +53,47 @@ const applicantSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
     },
-    notes: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    applicationRefs: {
+    mmnaRefs: [{
         type: mongoose.Schema.Types.ObjectId,
         required: false,
-        ref: 'Application'
-    },
+        ref: 'MMNA'
+    }],
     //valid date format over 18 years
     dob: {
         type: Date,
         required: false,
         trim: true,
     },
-    //from predefined values
-    usVisaStatus: {
+    // US Address
+    line1: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    line2: {
         type: String,
         required: false,
         trim: true,
     },
-    inUSA: {
-        type: Boolean,
-        required: false
+    city: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    entryDateInUSA: {
-        type: Date,
-        required: false
+    state: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    permanentAddress: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Address'
+    zipcode: {
+        type: Number,
+        required: true
     },
-    usAddress: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Address'
-    },
+    country: {
+        type: String,
+        required: true,
+        trim: true,
+    }
 });
 
 module.exports = mongoose.model('Applicant', applicantSchema, 'Applicant');

@@ -11,7 +11,6 @@ var googlesheetsRouter = require('./routes/googlesheets/index');
 var mongodbRouter = require('./routes/mongodb/index');
 var applicantRouter = require('./routes/model/applicant');
 var applicationRouter = require('./routes/model/application');
-var addressRouter = require('./routes/model/address');
 var referrerRouter = require('./routes/model/referrer');
 var schoolRouter = require('./routes/model/school');
 
@@ -37,7 +36,6 @@ app.use('/googlesheets', googlesheetsRouter);
 // Models
 app.use('/applicant', applicantRouter);
 app.use('/application', applicationRouter);
-app.use('/address', addressRouter);
 app.use('/referrer', referrerRouter);
 app.use('/school', schoolRouter);
 

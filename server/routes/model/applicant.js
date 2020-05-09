@@ -17,6 +17,22 @@ router.post('/', function(req, res){
         });
 });
 
+// Find all
+router.get('/all', function(req, res) {
+    Applicant
+        .aggregate([{
+            $lookup: {
+                from: "MMNA",
+                localField: "mmnaRefs",
+                foreignField: "_id",
+                as: "mmna"
+            }
+        }])
+        .exec(function(error, applicant) {
+            callback.find(error, applicant, res);
+        });
+});
+
 // Find by email
 router.get('/', function(req, res) {
     const email = req.query.email;

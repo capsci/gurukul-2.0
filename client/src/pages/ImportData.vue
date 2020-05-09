@@ -1,18 +1,16 @@
 <template>
-    <div>
-        <v-content>
-            <span
-                v-if="gs_data == null"
-                class="errors">
-                Cannot Read Google Data
-            </span>
-            <span v-else
-                v-for="(row,index) in gs_data"
-                v-bind:key="index">
-                <GoogleSheetsRow v-bind:row="row" />
-            </span>
-        </v-content>
-    </div>
+    <v-content class="container">
+        <span
+            v-if="gs_data == null"
+            class="errors">
+            Cannot Read Google Data
+        </span>
+        <span v-else
+            v-for="(row,index) in gs_data"
+            v-bind:key="index">
+            <GoogleSheetsRow v-bind:row="row" />
+        </span>
+    </v-content>
 </template>
 
 <script>

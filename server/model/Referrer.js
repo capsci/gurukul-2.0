@@ -18,12 +18,12 @@ const referrerSchema = new mongoose.Schema({
         required: false,
         trim: true,
     },
-    phoneNumPrimary: {
+    phonePrimary: {
         type: String,
         required: true,
         trim: true,
     },
-    phoneNumSecondary: {
+    phoneSecondary: {
         type: String,
         required: false,
         trim: true,
@@ -50,16 +50,35 @@ const referrerSchema = new mongoose.Schema({
         required: false,
         trim: true,
     },
-    addressRef: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Address'
-    },
-    notes: {
+    line1: {
         type: String,
         required: false,
         trim: true,
     },
+    line2: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    city: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    state: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    zipcode: {
+        type: Number,
+        required: false
+    },
+    country: {
+        type: String,
+        required: false,
+        trim: true,
+    }
 });
 
 module.exports = mongoose.model('Referrer', referrerSchema, 'Referrer');

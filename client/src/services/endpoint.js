@@ -23,6 +23,7 @@ const applicant = {
     save: applicantUrl,
     findByEmail: applicantUrl,
     findById: applicantUrl,
+    findAll: applicantUrl + '/all',
 };
 
 const application = {

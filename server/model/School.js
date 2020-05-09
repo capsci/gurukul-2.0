@@ -8,12 +8,41 @@ const schoolSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    addressRef: {
-        type: mongoose.Schema.Types.ObjectId,
+    // colloquial will help in finding schools
+    colloquial: [{
+        type: String,
         required: false,
-        ref: 'Address'
+        trim: true,
+    }],
+    line1: {
+        type: String,
+        required: false,
+        trim: true,
     },
+    line2: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    city: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    state: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    zipcode: {
+        type: String, // For Canadian schools
+        required: true
+    },
+    country: {
+        type: String,
+        required: true,
+        trim: true,
+    }
 });
 
 module.exports = mongoose.model('School', schoolSchema, 'School');
-
