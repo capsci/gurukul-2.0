@@ -3,6 +3,25 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
+    //from predefined values
+    visaStatus: {
+        type: String,
+        required: false,
+        trim: true,
+    },
+    inUSA: {
+        type: Boolean,
+        required: false
+    },
+    dateOfArrival: {
+        type: Date,
+        required: false
+    },
+    schoolRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'School'
+    },
     courseName: {
         type: String,
         required: false,
@@ -18,17 +37,15 @@ const applicationSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    //US Collge or Uninversity
-    schoolRef: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'School',
-        trim: true,
-    },
-    //Format: [Spring|Fall] 20\d{2}
+    // Format: [Spring|Fall] 20\d{2}
     courseSemester: {
         type: String,
         required: true,
+        trim: true,
+    },
+    scholarships: {
+        type: String,
+        required: false,
         trim: true,
     },
     referrer1Ref: {
@@ -41,17 +58,7 @@ const applicationSchema = new mongoose.Schema({
         required: false,
         ref: 'Referrer'
     },
-    scholarships: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    notes: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    writeup: [
+    writeups: [
         {
             question: {
                 type: String,
@@ -67,10 +74,10 @@ const applicationSchema = new mongoose.Schema({
     ],
     prevEducation: [
         {
-            schoolRef: {
-                type: mongoose.Schema.Types.ObjectId,
+            schoolName: {
+                type: String,
                 required: true,
-                ref: 'School'
+                trim: true
             },
             gpa: {
                 type: String,
@@ -84,38 +91,20 @@ const applicationSchema = new mongoose.Schema({
             },
         }
     ],
-    docI20: {
-        type: Boolean,
-        required: false
-    },
-    docAdmissionLetter: {
-        type: Boolean,
-        required: false
-    },
-    docPassport: {
-        type: Boolean,
-        required: false
-    },
-    docVisa: {
-        type: Boolean,
-        required: false
-    },
-    docResume: {
-        type: Boolean,
-        required: false
-    },
-    docMMNAApplication: {
-        type: Boolean,
-        required: false
-    },
-    docReference1: {
-        type: Boolean,
-        required: false
-    },
-    docReference2: {
-        type: Boolean,
-        required: false
-    },
+    // I20, Admission Letter, Passport, Visa, Resume
+    // MMNA Application, Referrer documents
+    uploadedDocs: [{
+        docName: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        status: {
+            type: Boolean,
+            required: true,
+            trim: true,
+        }
+    }],
 });
 
 module.exports = mongoose.model('Application', applicationSchema, 'Application');

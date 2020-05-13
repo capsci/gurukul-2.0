@@ -1,6 +1,6 @@
 <template>
-    <div>
+    <v-content class="container">
         404 Page - Not Found
         Return to <a href="/">Gurukul Home</a>
-    </div>
+    </v-content>
 </template>

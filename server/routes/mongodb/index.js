@@ -3,23 +3,10 @@
 var express = require('express');
 var router = express.Router();
 
-var Address = require('./../../model/Address');
 var Applicant = require('./../../model/Applicant');
 var Application = require('./../../model/Application');
 var Referrer = require('./../../model/Referrer');
 var School = require('./../../model/School');
-
-
-/* GET all Addresses page. */
-router.get('/address', async function (req, res, next) {
-    try {
-        const addresses = await Address.find();
-        res.json(addresses);
-    }
-    catch(err) {
-        res.status(500).json({ message: err.message });
-    }
-});
 
 router.get('/applicant', async function (req, res, next) {
     try {
