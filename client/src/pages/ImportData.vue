@@ -34,7 +34,7 @@ export default {
         axios
             .get(endpoint.googleData.get)
             .then(response => {
-                this.gs_data = response.data.rows;
+                this.gs_data = response.data;
             }).catch(error => {
                 console.error(error.response);
             });
