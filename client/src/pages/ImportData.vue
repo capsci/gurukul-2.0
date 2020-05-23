@@ -4,6 +4,7 @@
             :headers="headers"
             :items="gs_data"
             item-key="applicationTime">
+            <!-- TODO : v-slot:top with search filter -->
             <template #item.fullName="{ item }">
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -87,7 +88,7 @@
                 </span>
                 <span v-else>
                     <v-dialog
-                        v-model="item.addFormClicked"
+                        v-model="item.showDialog"
                         persistent scrollable
                         max-width="1200px">
                         <template v-slot:activator="{ on }">
@@ -95,24 +96,9 @@
                                 Add <v-icon>Add mdi-account-plus</v-icon>
                             </v-btn>
                         </template>
-                        <v-card>
-                            <v-card-title>
-                                Add New Application
-                                <v-btn icon
-                                    @click="item.addFormClicked = false"
-                                    style="position: absolute; right: 10px">
-                                    <v-icon>mdi-close</v-icon>
-                                </v-btn>
-                            </v-card-title>
-                            <v-divider></v-divider>
-                            <v-card-text style="height: 700px">
-                                <Form v-bind:row="item" v-on:formUpdated="formUpdated"/>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-btn color="blue darken-1" text @click="addFormClicked = false">Close</v-btn>
-                                <v-btn color="blue darken-1" text @click="saveApplication">Save</v-btn>
-                            </v-card-actions>
-                        </v-card>
+                        <FormCard
+                            v-bind:googleRow="item"
+                            v-on:closeDialog="closeDialog(item)"/>
                     </v-dialog>
 
                 </span>
@@ -131,13 +117,13 @@
 import axios from 'axios';
 import endpoint from './../services/endpoint';
 import { formField } from './../mixins/formField';
-import Form from './../components/AddForm/Form';
+import FormCard from './../components/AddForm/FormCard';
 
 export default {
     name: 'ImportData',
     mixins: [formField],
     components: {
-        Form,
+        FormCard,
     },
     computed: {
         headers: function() {
@@ -160,7 +146,6 @@ export default {
     data: function(){
         return {
             gs_data: [],
-            addFormClicked: false,
         }
     },
     methods: {
@@ -175,17 +160,13 @@ export default {
         },
         addToGsData: function () {
             this.gs_data = this.gs_data.map(entry => {
-                var addFormClicked = false;
-                return Object.assign({}, entry, { addFormClicked })
+                var showDialog = false;
+                return Object.assign({}, entry, { showDialog })
             });
         },
-        //savetoMongo
-        saveApplication: function() {
-
-        },
-        formUpdated: function() {
-
-        },
+        closeDialog: function(item) {
+            item.showDialog = false;
+        }
     },
     mounted: function() {
         this.getGoogleSheetData();
