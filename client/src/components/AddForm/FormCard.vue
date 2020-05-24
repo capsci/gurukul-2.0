@@ -51,6 +51,7 @@
                                             </v-row>
                                             <ApplicantForm
                                                 v-bind:row="googleRow"
+                                                v-bind:application="application"
                                                 v-bind:emitId="formSections.applicant.emitId"
                                                 @updateForm="updateForm" />
                                         </v-card-text>
@@ -270,21 +271,38 @@ export default {
             this.$emit('closeDialog');
         },
         //savetoMongo
-        saveApplication: function() {
-            console.log("SaveFormClicked");
-            console.log(this.application);
+        saveApplication: async function() {
+            try {
+                // Update Existing
+                if(this.googleRow.applicationId) {
+                    await axios
+                        .post(endpoint.applicationMaterial.update + this.googleRow.applicationId, this.application);
+                }
+                // Add New
+                else {
+                    var applicationMaterial = await axios
+                        .post(endpoint.applicationMaterial.save, this.application);
+                    await axios
+                        .post(
+                            endpoint.googleData.addApplication + this.googleRow._id, {id: applicationMaterial.data});
+                }
+            }
+            catch (error) {
+                console.log("Error Saving applicationMaterial");
+                console.error(error.response);
+            }
         },
     },
     mounted: function() {
         if (this.googleRow.applicationId) {
             axios
-            .get(endpoint.application.findById + "/" + this.googleRow.applicationId)
-            .then(response => {
-                this.application = response.data;
-            }).catch(error => {
-                console.log("Error Fetching application");
-                console.error(error.response);
-            });
+                .get(endpoint.applicationMaterial.findById + "/" + this.googleRow.applicationId)
+                .then(response => {
+                    this.application = response.data;
+                }).catch(error => {
+                    console.log("Error Fetching application");
+                    console.error(error.response);
+                });
         }
     },
 }

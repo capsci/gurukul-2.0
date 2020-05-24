@@ -7,11 +7,13 @@ const googleDataUrl = serverUrl + '/googlesheets';
 const addressUrl = serverUrl + '/address';
 const applicantUrl = serverUrl + '/applicant';
 const applicationUrl = serverUrl + '/application';
+const applicationMaterialUrl = serverUrl + '/applicationMaterial';
 const referrerUrl = serverUrl + '/referrer';
 const schoolUrl = serverUrl + '/school';
 
 const googleData = {
     get: googleDataUrl,
+    addApplication: googleDataUrl + '/application/',
 }
 
 const address = {
@@ -29,6 +31,12 @@ const applicant = {
 const application = {
     save: applicationUrl,
     findById: applicationUrl,
+};
+
+const applicationMaterial = {
+    save: applicationMaterialUrl,
+    update: applicationMaterialUrl + "/",
+    findById: applicationMaterialUrl,
 };
 
 const referrer = {
@@ -49,4 +57,5 @@ module.exports = Object.freeze({
     application: application,
     referrer: referrer,
     school: school,
+    applicationMaterial: applicationMaterial,
 });

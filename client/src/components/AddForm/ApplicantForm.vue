@@ -145,7 +145,7 @@ import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'ApplicantForm',
-    props: ['row', 'emitId'],
+    props: ['row', 'application', 'emitId'],
     mixins: [formField],
     components: {
         AddressForm,
@@ -229,11 +229,7 @@ export default {
             if (!this.row) {
                 return;
             }
-            [this.firstName, this.middleName, this.lastName] = this.splitOnWhitespaceAndDelimeters(this.row.fullName);
-            if (!this.lastName) {
-                this.lastName = this.middleName;
-                this.middleName = null;
-            }
+            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.row.fullName);
             this.phonePrimary = this.row.phonePrimary;
             [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.row.email);
             this.facebook = this.row.facebook;
