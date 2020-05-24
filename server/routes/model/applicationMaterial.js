@@ -18,11 +18,11 @@ router.post('/:id', function(req, res){
     var applicationId = req.params.id;
     try {
         if (applicationId) {
-            console.log("Update Existing");
+            console.log("Update Existing Application");
             updateExistingApplicationMaterial(req, res);
         }
         else {
-            console.log("Adding new")
+            console.log("Adding New Application")
             saveNewApplication(req, res);
         }
     }
@@ -50,8 +50,16 @@ async function saveNewApplication(request, response) {
     callback.data(savedApplicationMaterial._id, response);
 }
 
-async function updateExistingApplicationMaterial() {
-
+async function updateExistingApplicationMaterial(request, response) {
+    var query = {_id: request.params.id};
+    const applicationMaterial = ApplicationMaterial(request.body);
+    ApplicationMaterial
+        .findByIdAndUpdate(request.params.id,
+            applicationMaterial,
+            {new: false})
+        .exec(function(error, data) {
+            callback.find(error, data, response);
+        });
 }
 
 module.exports = router;

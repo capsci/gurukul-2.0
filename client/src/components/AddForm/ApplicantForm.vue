@@ -145,7 +145,11 @@ import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'ApplicantForm',
-    props: ['row', 'application', 'emitId'],
+    props: {
+        googleRow: Object,
+        application: Object,
+        emitId: String,
+    },
     mixins: [formField],
     components: {
         AddressForm,
@@ -226,21 +230,40 @@ export default {
     },
     methods: {
         setDataFromGoogleRow: function() {
-            if (!this.row) {
-                return;
-            }
-            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.row.fullName);
-            this.phonePrimary = this.row.phonePrimary;
-            [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.row.email);
-            this.facebook = this.row.facebook;
-            this.linkedin = this.row.linkedin;
+            console.log("Setting data from google row");
+            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.googleRow.fullName);
+            this.phonePrimary = this.googleRow.phonePrimary;
+            [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.googleRow.email);
+            this.facebook = this.googleRow.facebook;
+            this.linkedin = this.googleRow.linkedin;
         },
-        updateAddress: function(key, value) {
-            this[key] = value;
-        },
+        setDataFromApplication: function() {
+            console.log("Setting data from application");
+            this.firstName = this.application.applicant.firstName;
+            this.middleName = this.application.applicant.middleName;
+            this.lastName  = this.application.applicant.lastName;
+            this.emailPrimary = this.application.applicant.emailPrimary;
+            this.emailSecondary = this.application.applicant.emailSecondary;
+            this.phonePrimary = this.application.applicant.phonePrimary;
+            this.phoneSecondary = this.application.applicant.phoneSecondary;
+            this.linkedin = this.application.applicant.linkedin;
+            this.facebook = this.application.applicant.facebook;
+            this.dateOfBirth = this.application.applicant.dateOfBirth;
+            this.parentName = this.application.applicant.parentName;
+            this.inUSA = this.application.applicant.inUSA;
+            this.usVisaStatus = this.application.applicant.usVisaStatus;
+            this.usEntryDate = this.application.applicant.usEntryDate;
+            this.parentAddress = this.application.applicant.parentAddress;
+            this.usAddress = this.application.applicant.usAddress;
+        }
     },
     mounted: function() {
-        this.setDataFromGoogleRow();
+        console.log(this.application);
+        console.log(this.application.applicant);
+        console.log(this.application._id);
+       (this.application._id)
+           ? this.setDataFromApplication()
+           : this.setDataFromGoogleRow();
     }
 }
 </script>

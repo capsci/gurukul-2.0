@@ -23,21 +23,11 @@ router.post('/application/:id', async function (req, res, next) {
             $set: {applicationId: req.body.id}
         };
     var options = { upsert: true};
-    await GSheetsRow.find(query).exec(function(err,data) {
-        console.log("Before");
-        console.log(data);
-    })
-    await GSheetsRow
+    GSheetsRow
         .updateOne(query, update, options)
         .exec(function(error, data) {
-            console.log("During");
-            console.log(data);
             callback.find(error, data, res);
         });
-    await GSheetsRow.find(query).exec(function(err,data) {
-        console.log("After");
-        console.log(data);
-    })
 });
 
 /* GET data from Google Sheets and updates local database. */

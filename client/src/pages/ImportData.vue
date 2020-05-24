@@ -83,24 +83,28 @@
                 {{splitOnDelimeter(splitOnNewline(item.referrer2)[0],",")[0]}}
             </template>
             <template #item.action="{ item }">
-                <span v-if="item.applicationId">
-                    Exists
-                </span>
-                <span v-else>
+                <span>
                     <v-dialog
                         v-model="item.showDialog"
                         persistent scrollable
                         max-width="1200px">
                         <template v-slot:activator="{ on }">
-                            <v-btn color="primary" dark v-on="on">
-                                Add <v-icon>Add mdi-account-plus</v-icon>
+                            <v-btn
+                                v-if="item.applicationId"
+                                color="primary" dark small v-on="on">
+                                Edit
+                                <v-icon>Edit mdi-account-edit</v-icon>
+                            </v-btn>
+                            <v-btn v-else color="primary" dark small v-on="on">
+                                Add
+                                <v-icon>Add mdi-account-plus</v-icon>
                             </v-btn>
                         </template>
                         <FormCard
                             v-bind:googleRow="item"
+                            v-bind:formTitle="`${item.applicationId ? 'Edit Application': 'Add New Application'} `"
                             v-on:closeDialog="closeDialog(item)"/>
                     </v-dialog>
-
                 </span>
             </template>
             <!-- Expansion slot is currently disabled -->
@@ -139,7 +143,7 @@ export default {
                 {text: 'Referrers', value: 'referrers',
                     sortable: false, width:"15%"},
                 {text: 'Action', value: 'action',
-                    sortable: false, width:"5%"},
+                    sortable: false, width:"10%"},
             ]
         },
     },

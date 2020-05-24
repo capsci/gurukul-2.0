@@ -137,6 +137,39 @@ const applicationMaterialSchema = new mongoose.Schema({
             }
         },
     },
+    courseDetails: {
+        school: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        name: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        semester: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        duration: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        fees: {
+            type: Number,
+            required: false,
+            trim: true,
+        },
+        otherScholarships: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+
+    }
 });
 
 module.exports = mongoose.model('ApplicationMaterial', applicationMaterialSchema, 'ApplicationMaterial');

@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title>
-            Add New Application
+            {{ formTitle }}
             <v-btn icon
                 @click="closeDialog"
                 style="position: absolute; right: 10px">
@@ -9,7 +9,7 @@
             </v-btn>
         </v-card-title>
         <v-divider></v-divider>
-        <v-card-text style="height: 700px">
+        <v-card-text v-if="ready" style="height: 700px">
             <v-form>
                 <v-container>
                     <v-row>
@@ -50,7 +50,7 @@
                                                 </v-icon>
                                             </v-row>
                                             <ApplicantForm
-                                                v-bind:row="googleRow"
+                                                v-bind:googleRow="googleRow"
                                                 v-bind:application="application"
                                                 v-bind:emitId="formSections.applicant.emitId"
                                                 @updateForm="updateForm" />
@@ -209,7 +209,7 @@ import AddictionalDocsForm from './AdditionalDocsForm';
 
 export default {
     name: "Form",
-    props: ['googleRow'],
+    props: ['googleRow', 'formTitle'],
     components: {
         ApplicantForm,
         UniversityDetailsForm,
@@ -221,6 +221,7 @@ export default {
     data() {
         return {
             application: {},
+            ready: false,
             // unique sections
             formSections: {
                 applicant: {
@@ -231,7 +232,7 @@ export default {
                 universityDetails:{
                     title: 'University Details',
                     icon: 'mdi-school',
-                    emitId: 'schoolDetails'
+                    emitId: 'courseDetails'
                 },
                 referrers: {
                     title: 'Referrers',
@@ -272,6 +273,7 @@ export default {
         },
         //savetoMongo
         saveApplication: async function() {
+            console.log(this.application);
             try {
                 // Update Existing
                 if(this.googleRow.applicationId) {
@@ -299,10 +301,15 @@ export default {
                 .get(endpoint.applicationMaterial.findById + "/" + this.googleRow.applicationId)
                 .then(response => {
                     this.application = response.data;
+                    this.ready = true;
                 }).catch(error => {
                     console.log("Error Fetching application");
                     console.error(error.response);
                 });
+        }
+        else {
+            console.log("Sending google row");
+            this.ready = true;
         }
     },
 }

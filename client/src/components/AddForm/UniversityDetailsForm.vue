@@ -83,15 +83,14 @@ export default {
         }
     },
     computed: {
-        universityDetails: function() {
+        courseDetails: function() {
             return {
-                courseDuration: this.courseDuration,
-                courseFee: this.courseFee,
-                courseSemester: this.courseSemester,
-                courseName: this.courseName,
+                school: this.schoolName,
+                name: this.courseName,
+                semester: this.courseSemester,
+                duration: this.courseDuration,
+                fees: this.courseFee,
                 otherScholarships: this.otherScholarships,
-                schoolName: this.schoolName,
-                address: this.address,
             }
         },
     },
