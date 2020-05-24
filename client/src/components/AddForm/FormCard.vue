@@ -70,7 +70,8 @@
                                                 </v-icon>
                                             </v-row>
                                             <UniversityDetailsForm
-                                                v-bind:row="googleRow"
+                                                v-bind:googleRow="googleRow"
+                                                v-bind:application="application"
                                                 v-bind:emitId="formSections.universityDetails.emitId"
                                                 @updateForm="updateForm" />
                                         </v-card-text>

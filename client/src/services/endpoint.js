@@ -48,6 +48,7 @@ const referrer = {
 const school = {
     save: schoolUrl,
     findById: schoolUrl,
+    findAll: schoolUrl + "/all",
 };
 
 module.exports = Object.freeze({

@@ -2,20 +2,6 @@
     <div>
         <v-row>
             <Autocomplete
-                :entries="collegeEntries"
-                :label="collegeEntriesLabel"
-                :additemtext="addCollegeItemText">
-                <template slot="itemTemplate" slot-scope="{ item }">
-                    <h3>{{item.name}}</h3>
-                    <h4>{{item.city}}, {{item.country}}</h4>
-                </template>
-                <template slot="selectionTemplate" slot-scope="{ item }">
-                    {{item.name}}, {{item.city}}
-                </template>
-            </Autocomplete>
-        </v-row>
-        <v-row>
-            <Autocomplete
                 :entries="referrerEntries"
                 :label="referrerEntriesLabel"
                 :additemtext="addReferrerItemText">
@@ -200,25 +186,11 @@ export default {
             usEntryDate: null,
             parentAddress: null,
             usAddress: null,
-            collegeEntriesLabel: "College Name",
-            collegeEntries: [
-                {name: 'North Carolina State University', city:'Raleigh', state: 'NC', country:'USA', colloquial: ['NCSU', 'NCState']},
-                {name: 'Massachusetts Institute of Technology', city:'Cambridge', state: 'MA', country:'USA', colloquial: ['MIT']},
-                {name: 'University of Washington', city:'Seattle', state: 'WA', country:'USA'},
-            ],
             referrerEntriesLabel: "Referrer Name",
             referrerEntries: [
                 {firstName: 'Tree', lastName: 'Hugger', phonePrimary: '1234', position:'President', organization:'SaveTheTrees', email:'plant1@forest.com', address:'betterworld'},
                 {firstName: 'Evil', lastName: 'Twin', phonePrimary: '4321', position:'Demolisher', organization:'FeedTheFactories', email:'burnall@coal.com', address:'RichesLand'},
             ],
-            // Since passed props need to be data
-            addCollegeItemText: function(entry) {
-                var items = entry.colloquial || [];
-                return items
-                    .concat(entry.name)
-                    .filter(x => x!=null )
-                    .join(', ');
-            },
             addReferrerItemText: function(entry) {
                 return [entry.firstName, entry.middleName,
                         entry.lastName, entry.emailPrimary,
@@ -258,9 +230,6 @@ export default {
         }
     },
     mounted: function() {
-        console.log(this.application);
-        console.log(this.application.applicant);
-        console.log(this.application._id);
        (this.application._id)
            ? this.setDataFromApplication()
            : this.setDataFromGoogleRow();

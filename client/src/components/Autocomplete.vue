@@ -51,6 +51,9 @@ export default {
         search: function() {
             if (this.items.length > 0) return
         },
+        select: function(val) {
+            this.$emit('selectedItem', val);
+        }
     },
 }
 </script>
