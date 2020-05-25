@@ -1,12 +1,13 @@
 <template>
-    <div>
+    <div v-if="ready">
         <v-row>
             <v-col cols="8">
                 <Autocomplete
                     :entries="collegeEntries"
                     :label="`College Name`"
                     :additemtext="addCollegeItemText"
-                    @selectedItem="selectedSchool">
+                    :selectedItemId="school"
+                    @selectItem="selectedSchool">
                     <template slot="itemTemplate" slot-scope="{ item }">
                         <h3>{{item.name}}</h3>
                         <h4>{{item.city}}, {{item.country}}</h4>
@@ -90,6 +91,7 @@ export default {
             name: null,
             otherScholarships: null,
             collegeEntries: [],
+            ready: false,
         }
     },
     computed: {
@@ -115,18 +117,17 @@ export default {
             this.fees = this.googleRow.courseTuitionFee;
             this.otherScholarships = this.googleRow.otherScholarships;
             this.name = this.googleRow.courseName;
-            // this.school = this.splitOnNewline(this.googleRow.schoolNameAndAddress)[0];
         },
         setDataFromApplication: function() {
-            // this.schoolName = this.application.courseDetails.school;
             this.courseDuration = this.application.courseDetails.duration;
             this.courseFee = this.application.courseDetails.fees;
             this.courseSemester = this.application.courseDetails.semester;
             this.courseName = this.application.courseDetails.name;
             this.otherScholarships = this.application.courseDetails.otherScholarships;
+            this.school = this.application.courseDetails.school;
         },
         populateCollegeEntries: function() {
-            axios
+            return axios
                 .get(endpoint.school.findAll)
                 .then(response => {
                     this.collegeEntries = response.data;
@@ -144,14 +145,15 @@ export default {
         },
         selectedSchool: function(selected) {
             this.school = (selected)
-                ? selected._id : "";
+                ? selected._id : null;
         }
     },
-    mounted: function() {
+    mounted: async function() {
+        await this.populateCollegeEntries();
         (this.application.courseDetails)
            ? this.setDataFromApplication()
            : this.setDataFromGoogleRow();
-        this.populateCollegeEntries();
+        this.ready=true;
     }
 }
 </script>
