@@ -1,75 +1,87 @@
 <template>
     <div>
         <v-row>
-            <v-col cols="4">
-                <v-text-field
-                    label="First Name"
-                    v-model="firstName"
-                    filled />
+            <v-col cols="6">
+                <Autocomplete
+                    :entries="referrerEntries"
+                    :label="`Referrer 1 Name`"
+                    :additemtext="addReferrerItemText"
+                    :selectedItemId="referrer1"
+                    @selectItem="selectedReferrer1">
+                    <template slot="itemTemplate" slot-scope="{ item }">
+                        <div>
+                            <h3>
+                                <span v-if="item.salutaion">
+                                    {{item.salutaion}}.
+                                </span> {{item.firstName}} {{item.lastName}}
+                            </h3>
+                            <h4>
+                                <span v-if="item.position">
+                                    {{item.position}}.
+                                </span> {{item.organization}}
+                            </h4>
+                            <h4>{{item.emails.toString()}}</h4>
+                            <v-divider />
+                        </div>
+                    </template>
+                    <template slot="selectionTemplate" slot-scope="{ item }">
+                        <span v-if="item.salutaion">
+                                {{item.salutaion}}.
+                        </span> {{item.firstName}} {{item.lastName}}
+                        <span v-if="item.organization">
+                            , {{item.organization}}
+                        </span>
+                    </template>
+                </Autocomplete>
             </v-col>
-            <v-col cols="4">
-                <v-text-field
-                    label="Middle Name"
-                    v-model="middleName"
-                    filled />
-            </v-col>
-            <v-col cols="4">
-                <v-text-field
-                    label="Last Name"
-                    v-model="lastName"
-                    filled />
+            <v-col cols="6">
+                <Autocomplete
+                    :entries="referrerEntries"
+                    :label="`Referrer 2 Name`"
+                    :additemtext="addReferrerItemText"
+                    :selectedItemId="referrer2"
+                    @selectItem="selectedReferrer2">
+                    <template slot="itemTemplate" slot-scope="{ item }">
+                        <div>
+                            <h3>
+                                <span v-if="item.salutaion">
+                                    {{item.salutaion}}.
+                                </span> {{item.firstName}} {{item.lastName}}
+                            </h3>
+                            <h4>
+                                <span v-if="item.position">
+                                    {{item.position}}.
+                                </span> {{item.organization}}
+                            </h4>
+                            <h4>{{item.emails.toString()}}</h4>
+                            <v-divider />
+                        </div>
+                    </template>
+                    <template slot="selectionTemplate" slot-scope="{ item }">
+                        <span v-if="item.salutaion">
+                                {{item.salutaion}}.
+                        </span> {{item.firstName}} {{item.lastName}}
+                        <span v-if="item.organization">
+                            , {{item.organization}}
+                        </span>
+                    </template>
+                </Autocomplete>
             </v-col>
         </v-row>
         <v-row>
             <v-col cols="6">
-                <v-text-field
-                    label="Position/Title"
-                    v-model="position"
-                    filled />
-            </v-col>
-            <v-col cols="6">
-                <v-text-field
-                    label="Organization"
-                    v-model="organization"
-                    filled />
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="4">
-                <v-text-field
-                    label="Primary Email"
-                    prepend-inner-icon="mdi-email"
-                    v-model="emailPrimary"
-                    filled />
-                <v-text-field
-                    label="Secondary Email"
-                    prepend-inner-icon="mdi-email"
-                    v-model="emailSecondary"
-                    filled />
-            </v-col>
-            <v-col cols="4">
-                <v-text-field
-                    label="Primary Phone Number"
-                    prepend-inner-icon="mdi-phone"
-                    v-model="phonePrimary"
-                    filled />
-                <v-text-field
-                    label="Secondary Phone Number"
-                    prepend-inner-icon="mdi-phone"
-                    v-model="phoneSecondary"
-                    filled />
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="6">
-                <AddressForm
-                   @updateAddress="updateAddress" />
+                <v-textarea
+                filled
+                name="input-8-1"
+                v-bind:value="googleRow.referrer1"
+                label="GoogleSheet Data"
+                disabled />
             </v-col>
             <v-col cols="6">
                 <v-textarea
                 filled
                 name="input-8-1"
-                v-bind:value="referrer"
+                v-bind:value="googleRow.referrer2"
                 label="GoogleSheet Data"
                 disabled />
             </v-col>
@@ -78,65 +90,83 @@
 </template>
 
 <script>
-import AddressForm from './AddressForm';
-import { formField } from './../../mixins/formField'
+import axios from 'axios';
+import endpoint from './../../services/endpoint';
+import { formField } from './../../mixins/formField';
+import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'ReferrerForm',
     mixins: [formField],
-    props: ['referrer', 'emitId'],
+    components: {
+        Autocomplete,
+    },
+    props: {
+        googleRow: Object,
+        application: Object,
+        emitId: String,
+    },
     watch: {
-        referrerDetails: function(value) {
+        referrers: function(value) {
             this.$emit('updateForm', {[this.emitId] : value});
-        }
+        },
     },
     computed: {
-        referrerDetails: function() {
+        referrers: function() {
             return {
-                firstName: this.firstName,
-                middleName: this.middleName,
-                lastName: this.lastName,
-                position: this.position,
-                organization: this.organization,
-                emailPrimary: this.emailPrimary,
-                emailSecondary: this.emailSecondary,
-                phonePrimary: this.phonePrimary,
-                phoneSecondary: this.phoneSecondary,
-                address: this.address,
+                referrer1: this.referrer1,
+                referrer2: this.referrer2,
             }
-        }
+        },
     },
     data: function() {
         return {
-            firstName: null,
-            middleName: null,
-            lastName: null,
-            position: null,
-            organization: null,
-            emailPrimary: null,
-            emailSecondary: null,
-            phonePrimary: null,
-            phoneSecondary: null,
-            address: null,
+            referrer1: null,
+            referrer2: null,
+            referrerEntries: [],
         }
-    },
-    components: {
-        AddressForm
     },
     methods: {
         setDataFromGoogleRow: function() {
-            if (!this.referrer) {
-                return;
-            }
-            var fullName = this.splitOnNewline(this.referrer)[0];
-            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(fullName);
+
         },
-        updateAddress: function(value) {
-            this.address = value;
+        setDataFromApplication: function() {
+            this.referrer1 = this.application.referrers.referrer1;
+            this.referrer2 = this.application.referrers.referrer2;
+        },
+        populateReferrerEntries: function() {
+            return axios
+                .get(endpoint.referrer.findAll)
+                .then(response => {
+                    this.referrerEntries = response.data;
+                }).catch(error => {
+                    console.error(error.response);
+                });
+        },
+        addReferrerItemText: function(entry) {
+            var items = [entry.firstName,
+                entry.middleName,
+                entry.lastName];
+            return items
+                .concat(entry.emails)
+                .filter(x => x!=null )
+                .join(', ');
+        },
+        selectedReferrer1: function(selected) {
+            this.referrer1 = (selected)
+                ? selected._id : null;
+        },
+        selectedReferrer2: function(selected) {
+            this.referrer2 = (selected)
+                ? selected._id : null;
         }
     },
-    mounted: function() {
-        this.setDataFromGoogleRow();
+    mounted: async function() {
+        await this.populateReferrerEntries();
+        (this.application.referrers)
+            ? this.setDataFromApplication()
+            : this.setDataFromGoogleRow();
+        this.ready=true;
     }
 }
 </script>

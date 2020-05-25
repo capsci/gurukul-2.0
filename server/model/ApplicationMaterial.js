@@ -139,9 +139,9 @@ const applicationMaterialSchema = new mongoose.Schema({
     },
     courseDetails: {
         school: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             required: false,
-            trim: true,
+            ref: 'School',
         },
         name: {
             type: String,
@@ -168,8 +168,19 @@ const applicationMaterialSchema = new mongoose.Schema({
             required: false,
             trim: true,
         },
-
-    }
+    },
+    referrers: {
+        referrer1: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'Referrer',
+        },
+        referrer2: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
+            ref: 'Referrer',
+        },
+    },
 });
 
 module.exports = mongoose.model('ApplicationMaterial', applicationMaterialSchema, 'ApplicationMaterial');

@@ -1,21 +1,6 @@
 <template>
     <div>
         <v-row>
-            <Autocomplete
-                :entries="referrerEntries"
-                :label="referrerEntriesLabel"
-                :additemtext="addReferrerItemText">
-                <template slot="itemTemplate" slot-scope="{ item }">
-                    <h3>{{item.firstName}} {{item.lastName}}</h3>
-                    <h4>{{item.position}}, {{item.organization}}</h4>
-                    <h4>{{item.email}}</h4>
-                </template>
-                <template slot="selectionTemplate" slot-scope="{ item }">
-                    {{item.firstName}} {{item.lastName}}, {{item.organization}}
-                </template>
-            </Autocomplete>
-        </v-row>
-        <v-row>
             <v-col cols="4">
                 <v-text-field
                     label="First Name"
@@ -127,8 +112,6 @@
 import AddressForm from './AddressForm';
 import { formField } from './../../mixins/formField';
 
-import Autocomplete from './../Autocomplete';
-
 export default {
     name: 'ApplicantForm',
     props: {
@@ -139,7 +122,6 @@ export default {
     mixins: [formField],
     components: {
         AddressForm,
-        Autocomplete,
     },
     watch: {
         applicant: function(value) {
@@ -186,18 +168,6 @@ export default {
             usEntryDate: null,
             parentAddress: null,
             usAddress: null,
-            referrerEntriesLabel: "Referrer Name",
-            referrerEntries: [
-                {firstName: 'Tree', lastName: 'Hugger', phonePrimary: '1234', position:'President', organization:'SaveTheTrees', email:'plant1@forest.com', address:'betterworld'},
-                {firstName: 'Evil', lastName: 'Twin', phonePrimary: '4321', position:'Demolisher', organization:'FeedTheFactories', email:'burnall@coal.com', address:'RichesLand'},
-            ],
-            addReferrerItemText: function(entry) {
-                return [entry.firstName, entry.middleName,
-                        entry.lastName, entry.emailPrimary,
-                        entry.emailSecondary]
-                        .filter(x => x!=null )
-                        .join(', ');
-            }
         }
     },
     methods: {

@@ -90,12 +90,9 @@
                                                 </v-icon>
                                             </v-row>
                                             <ReferrerForm
-                                                v-bind:referrer="googleRow.referrer1"
-                                                v-bind:emitId="formSections.referrers.emitId[0]"
-                                                @updateForm="updateForm" />
-                                            <ReferrerForm
-                                                v-bind:referrer="googleRow.referrer2"
-                                                v-bind:emitId="formSections.referrers.emitId[1]"
+                                                :googleRow="googleRow"
+                                                :application="application"
+                                                :emitId="formSections.referrers.emitId"
                                                 @updateForm="updateForm" />
                                         </v-card-text>
                                     </v-card>
@@ -238,7 +235,7 @@ export default {
                 referrers: {
                     title: 'Referrers',
                     icon: 'mdi-account-tie',
-                    emitId: ['referrer1', 'referrer2']
+                    emitId: 'referrers',
                 },
                 previousSchool: {
                     title: 'Previous School Details',

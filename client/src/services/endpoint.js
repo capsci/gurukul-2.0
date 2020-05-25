@@ -43,6 +43,7 @@ const referrer = {
     save: referrerUrl,
     findByEmail: referrerUrl,
     findById: referrerUrl,
+    findAll: referrerUrl + "/all",
 };
 
 const school = {
