@@ -117,7 +117,7 @@
                                                         @updateForm="updateForm" />
                                                     <PreviousSchoolDetailsForm
                                                         v-bind:emitId="formSections.previousSchool.emitId[2]"
-                                                        @updateForm="updateForm" />
+                                                        @updateForm="updateForm"/>
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -134,20 +134,9 @@
                                                 </v-icon>
                                             </v-row>
                                             <WriteupForm
-                                                v-bind:emitId="formSections.writeup.emitId[0]"
-                                                v-bind:question="formSections.writeup.question[0]"
-                                                @updateAnswer="updateForm" />
-                                            <WriteupForm
-                                                v-bind:emitId="formSections.writeup.emitId[1]"
-                                                v-bind:question="formSections.writeup.question[1]"
-                                                @updateForm="updateForm" />
-                                            <WriteupForm
-                                                v-bind:emitId="formSections.writeup.emitId[2]"
-                                                v-bind:question="formSections.writeup.question[2]"
-                                                @updateForm="updateForm" />
-                                            <WriteupForm
-                                                v-bind:emitId="formSections.writeup.emitId[3]"
-                                                v-bind:question="formSections.writeup.question[3]"
+                                                :emitId="formSections.writeup.emitId"
+                                                :application="application"
+                                                :questions="formSections.writeup.questions"
                                                 @updateForm="updateForm" />
                                         </v-card-text>
                                     </v-card>
@@ -245,11 +234,12 @@ export default {
                 writeup: {
                     title: 'Writeups',
                     icon: 'mdi-grease-pencil',
-                    emitId: ['writeup1', 'writeup2', 'writeup3', 'writeup4'],
-                    question: ['Your academic, extra curriculum and social achievements/ Membership / Experience/ Association with a Maheshwari / Rajasthani Association or a cause)',
-                    'How do you plan to associate with and contribute to MMNA in USA during your studies and in future?',
-                    'Justification for requesting educational loan scholarship and how are you planning to finance the education & related expenses? ',
-                    'Your future goals and career plans']
+                    emitId: 'writeups',
+                    questions: [
+                        'Your academic, extra curriculum and social achievements/ Membership / Experience/ Association with a Maheshwari / Rajasthani Association or a cause)',
+                        'How do you plan to associate with and contribute to MMNA in USA during your studies and in future?',
+                        'Justification for requesting educational loan scholarship and how are you planning to finance the education & related expenses? ',
+                        'Your future goals and career plans']
                 },
                 additionalDocs: {
                     title: 'Additional Documents',

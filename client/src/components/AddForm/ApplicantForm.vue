@@ -172,7 +172,6 @@ export default {
     },
     methods: {
         setDataFromGoogleRow: function() {
-            console.log("Setting data from google row");
             [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.googleRow.fullName);
             this.phonePrimary = this.googleRow.phonePrimary;
             [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.googleRow.email);
@@ -180,7 +179,6 @@ export default {
             this.linkedin = this.googleRow.linkedin;
         },
         setDataFromApplication: function() {
-            console.log("Setting data from application");
             this.firstName = this.application.applicant.firstName;
             this.middleName = this.application.applicant.middleName;
             this.lastName  = this.application.applicant.lastName;

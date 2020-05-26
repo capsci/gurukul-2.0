@@ -181,6 +181,20 @@ const applicationMaterialSchema = new mongoose.Schema({
             ref: 'Referrer',
         },
     },
+    writeups:  [
+        {
+            question: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            answer: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+        }
+    ],
 });
 
 module.exports = mongoose.model('ApplicationMaterial', applicationMaterialSchema, 'ApplicationMaterial');
