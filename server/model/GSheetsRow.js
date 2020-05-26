@@ -58,7 +58,7 @@ const gSheetsRowSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    docsEmailed: {
+    uploadedDocs: {
         type: String,
         trim: true,
     },

@@ -26,7 +26,7 @@ function getStructuredDataFromGoogle(callback) {
                     schoolNameAndAddress: row[SpreadsheetCol.schoolNameAndAddress],
                     courseTuitionFee: row[SpreadsheetCol.courseTuitionFee],
                     otherScholarships: row[SpreadsheetCol.otherScholarships],
-                    docsEmailed: row[SpreadsheetCol.docsEmailed],
+                    uploadedDocs: row[SpreadsheetCol.uploadedDocs],
                 });
             });
         }

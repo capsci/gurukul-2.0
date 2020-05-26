@@ -150,8 +150,9 @@
                                                 </v-icon>
                                             </v-row>
                                             <AddictionalDocsForm
-                                                v-bind:uploadedDocs="googleRow.docsEmailed"
-                                                v-bind:emitId="formSections.additionalDocs.emitId"
+                                                :googleRow="googleRow"
+                                                :application="application"
+                                                :emitId="formSections.additionalDocs.emitId"
                                                 @updateForm="updateForm" />
                                         </v-card-text>
                                     </v-card>
@@ -241,7 +242,7 @@ export default {
                 additionalDocs: {
                     title: 'Additional Documents',
                     icon: 'mdi-file-upload',
-                    emitId: 'additionalDocs'
+                    emitId: 'uploadedDocs'
                 }
             },
             selectedSection: 0,

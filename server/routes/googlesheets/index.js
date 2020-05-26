@@ -43,7 +43,7 @@ router.get('/update', function (req, res, next) {
             data.forEach((row) => {
                 var query = {applicationTime: row.applicationTime};
                 var gSheetsRow = GSheetsRow(row);
-                var a = GSheetsRow.updateOne(
+                GSheetsRow.updateOne(
                     query,
                     {$setOnInsert: gSheetsRow},
                     options,

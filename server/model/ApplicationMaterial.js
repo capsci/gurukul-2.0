@@ -214,6 +214,40 @@ const applicationMaterialSchema = new mongoose.Schema({
             },
         }
     ],
+    uploadedDocs: {
+        docI20: {
+            type: Boolean,
+            required: false,
+        },
+        docAdmissionLetter: {
+            type: Boolean,
+            required: false,
+        },
+        docPassport: {
+            type: Boolean,
+            required: false,
+        },
+        docVisa: {
+            type: Boolean,
+            required: false,
+        },
+        docResume: {
+            type: Boolean,
+            required: false,
+        },
+        docMMNAApplication: {
+            type: Boolean,
+            required: false,
+        },
+        docReference1: {
+            type: Boolean,
+            required: false,
+        },
+        docReference2: {
+            type: Boolean,
+            required: false,
+        },
+    },
 });
 
 module.exports = mongoose.model('ApplicationMaterial', applicationMaterialSchema, 'ApplicationMaterial');

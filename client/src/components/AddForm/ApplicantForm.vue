@@ -198,7 +198,7 @@ export default {
         }
     },
     mounted: function() {
-       (this.application._id)
+       (this.application.applicant)
            ? this.setDataFromApplication()
            : this.setDataFromGoogleRow();
     }
