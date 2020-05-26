@@ -185,12 +185,12 @@ const applicationMaterialSchema = new mongoose.Schema({
         {
             name: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
             degree: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
             gpa: {
