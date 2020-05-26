@@ -110,13 +110,9 @@
                                                 </v-icon>
                                             </v-row>
                                                     <PreviousSchoolDetailsForm
-                                                        v-bind:emitId="formSections.previousSchool.emitId[0]"
-                                                        @updateForm="updateForm" />
-                                                    <PreviousSchoolDetailsForm
-                                                        v-bind:emitId="formSections.previousSchool.emitId[1]"
-                                                        @updateForm="updateForm" />
-                                                    <PreviousSchoolDetailsForm
-                                                        v-bind:emitId="formSections.previousSchool.emitId[2]"
+                                                        :emitId="formSections.previousSchool.emitId"
+                                                        :application="application"
+                                                        :numberOfSchools="formSections.previousSchool.numberOfSchools"
                                                         @updateForm="updateForm"/>
                                         </v-card-text>
                                     </v-card>
@@ -229,7 +225,8 @@ export default {
                 previousSchool: {
                     title: 'Previous School Details',
                     icon: 'mdi-book-multiple',
-                    emitId: ['prevSchool1', 'prevSchool2', 'prevSchool3', 'prevSchool4'],
+                    emitId: 'previousSchools',
+                    numberOfSchools: 3,
                 },
                 writeup: {
                     title: 'Writeups',

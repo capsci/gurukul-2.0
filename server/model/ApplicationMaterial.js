@@ -181,6 +181,25 @@ const applicationMaterialSchema = new mongoose.Schema({
             ref: 'Referrer',
         },
     },
+    previousSchools: [
+        {
+            name: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            degree: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            gpa: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+        }
+    ],
     writeups:  [
         {
             question: {
@@ -190,7 +209,7 @@ const applicationMaterialSchema = new mongoose.Schema({
             },
             answer: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
         }
