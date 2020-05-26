@@ -60,9 +60,13 @@
 <script>
 export default {
     name: 'AdditionalDocsForm',
-    props: ['uploadedDocs', 'emitId'],
+    props: {
+        googleRow: Object,
+        application: Object,
+        emitId: String,
+    },
     watch: {
-        additionalDocs: function(value) {
+        uploadedDocs: function(value) {
             this.$emit('updateForm', {[this.emitId]: value});
         }
     },
@@ -79,7 +83,7 @@ export default {
         }
     },
     computed: {
-        additionalDocs: function() {
+        uploadedDocs: function() {
             return {
                 docI20: this.docI20,
                 docAdmissionLetter: this.docAdmissionLetter,
@@ -94,15 +98,27 @@ export default {
     },
     methods: {
         setDataFromGoogleRow: function() {
-            this.docI20 = this.uploadedDocs.includes('I-20');
-            this.docAdmissionLetter = this.uploadedDocs.includes('US University - Admission Letter');
-            this.docPassport = this.uploadedDocs.includes('Passport Copy');
-            this.docVisa = this.uploadedDocs.includes('Visa Copy');
-            this.docMMNAApplication = this.uploadedDocs.includes('MMNA Application Form');
+            this.docI20 = this.googleRow.uploadedDocs.includes('I-20');
+            this.docAdmissionLetter = this.googleRow.uploadedDocs.includes('US University - Admission Letter');
+            this.docPassport = this.googleRow.uploadedDocs.includes('Passport Copy');
+            this.docVisa = this.googleRow.uploadedDocs.includes('Visa Copy');
+            this.docMMNAApplication = this.googleRow.uploadedDocs.includes('MMNA Application Form');
         },
+        setDataFromApplication: function() {
+            this.docI20 = this.application.uploadedDocs.docI20;
+            this.docAdmissionLetter = this.application.uploadedDocs.docAdmissionLetter;
+            this.docPassport = this.application.uploadedDocs.docPassport;
+            this.docVisa = this.application.uploadedDocs.docVisa;
+            this.docResume = this.application.uploadedDocs.docResume;
+            this.docMMNAApplication = this.application.uploadedDocs.docMMNAApplication;
+            this.docReference1 = this.application.uploadedDocs.docReference1;
+            this.docReference2 = this.application.uploadedDocs.docReference2;
+        }
     },
     mounted: function() {
-        this.setDataFromGoogleRow();
+       (this.application.uploadedDocs)
+           ? this.setDataFromApplication()
+           : this.setDataFromGoogleRow();
     }
 }
 </script>

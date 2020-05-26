@@ -16,7 +16,7 @@ const SpreadsheetCol = {
     linkedin: 12,
     courseTuitionFee: 13,
     otherScholarships: 14,
-    docsEmailed: 15
+    uploadedDocs: 15
 };
 
 module.exports = {

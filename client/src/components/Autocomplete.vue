@@ -32,6 +32,7 @@ export default {
         additemtext: Function,
         entries: Array,
         label: String,
+        selectedItemId: String,
     },
     data: function() {
         return {
@@ -51,7 +52,16 @@ export default {
         search: function() {
             if (this.items.length > 0) return
         },
+        select: function(val) {
+            this.$emit('selectItem', val);
+        }
     },
+    mounted: function() {
+        if (this.selectedItemId) {
+            this.select = this.items
+                .find(item => item._id == this.selectedItemId);
+        }
+    }
 }
 </script>
 
@@ -60,7 +70,9 @@ Usage:
 <Autocomplete
     v-bind:entries="<ENTRIES_ARRAY>"
     v-bind:label="<LABEL_FOR_DROPDOWN>"
-    v-bind:additemtext="<METHOD_TO_GENERATE_ITEM_TEXT_FOR_ENTRY>">
+    v-bind:additemtext="<METHOD_TO_GENERATE_ITEM_TEXT_FOR_ENTRY>"
+    v-bind:selectedItemId="<ID_OF_CURRENTLY SELECTED_ITEM>"
+    @selectItem="<METHOD_TO_EMIT_SELECTED_ITEM>">
     <template slot="itemTemplate" slot-scope="{ item }">
         <DROPDOWN_ITEM_LAYOUT>
     </template>

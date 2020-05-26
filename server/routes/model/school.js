@@ -17,6 +17,15 @@ router.post('/', function(req, res){
         });
 });
 
+// Find All
+router.get('/all', function(req, res) {
+    School
+        .find()
+        .exec(function(error, school) {
+            callback.save(error, school, res);
+        });
+})
+
 // Find by ID
 router.get('/:id', function(req, res) {
     console.log("Finding" +  req.params.id)

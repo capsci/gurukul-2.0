@@ -1,35 +1,6 @@
 <template>
     <div>
         <v-row>
-            <Autocomplete
-                :entries="collegeEntries"
-                :label="collegeEntriesLabel"
-                :additemtext="addCollegeItemText">
-                <template slot="itemTemplate" slot-scope="{ item }">
-                    <h3>{{item.name}}</h3>
-                    <h4>{{item.city}}, {{item.country}}</h4>
-                </template>
-                <template slot="selectionTemplate" slot-scope="{ item }">
-                    {{item.name}}, {{item.city}}
-                </template>
-            </Autocomplete>
-        </v-row>
-        <v-row>
-            <Autocomplete
-                :entries="referrerEntries"
-                :label="referrerEntriesLabel"
-                :additemtext="addReferrerItemText">
-                <template slot="itemTemplate" slot-scope="{ item }">
-                    <h3>{{item.firstName}} {{item.lastName}}</h3>
-                    <h4>{{item.position}}, {{item.organization}}</h4>
-                    <h4>{{item.email}}</h4>
-                </template>
-                <template slot="selectionTemplate" slot-scope="{ item }">
-                    {{item.firstName}} {{item.lastName}}, {{item.organization}}
-                </template>
-            </Autocomplete>
-        </v-row>
-        <v-row>
             <v-col cols="4">
                 <v-text-field
                     label="First Name"
@@ -141,15 +112,16 @@
 import AddressForm from './AddressForm';
 import { formField } from './../../mixins/formField';
 
-import Autocomplete from './../Autocomplete';
-
 export default {
     name: 'ApplicantForm',
-    props: ['row', 'emitId'],
+    props: {
+        googleRow: Object,
+        application: Object,
+        emitId: String,
+    },
     mixins: [formField],
     components: {
         AddressForm,
-        Autocomplete,
     },
     watch: {
         applicant: function(value) {
@@ -196,55 +168,39 @@ export default {
             usEntryDate: null,
             parentAddress: null,
             usAddress: null,
-            collegeEntriesLabel: "College Name",
-            collegeEntries: [
-                {name: 'North Carolina State University', city:'Raleigh', state: 'NC', country:'USA', colloquial: ['NCSU', 'NCState']},
-                {name: 'Massachusetts Institute of Technology', city:'Cambridge', state: 'MA', country:'USA', colloquial: ['MIT']},
-                {name: 'University of Washington', city:'Seattle', state: 'WA', country:'USA'},
-            ],
-            referrerEntriesLabel: "Referrer Name",
-            referrerEntries: [
-                {firstName: 'Tree', lastName: 'Hugger', phonePrimary: '1234', position:'President', organization:'SaveTheTrees', email:'plant1@forest.com', address:'betterworld'},
-                {firstName: 'Evil', lastName: 'Twin', phonePrimary: '4321', position:'Demolisher', organization:'FeedTheFactories', email:'burnall@coal.com', address:'RichesLand'},
-            ],
-            // Since passed props need to be data
-            addCollegeItemText: function(entry) {
-                var items = entry.colloquial || [];
-                return items
-                    .concat(entry.name)
-                    .filter(x => x!=null )
-                    .join(', ');
-            },
-            addReferrerItemText: function(entry) {
-                return [entry.firstName, entry.middleName,
-                        entry.lastName, entry.emailPrimary,
-                        entry.emailSecondary]
-                        .filter(x => x!=null )
-                        .join(', ');
-            }
         }
     },
     methods: {
         setDataFromGoogleRow: function() {
-            if (!this.row) {
-                return;
-            }
-            [this.firstName, this.middleName, this.lastName] = this.splitOnWhitespaceAndDelimeters(this.row.fullName);
-            if (!this.lastName) {
-                this.lastName = this.middleName;
-                this.middleName = null;
-            }
-            this.phonePrimary = this.row.phonePrimary;
-            [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.row.email);
-            this.facebook = this.row.facebook;
-            this.linkedin = this.row.linkedin;
+            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.googleRow.fullName);
+            this.phonePrimary = this.googleRow.phonePrimary;
+            [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.googleRow.email);
+            this.facebook = this.googleRow.facebook;
+            this.linkedin = this.googleRow.linkedin;
         },
-        updateAddress: function(key, value) {
-            this[key] = value;
-        },
+        setDataFromApplication: function() {
+            this.firstName = this.application.applicant.firstName;
+            this.middleName = this.application.applicant.middleName;
+            this.lastName  = this.application.applicant.lastName;
+            this.emailPrimary = this.application.applicant.emailPrimary;
+            this.emailSecondary = this.application.applicant.emailSecondary;
+            this.phonePrimary = this.application.applicant.phonePrimary;
+            this.phoneSecondary = this.application.applicant.phoneSecondary;
+            this.linkedin = this.application.applicant.linkedin;
+            this.facebook = this.application.applicant.facebook;
+            this.dateOfBirth = this.application.applicant.dateOfBirth;
+            this.parentName = this.application.applicant.parentName;
+            this.inUSA = this.application.applicant.inUSA;
+            this.usVisaStatus = this.application.applicant.usVisaStatus;
+            this.usEntryDate = this.application.applicant.usEntryDate;
+            this.parentAddress = this.application.applicant.parentAddress;
+            this.usAddress = this.application.applicant.usAddress;
+        }
     },
     mounted: function() {
-        this.setDataFromGoogleRow();
+       (this.application.applicant)
+           ? this.setDataFromApplication()
+           : this.setDataFromGoogleRow();
     }
 }
 </script>

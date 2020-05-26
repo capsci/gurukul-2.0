@@ -34,6 +34,15 @@ router.get('/', function(req, res) {
         });
 });
 
+// Find All
+router.get('/all', function(req, res) {
+    Referrer
+        .find()
+        .exec(function(error, referrer) {
+            callback.save(error, referrer, res);
+        });
+})
+
 // Find by ID
 router.get('/:id', function(req, res) {
     console.log("Finding By Id" +  req.params.id)

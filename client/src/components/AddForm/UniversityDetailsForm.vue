@@ -1,38 +1,48 @@
 <template>
-    <div>
+    <div v-if="ready">
         <v-row>
             <v-col cols="8">
-                <v-text-field
-                    label="College Name"
-                    v-model="schoolName"
-                    filled />
+                <Autocomplete
+                    :entries="collegeEntries"
+                    :label="`College Name`"
+                    :additemtext="addCollegeItemText"
+                    :selectedItemId="school"
+                    @selectItem="selectedSchool">
+                    <template slot="itemTemplate" slot-scope="{ item }">
+                        <h3>{{item.name}}</h3>
+                        <h4>{{item.city}}, {{item.country}}</h4>
+                    </template>
+                    <template slot="selectionTemplate" slot-scope="{ item }">
+                        {{item.name}}, {{item.city}}
+                    </template>
+                </Autocomplete>
             </v-col>
         </v-row>
         <v-row>
             <v-col cols="6">
                 <v-text-field
                     label="Course Name"
-                    v-model="courseName"
+                    v-model="name"
                     filled />
                 <v-text-field
                     label="Course Semester"
                     hint="Spring/Fall 2020"
-                    v-model="courseSemester"
+                    v-model="semester"
                     filled />
                 <v-text-field
                     label="Approximate Tuition Fees"
-                    v-model="courseFee"
+                    v-model="fees"
                     filled />
             </v-col>
             <v-col cols=6>
                 <v-text-field
                     label="Course Duration"
-                    v-model="courseDuration"
+                    v-model="duration"
                     hint="In months"
                     filled />
                 <v-textarea
                     filled
-                    name="input-8-1"
+                    name="input-4-1"
                     v-model="otherScholarships"
                     hint="Format- $$$$: Rewarder"
                     label="Other scholarshipsIf any" />
@@ -40,74 +50,110 @@
         </v-row>
         <v-row>
             <v-col cols="6">
-                <AddressForm
-                    @updateAddress="updateAddress" />
-            </v-col>
-            <v-col cols="6">
                 <v-textarea
-                    filled
-                    name="input-8-1"
-                    v-bind:value="row.schoolNameAndAddress"
-                    label="GoogleSheet Data"
-                    disabled />
+                filled
+                v-bind:value="googleRowData"
+                label="GoogleSheet Data"
+                disabled />
             </v-col>
         </v-row>
     </div>
 </template>
 
 <script>
-import AddressForm from './AddressForm';
-import { formField } from './../../mixins/formField'
+import axios from 'axios';
+import endpoint from './../../services/endpoint';
+import { formField } from './../../mixins/formField';
+import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'UniversityDetailsForm',
-    props: ['row', 'emitId'],
-    mixins: [formField],
-    components: {
-        AddressForm
+    props: {
+        googleRow: Object,
+        application: Object,
+        emitId: String,
     },
+    components: {
+        Autocomplete,
+    },
+    mixins: [formField],
     watch: {
-        universityDetails: function(value) {
+        courseDetails: function(value) {
             this.$emit('updateForm', {[this.emitId]: value});
         }
     },
     data: function() {
         return {
-            schoolName: null,
-            courseDuration: null,
-            courseFee: null,
-            courseSemester: null,
-            courseName: null,
+            school: null,
+            duration: null,
+            fees: null,
+            semester: null,
+            name: null,
             otherScholarships: null,
-            address: null,
+            collegeEntries: [],
+            ready: false,
         }
     },
     computed: {
-        universityDetails: function() {
+        courseDetails: function() {
             return {
-                courseDuration: this.courseDuration,
-                courseFee: this.courseFee,
-                courseSemester: this.courseSemester,
-                courseName: this.courseName,
+                school: this.school,
+                name: this.name,
+                semester: this.semester,
+                duration: this.duration,
+                fees: this.fees,
                 otherScholarships: this.otherScholarships,
-                schoolName: this.schoolName,
-                address: this.address,
             }
+        },
+        googleRowData: function() {
+            return this.googleRow.courseName + "\n"
+                + this.googleRow.schoolNameAndAddress + "\n"
+                + "Fees: " + this.googleRow.courseTuitionFee + "\n"
+                + "OtherScholarships: " + this.googleRow.otherScholarships;
         },
     },
     methods: {
         setDataFromGoogleRow: function() {
-            this.courseFee = this.row.courseTuitionFee;
-            this.otherScholarships = this.row.otherScholarships;
-            this.courseName = this.row.courseName;
-            this.schoolName = this.splitOnNewline(this.row.schoolNameAndAddress)[0];
+            this.fees = this.googleRow.courseTuitionFee;
+            this.otherScholarships = this.googleRow.otherScholarships;
+            this.name = this.googleRow.courseName;
         },
-        updateAddress: function(value) {
-            this.address = value;
+        setDataFromApplication: function() {
+            this.courseDuration = this.application.courseDetails.duration;
+            this.courseFee = this.application.courseDetails.fees;
+            this.courseSemester = this.application.courseDetails.semester;
+            this.courseName = this.application.courseDetails.name;
+            this.otherScholarships = this.application.courseDetails.otherScholarships;
+            this.school = this.application.courseDetails.school;
+        },
+        populateCollegeEntries: function() {
+            return axios
+                .get(endpoint.school.findAll)
+                .then(response => {
+                    this.collegeEntries = response.data;
+                }).catch(error => {
+                    console.error(error.response);
+                });
+        },
+        // Since passed props need to be data
+        addCollegeItemText: function(entry) {
+            var items = entry.colloquial || [];
+            return items
+                .concat(entry.name)
+                .filter(x => x!=null )
+                .join(', ');
+        },
+        selectedSchool: function(selected) {
+            this.school = (selected)
+                ? selected._id : null;
         }
     },
-    mounted: function() {
-        this.setDataFromGoogleRow();
+    mounted: async function() {
+        await this.populateCollegeEntries();
+        (this.application.courseDetails)
+           ? this.setDataFromApplication()
+           : this.setDataFromGoogleRow();
+        this.ready=true;
     }
 }
 </script>

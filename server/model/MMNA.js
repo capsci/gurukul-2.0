@@ -3,28 +3,18 @@
 const mongoose = require('mongoose');
 
 const mmnaSchema = new mongoose.Schema({
-    applicationRef: {
+    applicantRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false, // TODO: After finalizing applicant schema
+        ref: 'ApplicationMaterial',
+    },
+    applicationMaterialRef: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Application',
+        ref: 'ApplicationMaterial',
     },
     // Format Spring/Fall 20xx
-    semester: [{
-        type: String,
-        required: false,
-        trim: true,
-    }],
-    referrer1Status: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    referrer1Status: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    applicationMaterialStatus: {
+    semester: {
         type: String,
         required: false,
         trim: true,
@@ -34,15 +24,34 @@ const mmnaSchema = new mongoose.Schema({
         required: false,
         trim: true,
     },
-    amountGranted: {
-        type: Number,
-        required: false,
-        trim: true,
+    status: {
+        referrer1: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        referrer2: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        applicationMaterial: {
+            type: String,
+            required: false,
+            trim: true,
+        },
     },
-    amountPending: {
-        type: Number,
-        required: false,
-        trim: true,
+    amount: {
+        granted: {
+            type: Number,
+            required: false,
+            trim: true,
+        },
+        pending: {
+            type: Number,
+            required: false,
+            trim: true,
+        },
     },
 });
 
