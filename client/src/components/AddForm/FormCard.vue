@@ -9,8 +9,14 @@
             </v-btn>
         </v-card-title>
         <v-divider></v-divider>
+        <v-alert
+            type="error"
+            v-if="errors"
+            dismissible>
+            {{ errors }}
+        </v-alert>
         <v-card-text v-if="ready" style="height: 700px">
-            <v-form>
+            <v-form ref="applicationForm">
                 <v-container>
                     <v-row>
                         <v-item-group
@@ -247,12 +253,14 @@ export default {
             },
             selectedSection: 0,
             formData: {},
+            errors: "",
         }
     },
     methods: {
         updateForm: function(data) {
             var sectionKey = Object.keys(data)[0];
             this.application[sectionKey] = data[sectionKey];
+            this.errors = "";
         },
         closeDialog: function() {
             this.$emit('closeDialog');
@@ -260,6 +268,10 @@ export default {
         //savetoMongo
         saveApplication: async function() {
             console.log(this.application);
+            if (!this.$refs.applicationForm.validate()) {
+                this.errors = 'There are errors on the form';
+                return;
+            }
             try {
                 // Update Existing
                 if(this.googleRow.applicationId) {

@@ -5,18 +5,21 @@
                 <v-text-field
                     label="First Name"
                     v-model="firstName"
+                    :rules="[rules.required, rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="Middle Name"
                     v-model="middleName"
+                    :rules="[rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="Last Name"
                     v-model="lastName"
+                    :rules="[rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
         </v-row>
@@ -26,24 +29,28 @@
                     label="Primary Email"
                     prepend-inner-icon="mdi-email"
                     v-model="emailPrimary"
+                    :rules="[rules.required, rules.email]"
                     filled />
                 <v-text-field
                     label="Secondary Email"
                     prepend-inner-icon="mdi-email"
                     v-model="emailSecondary"
+                    :rules="[rules.email]"
                     filled />
             </v-col>
             <v-col cols="3">
                 <v-text-field
                     label="Primary Phone Number"
-                    :messages="['USA (if possible)']"
+                    :messages="'USA (if possible)'"
                     prepend-inner-icon="mdi-phone"
                     v-model="phonePrimary"
+                    :rules="[rules.required, rules.phoneNum]"
                     filled />
                 <v-text-field
                     label="Secondary Phone Number"
                     prepend-inner-icon="mdi-phone"
                     v-model="phoneSecondary"
+                    :rules="[rules.phoneNum]"
                     filled />
             </v-col>
             <v-col cols="4">
@@ -51,11 +58,13 @@
                     label="Link to Facebook Profile"
                     prepend-inner-icon="mdi-facebook"
                     v-model="facebook"
+                    :rules="[rules.noSpaces]"
                     filled />
                 <v-text-field
                     label="Link to LinkedIn Profile"
                     prepend-inner-icon="mdi-linkedin"
                     v-model="linkedin"
+                    :rules="[rules.noSpaces]"
                     filled />
             </v-col>
         </v-row>
@@ -73,6 +82,7 @@
                 <v-text-field
                     label="US Visa Status"
                     v-model="usVisaStatus"
+                    :rules="[rules.required]"
                     filled />
             </v-col>
             <v-col cols="4">
@@ -95,6 +105,7 @@
                 <v-text-field
                     label="Name"
                     v-model="parentName"
+                    :rules="[rules.wordCharsOnly]"
                     filled />
                 <AddressForm
                     @updateAddress="updateAddress('parentAddress', $event)" />
@@ -110,7 +121,7 @@
 
 <script>
 import AddressForm from './AddressForm';
-import { formField } from './../../mixins/formField';
+import { rules, sanitize } from './../../mixins/formHelper';
 
 export default {
     name: 'ApplicantForm',
@@ -119,7 +130,7 @@ export default {
         application: Object,
         emitId: String,
     },
-    mixins: [formField],
+    mixins: [rules, sanitize],
     components: {
         AddressForm,
     },
@@ -168,13 +179,14 @@ export default {
             usEntryDate: null,
             parentAddress: null,
             usAddress: null,
+            rules: rules,
         }
     },
     methods: {
         setDataFromGoogleRow: function() {
-            [this.firstName, this.middleName, this.lastName] = this.extractNameFields(this.googleRow.fullName);
+            [this.firstName, this.middleName, this.lastName] = sanitize.extractNameFields(this.googleRow.fullName);
             this.phonePrimary = this.googleRow.phonePrimary;
-            [this.emailPrimary, this.emailSecondary] = this.splitOnWhitespaceAndDelimeters(this.googleRow.email);
+            [this.emailPrimary, this.emailSecondary] = sanitize.splitOnWhitespaceAndDelimeters(this.googleRow.email);
             this.facebook = this.googleRow.facebook;
             this.linkedin = this.googleRow.linkedin;
         },
