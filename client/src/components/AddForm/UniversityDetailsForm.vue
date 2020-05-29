@@ -63,8 +63,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import endpoint from './../../services/endpoint';
+import api from './../../services/api';
 import Autocomplete from './../Autocomplete';
 import { rules } from './../../mixins/formHelper';
 
@@ -130,8 +129,8 @@ export default {
             this.school = this.application.courseDetails.school;
         },
         populateCollegeEntries: function() {
-            return axios
-                .get(endpoint.school.findAll)
+            return api.school
+                .findAll()
                 .then(response => {
                     this.collegeEntries = response.data;
                 }).catch(error => {

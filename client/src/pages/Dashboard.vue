@@ -111,8 +111,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import endpoint from './../services/endpoint';
+import api from './../services/api';
 
 export default {
     name: 'Dashboard',
@@ -157,8 +156,8 @@ export default {
     },
     methods: {
         getData: function() {
-            axios
-                .get(endpoint.applicant.findAll)
+            api.applicationMaterial
+                .findAll()
                 .then(response => {
                     this.entries = response.data;
                 }).catch(error => {

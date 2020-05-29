@@ -90,8 +90,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import endpoint from './../../services/endpoint';
+import api from './../../services/api';
 import { formField } from './../../mixins/formField';
 import Autocomplete from './../Autocomplete';
 
@@ -135,8 +134,8 @@ export default {
             this.referrer2 = this.application.referrers.referrer2;
         },
         populateReferrerEntries: function() {
-            return axios
-                .get(endpoint.referrer.findAll)
+            return api.referrer
+                .findAll()
                 .then(response => {
                     this.referrerEntries = response.data;
                 }).catch(error => {
