@@ -188,8 +188,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import endpoint from './../../services/endpoint';
+import api from './../../services/api';
 import ApplicantForm from './ApplicantForm';
 import UniversityDetailsForm from './UniversityDetailsForm';
 import ReferrerForm from './ReferrerForm';
@@ -275,16 +274,20 @@ export default {
             try {
                 // Update Existing
                 if(this.googleRow.applicationId) {
-                    await axios
-                        .post(endpoint.applicationMaterial.update + this.googleRow.applicationId, this.application);
+                    await api.applicationMaterial
+                        .update(
+                            this.googleRow.applicationId,
+                            this.application);
                 }
                 // Add New
                 else {
-                    var applicationMaterial = await axios
-                        .post(endpoint.applicationMaterial.save, this.application);
-                    await axios
-                        .post(
-                            endpoint.googleData.addApplication + this.googleRow._id, {id: applicationMaterial.data});
+                    var applicationMaterial = await api.applicationMaterial
+                        .addNew(
+                            this.application);
+                    await api.googleData
+                        .addApplication(
+                            this.googleRow._id,
+                            applicationMaterial.data)
                 }
             }
             catch (error) {
@@ -295,8 +298,8 @@ export default {
     },
     mounted: function() {
         if (this.googleRow.applicationId) {
-            axios
-                .get(endpoint.applicationMaterial.findById + "/" + this.googleRow.applicationId)
+            api.applicationMaterial
+                .findById(this.googleRow.applicationId)
                 .then(response => {
                     this.application = response.data;
                     this.ready = true;

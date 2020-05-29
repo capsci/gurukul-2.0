@@ -118,8 +118,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import endpoint from './../services/endpoint';
+import api from './../services/api';
 import { formField } from './../mixins/formField';
 import FormCard from './../components/AddForm/FormCard';
 
@@ -154,13 +153,13 @@ export default {
     },
     methods: {
         getGoogleSheetData: function () {
-        axios
-            .get(endpoint.googleData.get)
-            .then(response => {
-                this.gs_data = response.data;
-            }).catch(error => {
-                console.error(error.response);
-            });
+            api.googleData
+                .getGoogleData()
+                .then(response => {
+                    this.gs_data = response.data;
+                }).catch(error => {
+                    console.error(error.response);
+                });
         },
         addToGsData: function () {
             this.gs_data = this.gs_data.map(entry => {
