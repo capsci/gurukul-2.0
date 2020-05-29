@@ -8,9 +8,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var googlesheetsRouter = require('./routes/googlesheets/index');
-var mongodbRouter = require('./routes/mongodb/index');
-var applicantRouter = require('./routes/model/applicant');
-var applicationRouter = require('./routes/model/application');
 var applicationMaterialRouter = require('./routes/model/applicationMaterial');
 var referrerRouter = require('./routes/model/referrer');
 var schoolRouter = require('./routes/model/school');
@@ -35,8 +32,6 @@ app.use('/', indexRouter);
 app.use('/googlesheets', googlesheetsRouter);
 
 // Models
-app.use('/applicant', applicantRouter);
-app.use('/application', applicationRouter);
 app.use('/applicationMaterial', applicationMaterialRouter);
 app.use('/referrer', referrerRouter);
 app.use('/school', schoolRouter);
