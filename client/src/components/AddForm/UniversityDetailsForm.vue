@@ -23,11 +23,13 @@
                 <v-text-field
                     label="Course Name"
                     v-model="name"
+                    :rules="[rules.required]"
                     filled />
                 <v-text-field
                     label="Course Semester"
                     hint="Spring/Fall 2020"
                     v-model="semester"
+                    :rules="[rules.required]"
                     filled />
                 <v-text-field
                     label="Approximate Tuition Fees"
@@ -63,8 +65,8 @@
 <script>
 import axios from 'axios';
 import endpoint from './../../services/endpoint';
-import { formField } from './../../mixins/formField';
 import Autocomplete from './../Autocomplete';
+import { rules } from './../../mixins/formHelper';
 
 export default {
     name: 'UniversityDetailsForm',
@@ -76,7 +78,7 @@ export default {
     components: {
         Autocomplete,
     },
-    mixins: [formField],
+    mixins: [rules],
     watch: {
         courseDetails: function(value) {
             this.$emit('updateForm', {[this.emitId]: value});
@@ -92,6 +94,7 @@ export default {
             otherScholarships: null,
             collegeEntries: [],
             ready: false,
+            rules: rules,
         }
     },
     computed: {
