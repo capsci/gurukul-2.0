@@ -266,7 +266,6 @@ export default {
         },
         //savetoMongo
         saveApplication: async function() {
-            console.log(this.application);
             if (!this.$refs.applicationForm.validate()) {
                 this.errors = 'There are errors on the form';
                 return;
@@ -309,7 +308,6 @@ export default {
                 });
         }
         else {
-            console.log("Sending google row");
             this.ready = true;
         }
     },
