@@ -1,21 +1,12 @@
 <template>
-    <div v-if="ready">
+    <div>
         <v-row>
             <v-col cols="8">
-                <Autocomplete
-                    :entries="collegeEntries"
-                    :label="`College Name`"
-                    :additemtext="addCollegeItemText"
-                    :selectedItemId="school"
-                    @selectItem="selectedSchool">
-                    <template slot="itemTemplate" slot-scope="{ item }">
-                        <h3>{{item.name}}</h3>
-                        <h4>{{item.city}}, {{item.country}}</h4>
-                    </template>
-                    <template slot="selectionTemplate" slot-scope="{ item }">
-                        {{item.name}}, {{item.city}}
-                    </template>
-                </Autocomplete>
+                <v-text-field
+                    label="School Name"
+                    v-model="school"
+                    :rules="[rules.required]"
+                    filled />
             </v-col>
         </v-row>
         <v-row>
@@ -52,6 +43,33 @@
         </v-row>
         <v-row>
             <v-col cols="6">
+                <v-subheader>School Address</v-subheader>
+                <v-text-field
+                    label="Line1"
+                    v-model="address.line1"
+                    filled/>
+                <v-text-field
+                    label="Line2"
+                    v-model="address.line2"
+                    filled/>
+                <v-text-field
+                    label="City"
+                    v-model="address.city"
+                    filled/>
+                <v-text-field
+                    label="Zipcode"
+                    v-model="address.zipcode"
+                    filled/>
+                <v-text-field
+                    label="State"
+                    v-model="address.state"
+                    filled/>
+                <v-text-field
+                    label="Country"
+                    v-model="address.country"
+                    filled/>
+            </v-col>
+            <v-col cols="6">
                 <v-textarea
                 filled
                 v-bind:value="googleRowData"
@@ -63,8 +81,6 @@
 </template>
 
 <script>
-import api from './../../services/api';
-import Autocomplete from './../Autocomplete';
 import { rules } from './../../mixins/formHelper';
 
 export default {
@@ -73,9 +89,6 @@ export default {
         googleRow: Object,
         application: Object,
         emitId: String,
-    },
-    components: {
-        Autocomplete,
     },
     mixins: [rules],
     watch: {
@@ -91,8 +104,14 @@ export default {
             semester: null,
             name: null,
             otherScholarships: null,
-            collegeEntries: [],
-            ready: false,
+            address: {
+                line1: null,
+                line2: null,
+                city: null,
+                zipcode: null,
+                state: null,
+                country: null,
+            },
             rules: rules,
         }
     },
@@ -101,6 +120,7 @@ export default {
             return {
                 school: this.school,
                 name: this.name,
+                address: this.address,
                 semester: this.semester,
                 duration: this.duration,
                 fees: this.fees,
@@ -128,34 +148,11 @@ export default {
             this.otherScholarships = this.application.courseDetails.otherScholarships;
             this.school = this.application.courseDetails.school;
         },
-        populateCollegeEntries: function() {
-            return api.school
-                .findAll()
-                .then(response => {
-                    this.collegeEntries = response.data;
-                }).catch(error => {
-                    console.error(error.response);
-                });
-        },
-        // Since passed props need to be data
-        addCollegeItemText: function(entry) {
-            var items = entry.colloquial || [];
-            return items
-                .concat(entry.name)
-                .filter(x => x!=null )
-                .join(', ');
-        },
-        selectedSchool: function(selected) {
-            this.school = (selected)
-                ? selected._id : null;
-        }
     },
-    mounted: async function() {
-        await this.populateCollegeEntries();
+    mounted: function() {
         (this.application.courseDetails)
            ? this.setDataFromApplication()
            : this.setDataFromGoogleRow();
-        this.ready=true;
     }
 }
 </script>

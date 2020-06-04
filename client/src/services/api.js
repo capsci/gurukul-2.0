@@ -6,8 +6,6 @@ const serverUrl = 'http://localhost:3000';
 const googleDataUrl = serverUrl + '/googlesheets';
 
 const applicationMaterialUrl = serverUrl + '/applicationMaterial';
-const referrerUrl = serverUrl + '/referrer';
-const schoolUrl = serverUrl + '/school';
 
 const googleData = {
     getGoogleData: function() {
@@ -48,25 +46,7 @@ const applicationMaterial = {
     },
 };
 
-const referrer = {
-    findAll: function() {
-        return axios
-            .get(
-                referrerUrl + "/all");
-    },
-};
-
-const school = {
-    findAll: function() {
-        return axios
-            .get(
-                schoolUrl + "/all");
-    },
-};
-
 export default Object.freeze({
     googleData: googleData,
-    referrer: referrer,
-    school: school,
     applicationMaterial: applicationMaterial,
 });

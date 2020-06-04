@@ -139,9 +139,9 @@ const applicationMaterialSchema = new mongoose.Schema({
     },
     courseDetails: {
         school: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: false,
-            ref: 'School',
+            type: String,
+            required: true,
+            trim: true,
         },
         name: {
             type: String,
@@ -168,9 +168,80 @@ const applicationMaterialSchema = new mongoose.Schema({
             required: false,
             trim: true,
         },
+        address: {
+            line1: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            line2: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            city: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            state: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            zipcode: {
+                type: Number,
+                required: false
+            },
+            country: {
+                type: String,
+                required: false,
+                trim: true,
+            }
+        },
     },
     referrers: {
         referrer1: {
+            salutation: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            firstName: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            middleName: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            lastName: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            emailPrimary: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            emailSecondary: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            phonePrimary: {
+                type: String,
+                required: false,
+                trim: true,
+            },
+            phoneSecondary: {
+                type: String,
+                required: false,
+                trim: true,
+            },
             type: mongoose.Schema.Types.ObjectId,
             required: false,
             ref: 'Referrer',
