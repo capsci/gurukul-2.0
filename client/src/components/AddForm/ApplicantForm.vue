@@ -101,26 +101,69 @@
         </v-row>
         <v-row>
             <v-col cols="6">
-                <v-subheader>Parents Address</v-subheader>
+                <v-subheader>Parents Name & Address</v-subheader>
                 <v-text-field
                     label="Name"
                     v-model="parentName"
                     :rules="[rules.wordCharsOnly]"
                     filled />
-                <AddressForm
-                    @updateAddress="updateAddress('parentAddress', $event)" />
+                <v-text-field
+                    label="Line1"
+                    v-model="parentAddress.line1"
+                    filled/>
+                <v-text-field
+                    label="Line2"
+                    v-model="parentAddress.line2"
+                    filled/>
+                <v-text-field
+                    label="City"
+                    v-model="parentAddress.city"
+                    filled/>
+                <v-text-field
+                    label="Zipcode"
+                    v-model="parentAddress.zipcode"
+                    filled/>
+                <v-text-field
+                    label="State"
+                    v-model="parentAddress.state"
+                    filled/>
+                <v-text-field
+                    label="Country"
+                    v-model="parentAddress.country"
+                    filled/>
             </v-col>
             <v-col cols="6">
                 <v-subheader>US Address</v-subheader>
-                <AddressForm
-                    @updateAddress="updateAddress('usAddress', $event)" />
+                <v-text-field
+                    label="Line1"
+                    v-model="usAddress.line1"
+                    filled/>
+                <v-text-field
+                    label="Line2"
+                    v-model="usAddress.line2"
+                    filled/>
+                <v-text-field
+                    label="City"
+                    v-model="usAddress.city"
+                    filled/>
+                <v-text-field
+                    label="Zipcode"
+                    v-model="usAddress.zipcode"
+                    filled/>
+                <v-text-field
+                    label="State"
+                    v-model="usAddress.state"
+                    filled/>
+                <v-text-field
+                    label="Country"
+                    v-model="usAddress.country"
+                    filled/>
             </v-col>
         </v-row>
     </div>
 </template>
 
 <script>
-import AddressForm from './AddressForm';
 import { rules, sanitize } from './../../mixins/formHelper';
 
 export default {
@@ -131,9 +174,6 @@ export default {
         emitId: String,
     },
     mixins: [rules, sanitize],
-    components: {
-        AddressForm,
-    },
     watch: {
         applicant: function(value) {
             this.$emit('updateForm', {[this.emitId]: value});
@@ -177,8 +217,22 @@ export default {
             inUSA: false,
             usVisaStatus: null,
             usEntryDate: null,
-            parentAddress: null,
-            usAddress: null,
+            parentAddress: {
+                line1: null,
+                line2: null,
+                city: null,
+                zipcode: null,
+                state: null,
+                country: null,
+            },
+            usAddress: {
+                line1: null,
+                line2: null,
+                city: null,
+                zipcode: null,
+                state: null,
+                country: null,
+            },
             rules: rules,
         }
     },

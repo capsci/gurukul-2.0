@@ -1,105 +1,140 @@
 <template>
     <div>
-        <v-row>
-            <v-col cols="6">
-                <Autocomplete
-                    :entries="referrerEntries"
-                    :label="`Referrer 1 Name`"
-                    :additemtext="addReferrerItemText"
-                    :selectedItemId="referrer1"
-                    @selectItem="selectedReferrer1">
-                    <template slot="itemTemplate" slot-scope="{ item }">
-                        <div>
-                            <h3>
-                                <span v-if="item.salutaion">
-                                    {{item.salutaion}}.
-                                </span> {{item.firstName}} {{item.lastName}}
-                            </h3>
-                            <h4>
-                                <span v-if="item.position">
-                                    {{item.position}}.
-                                </span> {{item.organization}}
-                            </h4>
-                            <h4>{{item.emails.toString()}}</h4>
-                            <v-divider />
-                        </div>
-                    </template>
-                    <template slot="selectionTemplate" slot-scope="{ item }">
-                        <span v-if="item.salutaion">
-                                {{item.salutaion}}.
-                        </span> {{item.firstName}} {{item.lastName}}
-                        <span v-if="item.organization">
-                            , {{item.organization}}
-                        </span>
-                    </template>
-                </Autocomplete>
-            </v-col>
-            <v-col cols="6">
-                <Autocomplete
-                    :entries="referrerEntries"
-                    :label="`Referrer 2 Name`"
-                    :additemtext="addReferrerItemText"
-                    :selectedItemId="referrer2"
-                    @selectItem="selectedReferrer2">
-                    <template slot="itemTemplate" slot-scope="{ item }">
-                        <div>
-                            <h3>
-                                <span v-if="item.salutaion">
-                                    {{item.salutaion}}.
-                                </span> {{item.firstName}} {{item.lastName}}
-                            </h3>
-                            <h4>
-                                <span v-if="item.position">
-                                    {{item.position}}.
-                                </span> {{item.organization}}
-                            </h4>
-                            <h4>{{item.emails.toString()}}</h4>
-                            <v-divider />
-                        </div>
-                    </template>
-                    <template slot="selectionTemplate" slot-scope="{ item }">
-                        <span v-if="item.salutaion">
-                                {{item.salutaion}}.
-                        </span> {{item.firstName}} {{item.lastName}}
-                        <span v-if="item.organization">
-                            , {{item.organization}}
-                        </span>
-                    </template>
-                </Autocomplete>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="6">
-                <v-textarea
-                filled
-                name="input-8-1"
-                v-bind:value="googleRow.referrer1"
-                label="GoogleSheet Data"
-                disabled />
-            </v-col>
-            <v-col cols="6">
-                <v-textarea
-                filled
-                name="input-8-1"
-                v-bind:value="googleRow.referrer2"
-                label="GoogleSheet Data"
-                disabled />
-            </v-col>
-        </v-row>
+        <div v-for="referrer in references"
+            :key="referrer.firstName">
+            <v-row>
+                <v-col cols="1">
+                    <v-autocomplete
+                        v-model="referrer.salutation"
+                        label="Salutation"
+                        :items="salutations"
+                        filled/>
+                </v-col>
+                <v-col cols="3.5">
+                    <v-text-field
+                    label="First Name"
+                    v-model="referrer.firstName"
+                    filled/>
+                </v-col>
+                <v-col cols="3.5">
+                    <v-text-field
+                    label="Middle Name"
+                    v-model="referrer.middleName"
+                    filled/>
+                </v-col>
+                <v-col cols="3.5">
+                    <v-text-field
+                    label="Last Name"
+                    v-model="referrer.lastName"
+                    filled/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="5">
+                    <v-text-field
+                    label="Position"
+                    v-model="referrer.position"
+                    filled/>
+                </v-col>
+                <v-col cols="7">
+                    <v-text-field
+                    label="Organization"
+                    v-model="referrer.organization"
+                    filled/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="5">
+                    <v-text-field
+                    label="Primary Email"
+                    v-model="referrer.emailPrimary"
+                    filled/>
+                </v-col>
+                <v-col cols="5">
+                    <v-text-field
+                    label="Secondary Email"
+                    v-model="referrer.emailSecondary"
+                    filled/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="4">
+                    <v-text-field
+                    label="Primary Phone"
+                    v-model="referrer.phonePrimary"
+                    filled/>
+                </v-col>
+                <v-col cols="4">
+                    <v-text-field
+                    label="Secondary Phone"
+                    v-model="referrer.phoneSecondary"
+                    filled/>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="9">
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="Line1"
+                            v-model="referrer.address.line1"
+                            filled/>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="Zipcode"
+                            v-model="referrer.address.zipcode"
+                            filled/>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="Line2"
+                            v-model="referrer.address.line2"
+                            filled/>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="State"
+                            v-model="referrer.address.state"
+                            filled/>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="City"
+                            v-model="referrer.address.city"
+                            filled/>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text-field
+                            label="Country"
+                            v-model="referrer.address.country"
+                            filled/>
+                        </v-col>
+                    </v-row>
+                </v-col>
+                <v-col cols="3">
+                    <v-textarea
+                        filled
+                        name="input-8-1"
+                        v-bind:value="referrer.googleRowData"
+                        label="GoogleSheet Data"
+                        disabled />
+                </v-col>
+            </v-row>
+        </div>
     </div>
 </template>
 
 <script>
-import api from './../../services/api';
 import { formField } from './../../mixins/formField';
-import Autocomplete from './../Autocomplete';
 
 export default {
     name: 'ReferrerForm',
     mixins: [formField],
-    components: {
-        Autocomplete,
-    },
     props: {
         googleRow: Object,
         application: Object,
@@ -113,16 +148,35 @@ export default {
     computed: {
         referrers: function() {
             return {
-                referrer1: this.referrer1,
-                referrer2: this.referrer2,
+                referrer1: this.references[0],
+                referrer2: this.references[1],
             }
         },
     },
     data: function() {
         return {
-            referrer1: null,
-            referrer2: null,
-            referrerEntries: [],
+            references: Array(2).fill({
+                    saluation: null,
+                    firstName: null,
+                    middleName: null,
+                    lastName: null,
+                    position: null,
+                    organization: null,
+                    emailPrimary: null,
+                    emailSecondary: null,
+                    phonePrimary: null,
+                    phoneSecondary: null,
+                    address: {
+                        line1: null,
+                        line2: null,
+                        city: null,
+                        zipcode: null,
+                        state: null,
+                        country: null,
+                    },
+                    googleRowData: "Pre",
+                }),
+            salutations: ['Mr.', 'Mrs.', 'Miss'],
         }
     },
     methods: {
@@ -133,39 +187,13 @@ export default {
             this.referrer1 = this.application.referrers.referrer1;
             this.referrer2 = this.application.referrers.referrer2;
         },
-        populateReferrerEntries: function() {
-            return api.referrer
-                .findAll()
-                .then(response => {
-                    this.referrerEntries = response.data;
-                }).catch(error => {
-                    console.error(error.response);
-                });
-        },
-        addReferrerItemText: function(entry) {
-            var items = [entry.firstName,
-                entry.middleName,
-                entry.lastName];
-            return items
-                .concat(entry.emails)
-                .filter(x => x!=null )
-                .join(', ');
-        },
-        selectedReferrer1: function(selected) {
-            this.referrer1 = (selected)
-                ? selected._id : null;
-        },
-        selectedReferrer2: function(selected) {
-            this.referrer2 = (selected)
-                ? selected._id : null;
-        }
     },
-    mounted: async function() {
-        await this.populateReferrerEntries();
+    mounted: function() {
+        this.references[0].googleRowData = this.googleRow.referrer1;
+        this.references[1].googleRowData = this.googleRow.referrer2;
         (this.application.referrers)
             ? this.setDataFromApplication()
             : this.setDataFromGoogleRow();
-        this.ready=true;
     }
 }
 </script>
