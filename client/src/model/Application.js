@@ -19,10 +19,7 @@ class Application {
         this.info = new Info();
         this.googleMetaData = {
             universityDetails : null,
-            referrers: {
-                referrer1: null,
-                referrer2: null,
-            },
+            referrers: [],
         };
         this.applicationId = null;
         this.googleRowId = null;
@@ -47,7 +44,9 @@ class Application {
     * Set data from saved application
     */
     setFromGoogleRow(googleRow) {
-       this.applicant.setFromGoogleRow(googleRow);
+        this.setGoogleMetaData(googleRow);
+        this.applicant.setFromGoogleRow(googleRow);
+        this.info.setFromGoogleRow(googleRow);
     }
     /*
     * Set data from saved application
@@ -78,8 +77,8 @@ class Application {
                 + "OtherScholarships: " + googleRow.otherScholarships;
 
         // TODO: Extract and set referrer data
-        this.googleMetaData.referrers.referrer1 = googleRow.referrer1;
-        this.googleMetaData.referrers.referrer2 = googleRow.referrer2;
+        this.googleMetaData.referrers.push(googleRow.referrer1);
+        this.googleMetaData.referrers.push(googleRow.referrer2);
     }
 
     getApplicant() {

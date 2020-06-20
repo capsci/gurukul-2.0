@@ -11,6 +11,9 @@ export const store = new Vuex.Store({
         SET_APPLICATION (state, payload) {
             state.application = payload;
         },
+        CLEAR_APPLICATION (state) {
+            state.application = null;
+        },
     },
     getters: {
         application (state) {

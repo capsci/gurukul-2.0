@@ -116,7 +116,7 @@ class University {
         // TODO: extract university name
         this.fees = googleRow.courseTuitionFee;
         this.otherScholarships = googleRow.otherScholarships;
-        this.universityDetails.courseName = googleRow.courseName;
+        this.courseName = googleRow.courseName;
     }
 }
 

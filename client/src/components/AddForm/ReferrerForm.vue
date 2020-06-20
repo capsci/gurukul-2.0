@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-for="referrer in references"
-            :key="referrer.firstName">
+        <div v-for="(referrer, index) in referrers"
+            :key="index">
             <v-row>
                 <v-col cols="1">
                     <v-autocomplete
@@ -13,19 +13,19 @@
                 <v-col cols="3.5">
                     <v-text-field
                     label="First Name"
-                    v-model="referrer.firstName"
+                    v-model="referrer.name.first"
                     filled/>
                 </v-col>
                 <v-col cols="3.5">
                     <v-text-field
                     label="Middle Name"
-                    v-model="referrer.middleName"
+                    v-model="referrer.name.middle"
                     filled/>
                 </v-col>
                 <v-col cols="3.5">
                     <v-text-field
                     label="Last Name"
-                    v-model="referrer.lastName"
+                    v-model="referrer.name.last"
                     filled/>
                 </v-col>
             </v-row>
@@ -47,13 +47,13 @@
                 <v-col cols="5">
                     <v-text-field
                     label="Primary Email"
-                    v-model="referrer.emailPrimary"
+                    v-model="referrer.email.primary"
                     filled/>
                 </v-col>
                 <v-col cols="5">
                     <v-text-field
                     label="Secondary Email"
-                    v-model="referrer.emailSecondary"
+                    v-model="referrer.email.secondary"
                     filled/>
                 </v-col>
             </v-row>
@@ -61,13 +61,13 @@
                 <v-col cols="4">
                     <v-text-field
                     label="Primary Phone"
-                    v-model="referrer.phonePrimary"
+                    v-model="referrer.phone.primary"
                     filled/>
                 </v-col>
                 <v-col cols="4">
                     <v-text-field
                     label="Secondary Phone"
-                    v-model="referrer.phoneSecondary"
+                    v-model="referrer.phone.secondary"
                     filled/>
                 </v-col>
             </v-row>
@@ -120,7 +120,7 @@
                     <v-textarea
                         filled
                         name="input-8-1"
-                        v-bind:value="referrer.googleRowData"
+                        v-bind:value="googleMetaData[index]"
                         label="GoogleSheet Data"
                         disabled />
                 </v-col>
@@ -130,70 +130,15 @@
 </template>
 
 <script>
-import { formField } from './../../mixins/formField';
 
 export default {
     name: 'ReferrerForm',
-    mixins: [formField],
-    props: {
-        googleRow: Object,
-        application: Object,
-        emitId: String,
-    },
-    watch: {
-        referrers: function(value) {
-            this.$emit('updateForm', {[this.emitId] : value});
-        },
-    },
-    computed: {
-        referrers: function() {
-            return {
-                referrer1: this.references[0],
-                referrer2: this.references[1],
-            }
-        },
-    },
     data: function() {
         return {
-            references: Array(2).fill({
-                    saluation: null,
-                    firstName: null,
-                    middleName: null,
-                    lastName: null,
-                    position: null,
-                    organization: null,
-                    emailPrimary: null,
-                    emailSecondary: null,
-                    phonePrimary: null,
-                    phoneSecondary: null,
-                    address: {
-                        line1: null,
-                        line2: null,
-                        city: null,
-                        zipcode: null,
-                        state: null,
-                        country: null,
-                    },
-                    googleRowData: "Pre",
-                }),
+            referrers: this.$store.getters.application.referrers,
+            googleMetaData: this.$store.getters.application.googleMetaData.referrers,
             salutations: ['Mr.', 'Mrs.', 'Miss'],
         }
     },
-    methods: {
-        setDataFromGoogleRow: function() {
-
-        },
-        setDataFromApplication: function() {
-            this.referrer1 = this.application.referrers.referrer1;
-            this.referrer2 = this.application.referrers.referrer2;
-        },
-    },
-    mounted: function() {
-        this.references[0].googleRowData = this.googleRow.referrer1;
-        this.references[1].googleRowData = this.googleRow.referrer2;
-        (this.application.referrers)
-            ? this.setDataFromApplication()
-            : this.setDataFromGoogleRow();
-    }
 }
 </script>

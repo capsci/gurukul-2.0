@@ -71,11 +71,7 @@
                                                     {{ formSections.universityDetails.icon }}
                                                 </v-icon>
                                             </v-row>
-                                            <UniversityDetailsForm
-                                                v-bind:googleRow="googleRow"
-                                                v-bind:application="application"
-                                                v-bind:emitId="formSections.universityDetails.emitId"
-                                                @updateForm="updateForm" />
+                                            <UniversityDetailsForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -91,11 +87,7 @@
                                                     {{ formSections.referrers.icon }}
                                                 </v-icon>
                                             </v-row>
-                                            <ReferrerForm
-                                                :googleRow="googleRow"
-                                                :application="application"
-                                                :emitId="formSections.referrers.emitId"
-                                                @updateForm="updateForm" />
+                                            <ReferrerForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -111,11 +103,7 @@
                                                     {{ formSections.previousSchool.icon }}
                                                 </v-icon>
                                             </v-row>
-                                                    <PreviousSchoolDetailsForm
-                                                        :emitId="formSections.previousSchool.emitId"
-                                                        :application="application"
-                                                        :numberOfSchools="formSections.previousSchool.numberOfSchools"
-                                                        @updateForm="updateForm"/>
+                                                    <PreviousSchoolDetailsForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -131,11 +119,7 @@
                                                     {{ formSections.writeup.icon}}
                                                 </v-icon>
                                             </v-row>
-                                            <WriteupForm
-                                                :emitId="formSections.writeup.emitId"
-                                                :application="application"
-                                                :questions="formSections.writeup.questions"
-                                                @updateForm="updateForm" />
+                                            <WriteupForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -151,11 +135,7 @@
                                                     {{ formSections.additionalDocs.icon }}
                                                 </v-icon>
                                             </v-row>
-                                            <AddictionalDocsForm
-                                                :googleRow="googleRow"
-                                                :application="application"
-                                                :emitId="formSections.additionalDocs.emitId"
-                                                @updateForm="updateForm" />
+                                            <AddictionalDocsForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -213,28 +193,23 @@ export default {
                 applicant: {
                     title: 'Applicant Details',
                     icon: 'mdi-file-document-edit',
-                    emitId: 'applicant'
+                    component: ApplicantForm,
                 },
                 universityDetails:{
                     title: 'University Details',
                     icon: 'mdi-school',
-                    emitId: 'courseDetails'
                 },
                 referrers: {
                     title: 'Referrers',
                     icon: 'mdi-account-tie',
-                    emitId: 'referrers',
                 },
                 previousSchool: {
                     title: 'Previous School Details',
                     icon: 'mdi-book-multiple',
-                    emitId: 'previousSchools',
-                    numberOfSchools: 3,
                 },
                 writeup: {
                     title: 'Writeups',
                     icon: 'mdi-grease-pencil',
-                    emitId: 'writeups',
                     questions: [
                         'Your academic, extra curriculum and social achievements/ Membership / Experience/ Association with a Maheshwari / Rajasthani Association or a cause)',
                         'How do you plan to associate with and contribute to MMNA in USA during your studies and in future?',
@@ -244,11 +219,9 @@ export default {
                 additionalDocs: {
                     title: 'Additional Documents',
                     icon: 'mdi-file-upload',
-                    emitId: 'uploadedDocs'
                 }
             },
             selectedSection: 0,
-            formData: {},
             errors: "",
         }
     },
@@ -259,6 +232,7 @@ export default {
             this.errors = "";
         },
         closeDialog: function() {
+            this.$store.commit('CLEAR_APPLICATION');
             this.$emit('closeDialog');
         },
         //savetoMongo
