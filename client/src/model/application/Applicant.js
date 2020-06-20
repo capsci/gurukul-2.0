@@ -6,7 +6,7 @@ import { sanitize } from './../../mixins/formHelper';
 * This is client side model for Applicant
 */
 
-class Application {
+class Applicant {
 
     constructor() {
         this.name = {
@@ -109,4 +109,4 @@ class Application {
     }
 }
 
-return Applicant;
+export default Applicant;

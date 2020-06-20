@@ -28,42 +28,46 @@ class Application {
         this.googleRowId = null;
     }
 
-    /*
-    * Set data from googleRow
-    */
-    async initFromGoogleRow(googleRow) {
+    init(googleRow) {
         this.googleRowId = googleRow._id;
         this.applicationId = googleRow.applicationId;
 
         //Google Meta Data Here
         this.setGoogleMetaData(googleRow);
 
-        (this.applicationId)
-            ? await this.initFromApplicationId(this.applicationId)
-            : this.applicant.setFromGoogleRow(googleRow);
-    }
-
-    async initFromApplicationId(applicationId) {
-        await api.applicationMaterial
-            .findById(applicationId)
-            .then(response => {
-                this.setFromSavedData(response.data);
-            }).catch(error => {
-                console.log("Error Fetching application");
-                console.error(error.response);
-            });
+        if(this.applicationId) {
+            this.setFromSavedData();
+        }
+        else {
+            this.setFromGoogleRow(googleRow);
+        }
     }
 
     /*
     * Set data from saved application
     */
-    setFromSavedData(data) {
-        this.applicant.setFromSavedApplication(data);
-        this.referrers = [
-            new Referrer().setFromSavedApplication(data.referrers.reference1),
-            new Referrer().setFromSavedApplication(data.referrers.reference2),
-        ];
-        this.info.setFromSavedApplication(data);
+    setFromGoogleRow(googleRow) {
+       this.applicant.setFromGoogleRow(googleRow);
+    }
+    /*
+    * Set data from saved application
+    */
+    setFromSavedData() {
+        api.applicationMaterial.findById(this.applicationId)
+            .then(response => {
+                var data = response.data;
+                this.applicant.setFromSavedApplication(data);
+                this.referrers = [
+                    new Referrer()
+                        .setFromSavedApplication(data.referrers.reference1),
+                    new Referrer()
+                        .setFromSavedApplication(data.referrers.reference2),
+                ];
+                this.info.setFromSavedApplication(data);
+            }).catch(error => {
+                console.log("Error Fetching application");
+                console.error(error);
+            })
     }
 
     setGoogleMetaData(googleRow) {
@@ -77,6 +81,10 @@ class Application {
         this.googleMetaData.referrers.referrer1 = googleRow.referrer1;
         this.googleMetaData.referrers.referrer2 = googleRow.referrer2;
     }
-};
 
-return Application;
+    getApplicant() {
+        return this.applicant;
+    }
+}
+
+export default Application;

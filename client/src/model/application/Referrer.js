@@ -59,4 +59,4 @@ class Referrer {
     }
 }
 
-return Referrer;
+export default Referrer;

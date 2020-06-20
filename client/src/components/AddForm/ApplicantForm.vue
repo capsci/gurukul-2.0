@@ -4,21 +4,21 @@
             <v-col cols="4">
                 <v-text-field
                     label="First Name"
-                    v-model="firstName"
+                    v-model="applicant.name.first"
                     :rules="[rules.required, rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="Middle Name"
-                    v-model="middleName"
+                    v-model="applicant.name.middle"
                     :rules="[rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
             <v-col cols="4">
                 <v-text-field
                     label="Last Name"
-                    v-model="lastName"
+                    v-model="applicant.name.last"
                     :rules="[rules.noSpaces, rules.wordCharsOnly]"
                     filled />
             </v-col>
@@ -28,13 +28,13 @@
                 <v-text-field
                     label="Primary Email"
                     prepend-inner-icon="mdi-email"
-                    v-model="emailPrimary"
+                    v-model="applicant.email.primary"
                     :rules="[rules.required, rules.email]"
                     filled />
                 <v-text-field
                     label="Secondary Email"
                     prepend-inner-icon="mdi-email"
-                    v-model="emailSecondary"
+                    v-model="applicant.email.secondary"
                     :rules="[rules.email]"
                     filled />
             </v-col>
@@ -43,13 +43,13 @@
                     label="Primary Phone Number"
                     :messages="'USA (if possible)'"
                     prepend-inner-icon="mdi-phone"
-                    v-model="phonePrimary"
+                    v-model="applicant.phone.primary"
                     :rules="[rules.required, rules.phoneNum]"
                     filled />
                 <v-text-field
                     label="Secondary Phone Number"
                     prepend-inner-icon="mdi-phone"
-                    v-model="phoneSecondary"
+                    v-model="applicant.phone.secondary"
                     :rules="[rules.phoneNum]"
                     filled />
             </v-col>
@@ -57,13 +57,13 @@
                 <v-text-field
                     label="Link to Facebook Profile"
                     prepend-inner-icon="mdi-facebook"
-                    v-model="facebook"
+                    v-model="applicant.socialMedia.facebook"
                     :rules="[rules.noSpaces]"
                     filled />
                 <v-text-field
                     label="Link to LinkedIn Profile"
                     prepend-inner-icon="mdi-linkedin"
-                    v-model="linkedin"
+                    v-model="applicant.socialMedia.linkedin"
                     :rules="[rules.noSpaces]"
                     filled />
             </v-col>
@@ -73,7 +73,7 @@
                 <v-text-field
                     label="Date of Birth"
                     type="date"
-                    v-model="dateOfBirth"
+                    v-model="applicant.dob"
                     filled />
             </v-col>
         </v-row>
@@ -81,7 +81,7 @@
             <v-col cols="4">
                 <v-text-field
                     label="US Visa Status"
-                    v-model="usVisaStatus"
+                    v-model="applicant.USAVisaStatus"
                     :rules="[rules.required]"
                     filled />
             </v-col>
@@ -89,13 +89,13 @@
                 <v-text-field
                     label="Entry Date in USA"
                     type="date"
-                    v-model="usEntryDate"
+                    v-model="applicant.USAEntryDate"
                     filled />
             </v-col>
             <v-col cols="4">
                 <v-switch
-                v-model="inUSA"
-                v-bind:label="inUSA ? 'In USA' : 'Not In USA'"
+                v-model="applicant.inUSA"
+                v-bind:label="applicant.inUSA ? 'In USA' : 'Not In USA'"
                 ></v-switch>
             </v-col>
         </v-row>
@@ -104,59 +104,59 @@
                 <v-subheader>Parents Name & Address</v-subheader>
                 <v-text-field
                     label="Name"
-                    v-model="parentName"
+                    v-model="applicant.parent.name"
                     :rules="[rules.wordCharsOnly]"
                     filled />
                 <v-text-field
                     label="Line1"
-                    v-model="parentAddress.line1"
+                    v-model="applicant.parent.address.line1"
                     filled/>
                 <v-text-field
                     label="Line2"
-                    v-model="parentAddress.line2"
+                    v-model="applicant.parent.address.line2"
                     filled/>
                 <v-text-field
                     label="City"
-                    v-model="parentAddress.city"
+                    v-model="applicant.parent.address.city"
                     filled/>
                 <v-text-field
                     label="Zipcode"
-                    v-model="parentAddress.zipcode"
+                    v-model="applicant.parent.address.zipcode"
                     filled/>
                 <v-text-field
                     label="State"
-                    v-model="parentAddress.state"
+                    v-model="applicant.parent.address.state"
                     filled/>
                 <v-text-field
                     label="Country"
-                    v-model="parentAddress.country"
+                    v-model="applicant.parent.address.country"
                     filled/>
             </v-col>
             <v-col cols="6">
                 <v-subheader>US Address</v-subheader>
                 <v-text-field
                     label="Line1"
-                    v-model="usAddress.line1"
+                    v-model="applicant.address.line1"
                     filled/>
                 <v-text-field
                     label="Line2"
-                    v-model="usAddress.line2"
+                    v-model="applicant.address.line2"
                     filled/>
                 <v-text-field
                     label="City"
-                    v-model="usAddress.city"
+                    v-model="applicant.address.city"
                     filled/>
                 <v-text-field
                     label="Zipcode"
-                    v-model="usAddress.zipcode"
+                    v-model="applicant.address.zipcode"
                     filled/>
                 <v-text-field
                     label="State"
-                    v-model="usAddress.state"
+                    v-model="applicant.address.state"
                     filled/>
                 <v-text-field
                     label="Country"
-                    v-model="usAddress.country"
+                    v-model="applicant.address.country"
                     filled/>
             </v-col>
         </v-row>
@@ -164,110 +164,17 @@
 </template>
 
 <script>
-import { rules, sanitize } from './../../mixins/formHelper';
+import { rules } from './../../mixins/formHelper';
 
 export default {
     name: 'ApplicantForm',
-    props: {
-        googleRow: Object,
-        application: Object,
-        emitId: String,
-    },
-    mixins: [rules, sanitize],
-    watch: {
-        applicant: function(value) {
-            this.$emit('updateForm', {[this.emitId]: value});
-        }
-    },
-    computed: {
-        applicant: function() {
-            return {
-                firstName: this.firstName,
-                middleName: this.middleName,
-                lastName: this.lastName,
-                emailPrimary: this.emailPrimary,
-                emailSecondary: this.emailSecondary,
-                phonePrimary: this.phonePrimary,
-                phoneSecondary: this.phoneSecondary,
-                linkedin: this.linkedin,
-                facebook: this.facebook,
-                dateOfBirth: this.dateOfBirth,
-                parentName: this.parentName,
-                inUSA: this.inUSA,
-                usVisaStatus: this.usVisaStatus,
-                usEntryDate: this.usEntryDate,
-                parentAddress: this.parentAddress,
-                usAddress: this.usAddress,
-            }
-        },
-    },
+    mixins: [rules],
     data() {
         return {
-            firstName: null,
-            middleName: null,
-            lastName: null,
-            emailPrimary: null,
-            emailSecondary: null,
-            phonePrimary: null,
-            phoneSecondary: null,
-            linkedin: null,
-            facebook: null,
-            dateOfBirth: null,
-            parentName: null,
-            inUSA: false,
-            usVisaStatus: null,
-            usEntryDate: null,
-            parentAddress: {
-                line1: null,
-                line2: null,
-                city: null,
-                zipcode: null,
-                state: null,
-                country: null,
-            },
-            usAddress: {
-                line1: null,
-                line2: null,
-                city: null,
-                zipcode: null,
-                state: null,
-                country: null,
-            },
-            rules: rules,
+            applicant: this.$store.getters.application.applicant,
+            rules    : rules,
         }
     },
-    methods: {
-        setDataFromGoogleRow: function() {
-            [this.firstName, this.middleName, this.lastName] = sanitize.extractNameFields(this.googleRow.fullName);
-            this.phonePrimary = this.googleRow.phonePrimary;
-            [this.emailPrimary, this.emailSecondary] = sanitize.splitOnWhitespaceAndDelimeters(this.googleRow.email);
-            this.facebook = this.googleRow.facebook;
-            this.linkedin = this.googleRow.linkedin;
-        },
-        setDataFromApplication: function() {
-            this.firstName = this.application.applicant.firstName;
-            this.middleName = this.application.applicant.middleName;
-            this.lastName  = this.application.applicant.lastName;
-            this.emailPrimary = this.application.applicant.emailPrimary;
-            this.emailSecondary = this.application.applicant.emailSecondary;
-            this.phonePrimary = this.application.applicant.phonePrimary;
-            this.phoneSecondary = this.application.applicant.phoneSecondary;
-            this.linkedin = this.application.applicant.linkedin;
-            this.facebook = this.application.applicant.facebook;
-            this.dateOfBirth = this.application.applicant.dateOfBirth;
-            this.parentName = this.application.applicant.parentName;
-            this.inUSA = this.application.applicant.inUSA;
-            this.usVisaStatus = this.application.applicant.usVisaStatus;
-            this.usEntryDate = this.application.applicant.usEntryDate;
-            this.parentAddress = this.application.applicant.parentAddress;
-            this.usAddress = this.application.applicant.usAddress;
-        }
-    },
-    mounted: function() {
-       (this.application.applicant)
-           ? this.setDataFromApplication()
-           : this.setDataFromGoogleRow();
-    }
 }
 </script>
 

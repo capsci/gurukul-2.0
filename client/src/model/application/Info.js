@@ -1,7 +1,5 @@
 "use strict";
 
-import { sanitize } from './../../mixins/formHelper';
-
 const DOC_TYPE = {
     passport       : 'Passport',
     visa           : 'Visa',
@@ -156,4 +154,4 @@ class Doc {
     }
 }
 
-return Info;
+export default Info;

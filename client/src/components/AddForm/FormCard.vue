@@ -55,11 +55,7 @@
                                                     {{ formSections.applicant.icon }}
                                                 </v-icon>
                                             </v-row>
-                                            <ApplicantForm
-                                                v-bind:googleRow="googleRow"
-                                                v-bind:application="application"
-                                                v-bind:emitId="formSections.applicant.emitId"
-                                                @updateForm="updateForm" />
+                                            <ApplicantForm />
                                         </v-card-text>
                                     </v-card>
                                 </v-window-item>
@@ -189,6 +185,7 @@
 
 <script>
 import api from './../../services/api';
+import Application from './../../model/Application';
 import ApplicantForm from './ApplicantForm';
 import UniversityDetailsForm from './UniversityDetailsForm';
 import ReferrerForm from './ReferrerForm';
@@ -296,20 +293,15 @@ export default {
         },
     },
     mounted: function() {
-        if (this.googleRow.applicationId) {
-            api.applicationMaterial
-                .findById(this.googleRow.applicationId)
-                .then(response => {
-                    this.application = response.data;
-                    this.ready = true;
-                }).catch(error => {
-                    console.log("Error Fetching application");
-                    console.error(error.response);
-                });
+        var application = new Application();
+        if(this.googleRow.applicationId) {
+            application.initFromApplicationId(this.googleRow.applicationId);
         }
         else {
+            application.setFromGoogleRow(this.googleRow);
             this.ready = true;
         }
+        this.$store.commit('SET_APPLICATION', application);
     },
 }
 </script>
