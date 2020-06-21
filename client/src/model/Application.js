@@ -77,12 +77,18 @@ class Application {
                 + "OtherScholarships: " + googleRow.otherScholarships;
 
         // TODO: Extract and set referrer data
-        this.googleMetaData.referrers.push(googleRow.referrer1);
-        this.googleMetaData.referrers.push(googleRow.referrer2);
-    }
+        if(googleRow.referrer1) {
+            this.googleMetaData.referrers.push(googleRow.referrer1);
+            this.addReferrer();
+        }
+        if(googleRow.referrer2) {
+            this.googleMetaData.referrers.push(googleRow.referrer2);
+            this.addReferrer();
+        }
 
-    getApplicant() {
-        return this.applicant;
+    }
+    addReferrer() {
+        this.referrers.push(new Referrer());
     }
 }
 

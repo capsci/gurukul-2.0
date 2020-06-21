@@ -73,6 +73,15 @@ class Info {
             ? this.docs.push( new Doc(DOC_TYPE.mmnaApplication, true) )
             : this.docs.push( new Doc(DOC_TYPE.mmnaApplication, false) );
     }
+    addPrevEducation(name, degree, grade) {
+        this.prevEducation.push(new Education(name, degree, grade));
+    }
+    addWriteup(question, answer) {
+        this.writeups.push(new WriteUp(question, answer));
+    }
+    addDocument(docName, uploaded) {
+        this.docs.push(new Document(docName, uploaded));
+    }
 }
 
 /*
