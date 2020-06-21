@@ -1,17 +1,34 @@
 <template>
     <div>
         <div v-for="(writeup,index) in writeups"
-            :key="writeup.question">
+            :key="index">
             <v-row>
-                {{questions[index]}}
+                {{writeup.question}}
             </v-row>
             <v-row>
                 <v-textarea
                     filled
                     name="input-8-1"
                     label="Enter your answer here"
-                    v-model='answers[index]'>
+                    v-model='writeup.answer'>
                 </v-textarea>
+            </v-row>
+        </div>
+        <div>
+            <v-row>
+                <v-col cols="8">
+                    <v-text-field
+                        label="Question"
+                        v-model="question"
+                        filled />
+                </v-col>
+                <v-col cols="4">
+                    <v-btn
+                        primary
+                        @click="addQuestion">
+                        Add Writeup Question
+                    </v-btn>
+                </v-col>
             </v-row>
         </div>
     </div>
@@ -20,46 +37,21 @@
 <script>
 export default {
     name: 'AdditionalMaterialForm',
-    props: {
-        application: Object,
-        emitId: String,
-        questions: Array,
-    },
-    watch: {
-        writeups: function(value) {
-            this.$emit('updateForm', {[this.emitId]: value});
-        }
-    },
-    computed: {
-        writeups: function() {
-            return this.questions.map((question, idx) => {
-                return {
-                    question: question,
-                    answer: this.answers[idx]};
-            })
-        }
-    },
     data: function() {
         return {
-            answers: []
+            writeups: this.$store.getters.application.info.writeups,
+            question: null,
         }
     },
     methods: {
-        setDataFromApplication: function() {
-            this.questions = [];
-            this.application.writeups.forEach((item) => {
-                this.questions.push(item.question);
-                this.answers.push(item.answer);
-            });
-        },
-        setDataFromGoogleRow: function() {
-
-        },
-    },
-    mounted() {
-        (this.application.writeups)
-            ? this.setDataFromApplication()
-            : this.setDataFromGoogleRow();
+        addQuestion: function() {
+            if(this.question == null || this.question == "") {
+                alert("Insert Question");
+                return;
+            }
+            this.$store.getters.application.info.addWriteup(this.question);
+            this.question = null;
+        }
     },
 }
 </script>
