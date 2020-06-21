@@ -33,29 +33,22 @@ class Referrer {
     }
     setFromSavedApplication(referrer) {
         this.name  = {
-            salutation: referrer.salutation,
-            first     : referrer.firstName,
-            middle    : referrer.middleName,
-            last      : referrer.lastName,
+            salutation: referrer.name.salutation,
+            first     : referrer.name.first,
+            middle    : referrer.name.middle,
+            last      : referrer.name.last,
         };
         this.email = {
-            primary  : referrer.emailPrimary,
-            secondary: referrer.emailSecondary,
+            primary  : referrer.email.primary,
+            secondary: referrer.email.secondary,
         };
         this.phone = {
-            primary  : referrer.phonePrimary,
-            secondary: referrer.phoneSecondary,
+            primary  : referrer.phone.primary,
+            secondary: referrer.phone.secondary,
         };
         this.position = referrer.position;
         this.organization = referrer.organization;
-        this.address = {
-            line1  : referrer.address.line1,
-            line2  : referrer.address.line2,
-            city   : referrer.address.city,
-            zipcode: referrer.address.zipcode,
-            state  : referrer.address.state,
-            country: referrer.address.country,
-        };
+        this.address = referrer.address;
     }
 }
 

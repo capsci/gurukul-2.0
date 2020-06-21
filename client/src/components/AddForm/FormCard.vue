@@ -269,13 +269,18 @@ export default {
     mounted: function() {
         var application = new Application();
         if(this.googleRow.applicationId) {
-            application.initFromApplicationId(this.googleRow.applicationId);
+            application
+                .setFromSavedData(this.googleRow.applicationId)
+                .then(() => {
+                    this.$store.commit('SET_APPLICATION', application);
+                    this.ready = true;
+                });
         }
         else {
             application.setFromGoogleRow(this.googleRow);
+            this.$store.commit('SET_APPLICATION', application);
             this.ready = true;
         }
-        this.$store.commit('SET_APPLICATION', application);
     },
 }
 </script>

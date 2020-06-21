@@ -18,42 +18,23 @@ class Info {
         this.writeups = [];
         this.docs = [];
     }
-    setFromSavedApplication(data) {
-        this.university.setFromSavedApplication(data);
-        data.previousSchools.forEach(school => {
+    setFromSavedApplication(info) {
+        this.university.setFromSavedApplication(info.university);
+        info.prevEducation.forEach(school => {
             this.prevEducation.push(
                 new Education(school.name, school.degree, school.gpa)
             );
         });
-        data.writeups.forEach(writeup => {
+        info.writeups.forEach(writeup => {
             this.writeups.push(
                 new WriteUp(writeup.question, writeup.answer)
             );
         });
-        this.docs.push(
-            new Doc(DOC_TYPE.passport, data.uploadedDocs.docPassport)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.visa, data.uploadedDocs.docVisa)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.i20, data.uploadedDocs.docI20)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.admissionLetter, data.uploadedDocs.docAdmissionLetter)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.mmnaApplication, data.uploadedDocs.docMMNAApplication)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.resume, data.uploadedDocs.docResume)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.reference1, data.uploadedDocs.docReferrence1)
-        );
-        this.docs.push(
-            new Doc(DOC_TYPE.reference2, data.uploadedDocs.docReferrence2)
-        );
+        info.docs.forEach(doc => {
+            this.docs.push(
+                new Doc(doc.name, doc.uploaded)
+            );
+        });
     }
     setFromGoogleRow(googleRow) {
         this.university.setFromGoogleRow(googleRow);
@@ -105,21 +86,14 @@ class University {
         this.fees = null;
         this.otherScholarships = null;
     }
-    setFromSavedApplication(data) {
-        this.name = data.courseDetails.school;
-        this.address = {
-            line1: data.courseDetails.address.line1,
-            line2: data.courseDetails.address.line2,
-            city: data.courseDetails.address.city,
-            zipcode: data.courseDetails.address.zipcode,
-            state: data.courseDetails.address.state,
-            country: data.courseDetails.address.country,
-        };
-        this.courseName = data.courseDetails.name;
-        this.courseDuration = data.courseDetails.duration;
-        this.semester = data.courseDetails.semester;
-        this.fees = data.courseDetails.fees;
-        this.otherScholarships = data.courseDetails.otherScholarships;
+    setFromSavedApplication(university) {
+        this.name = university.school;
+        this.address = university.address;
+        this.courseName = university.courseName;
+        this.courseDuration = university.courseDuration;
+        this.semester = university.semester;
+        this.fees = university.fees;
+        this.otherScholarships = university.otherScholarships;
     }
     setFromGoogleRow(googleRow) {
         // TODO: extract university name

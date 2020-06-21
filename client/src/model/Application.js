@@ -10,6 +10,7 @@ import api from './../services/api';
 import Applicant from './application/Applicant';
 import Referrer from './application/Referrer';
 import Info from './application/Info';
+import translate from './../services/translate';
 
 class Application {
 
@@ -51,18 +52,20 @@ class Application {
     /*
     * Set data from saved application
     */
-    setFromSavedData() {
-        api.applicationMaterial.findById(this.applicationId)
+    setFromSavedData(applicationId) {
+        return api.applicationMaterial.findById(applicationId)
             .then(response => {
-                var data = response.data;
-                this.applicant.setFromSavedApplication(data);
+                var clientFormat = translate.application
+                    .toClient(response.data);
+                this.applicant.setFromSavedApplication(clientFormat.applicant);
                 this.referrers = [
                     new Referrer()
-                        .setFromSavedApplication(data.referrers.reference1),
+                        .setFromSavedApplication(clientFormat.referrers[0]),
                     new Referrer()
-                        .setFromSavedApplication(data.referrers.reference2),
+                        .setFromSavedApplication(clientFormat.referrers[1]),
                 ];
-                this.info.setFromSavedApplication(data);
+                this.info.setFromSavedApplication(clientFormat.info);
+                return;
             }).catch(error => {
                 console.log("Error Fetching application");
                 console.error(error);

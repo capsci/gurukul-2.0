@@ -60,7 +60,6 @@ mongoose
     .connect(
         config.mLab.uri, {
             useNewUrlParser: true,
-            ignoreUndefined: true,
             useUnifiedTopology: true,
             useFindAndModify: false, });
 const db = mongoose.connection;

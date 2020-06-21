@@ -52,47 +52,33 @@ class Applicant {
         }
     }
 
-    setFromSavedApplication(data) {
+    setFromSavedApplication(applicant) {
         this.name = {
-            salutation: null,
-            first     : data.applicant.firstName,
-            middle    : data.applicant.middleName,
-            last      : data.applicant.lastName,
+            salutation: applicant.name.salutation,
+            first     : applicant.name.first,
+            middle    : applicant.name.middle,
+            last      : applicant.name.last,
         };
         this.email = {
-            primary  : data.applicant.emailPrimary,
-            secondary: data.applicant.emailSecondary,
+            primary  : applicant.email.primary,
+            secondary: applicant.email.secondary,
         };
         this.phone = {
-            primary  : data.applicant.phonePrimary,
-            secondary: data.applicant.phoneSecondary,
+            primary  : applicant.phone.primary,
+            secondary: applicant.phone.secondary,
         };
         this.socialMedia = {
-            facebook: data.applicant.facebook,
-            linkedin: data.applicant.linkedin,
+            facebook: applicant.socialMedia.facebook,
+            linkedin: applicant.socialMedia.linkedin,
         };
-        this.dob = data.applicant.dateOfBirth;
-        this.inUSA = data.applicant.inUSA;
-        this.USAEntryDate = data.applicant.usEntryDate;
-        this.USAVisaStatus = data.applicant.usVisaStatus;
-        this.address = {
-            line1  : data.applicant.usAddress.line1,
-            line2  : data.applicant.usAddress.line2,
-            city   : data.applicant.usAddress.city,
-            zipcode: data.applicant.usAddress.zipcode,
-            state  : data.applicant.usAddress.state,
-            country: data.applicant.usAddress.country,
-        };
+        this.dob = applicant.dob;
+        this.inUSA = applicant.inUSA;
+        this.USAEntryDate = applicant.USAEntryDate;
+        this.USAVisaStatus = applicant.USAVisaStatus;
+        this.address = applicant.address;
         this.parent = {
-            name: data.applicant.parentName,
-            address: {
-                line1  : data.applicant.parentAddress.line1,
-                line2  : data.applicant.parentAddress.line2,
-                city   : data.applicant.parentAddress.city,
-                zipcode: data.applicant.parentAddress.zipcode,
-                state  : data.applicant.parentAddress.state,
-                country: data.applicant.parentAddress.country,
-            }
+            name: applicant.parent.name,
+            address: applicant.parent.address,
         };
     }
     setFromGoogleRow(googleRow) {
