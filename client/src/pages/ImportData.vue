@@ -3,6 +3,7 @@
         <v-data-table
             :headers="headers"
             :items="gs_data"
+            height="500"
             item-key="applicationTime">
             <!-- TODO : v-slot:top with search filter -->
             <template #item.fullName="{ item }">

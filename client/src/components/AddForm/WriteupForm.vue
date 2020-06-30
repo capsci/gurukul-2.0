@@ -6,21 +6,18 @@
                 {{writeup.question}}
             </v-row>
             <v-row>
-                <v-textarea
-                    filled
+                <v-textarea-ext
                     name="input-8-1"
                     label="Enter your answer here"
-                    v-model='writeup.answer'>
-                </v-textarea>
+                    v-model='writeup.answer' />
             </v-row>
         </div>
         <div>
             <v-row>
                 <v-col cols="8">
-                    <v-text-field
+                    <v-text-field-ext
                         label="Question"
-                        v-model="question"
-                        filled />
+                        v-model="question" />
                 </v-col>
                 <v-col cols="4">
                     <v-btn
@@ -35,8 +32,14 @@
 </template>
 
 <script>
+import { VTextFieldExt, VTextareaExt } from './../extended/VForm';
+
 export default {
     name: 'AdditionalMaterialForm',
+    components: {
+        VTextFieldExt,
+        VTextareaExt
+    }
     data: function() {
         return {
             writeups: this.$store.getters.application.info.writeups,

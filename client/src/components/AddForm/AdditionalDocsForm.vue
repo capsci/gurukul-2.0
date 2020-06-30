@@ -12,10 +12,9 @@
         </v-row>
         <v-row>
                 <v-col cols="5">
-                    <v-text-field
+                    <v-text-field-ext
                         label="Document Name"
-                        v-model="docName"
-                        filled />
+                        v-model="docName" />
                 </v-col>
                 <v-col cols="3">
                     <v-switch
@@ -34,8 +33,13 @@
 </template>
 
 <script>
+import VTextFieldExt from './../extended/VForm';
+
 export default {
     name: 'AdditionalDocsForm',
+    components: {
+        VTextFieldExt,
+    }
     data: function() {
         return {
             docs : this.$store.getters.application.info.docs,
