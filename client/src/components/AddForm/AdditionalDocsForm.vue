@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import VTextFieldExt from './../extended/VForm';
+import { VTextFieldExt } from './../extended/VForm';
 
 export default {
     name: 'AdditionalDocsForm',
