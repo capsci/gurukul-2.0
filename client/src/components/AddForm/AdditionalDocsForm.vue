@@ -39,7 +39,7 @@ export default {
     name: 'AdditionalDocsForm',
     components: {
         VTextFieldExt,
-    }
+    },
     data: function() {
         return {
             docs : this.$store.getters.application.info.docs,

@@ -39,7 +39,7 @@ export default {
     components: {
         VTextFieldExt,
         VTextareaExt
-    }
+    },
     data: function() {
         return {
             writeups: this.$store.getters.application.info.writeups,
