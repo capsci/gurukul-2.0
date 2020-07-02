@@ -45,6 +45,8 @@ class Application {
     * Set data from saved application
     */
     setFromGoogleRow(googleRow) {
+        this.googleRowId = googleRow._id;
+        this.applicationId = googleRow.applicationId;
         this.setGoogleMetaData(googleRow);
         this.applicant.setFromGoogleRow(googleRow);
         this.info.setFromGoogleRow(googleRow);
@@ -53,6 +55,7 @@ class Application {
     * Set data from saved application
     */
     setFromSavedData(applicationId) {
+        this.applicationId = applicationId;
         return api.applicationMaterial.findById(applicationId)
             .then(response => {
                 var clientFormat = translate.application
@@ -90,8 +93,46 @@ class Application {
         }
 
     }
+
+    validate() {
+        this.applicant.validate();
+        this.referrers.forEach(referrer => referrer.validate());
+        this.info.validate()
+    }
+
     addReferrer() {
         this.referrers.push(new Referrer());
+    }
+
+    save() {
+        if (this.applicationId) {
+            return api.applicationMaterial
+                .update(
+                    this.googleRow.applicationId,
+                    translate.application.toServer(this) )
+                .catch(err => {
+                    console.log(err);
+                    throw err;
+                });
+        }
+        else {
+            return api.applicationMaterial
+                .addNew(
+                    translate.application.toServer(this) )
+                .then(response => {
+                    return response.data; // used by next then
+                })
+                .then((applicationId) => {
+                    return api.googleData
+                        .addApplication(
+                            this.googleRowId,
+                            applicationId)
+                })
+                .catch(err => {
+                    console.log(err);
+                    throw err;
+                });
+        }
     }
 }
 

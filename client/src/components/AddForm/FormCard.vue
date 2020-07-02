@@ -164,7 +164,6 @@
 </template>
 
 <script>
-import api from './../../services/api';
 import Application from './../../model/Application';
 import ApplicantForm from './ApplicantForm';
 import UniversityDetailsForm from './UniversityDetailsForm';
@@ -226,11 +225,6 @@ export default {
         }
     },
     methods: {
-        updateForm: function(data) {
-            var sectionKey = Object.keys(data)[0];
-            this.application[sectionKey] = data[sectionKey];
-            this.errors = "";
-        },
         closeDialog: function() {
             this.$store.commit('CLEAR_APPLICATION');
             this.$emit('closeDialog');
@@ -241,29 +235,12 @@ export default {
                 this.errors = 'There are errors on the form';
                 return;
             }
-            try {
-                // Update Existing
-                if(this.googleRow.applicationId) {
-                    await api.applicationMaterial
-                        .update(
-                            this.googleRow.applicationId,
-                            this.application);
-                }
-                // Add New
-                else {
-                    var applicationMaterial = await api.applicationMaterial
-                        .addNew(
-                            this.application);
-                    await api.googleData
-                        .addApplication(
-                            this.googleRow._id,
-                            applicationMaterial.data)
-                }
-            }
-            catch (error) {
-                console.log("Error Saving applicationMaterial");
-                console.error(error.response);
-            }
+            this.$store.getters.application
+                .save()
+                .then(() => {
+                    this.$store.commit('CLEAR_APPLICATION');
+                    this.$emit('closeDialog');
+            });
         },
     },
     mounted: function() {

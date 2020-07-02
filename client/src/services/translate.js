@@ -108,6 +108,53 @@ function toClient(server) {
 * Converts Client data model to structure used by Server
 */
 function toServer(client) {
+    var referrer1 = {};
+    if (client.referrers[0]) {
+        referrer1 = {
+            salutation: client.referrers[0].name.salutation,
+            firstName: client.referrers[0].name.first,
+            middleName: client.referrers[0].name.middle,
+            lastName: client.referrers[0].name.last,
+            emailPrimary: client.referrers[0].email.primary,
+            emailSecondary: client.referrers[0].email.secondary,
+            phonePrimary: client.referrers[0].phone.primary,
+            phoneSecondary: client.referrers[0].phone.secondary,
+        }
+    }
+    var referrer2 = {};
+    if (client.referrers[1]) {
+        referrer2 = {
+            salutation: client.referrers[1].name.salutation,
+            firstName: client.referrers[1].name.first,
+            middleName: client.referrers[1].name.middle,
+            lastName: client.referrers[1].name.last,
+            emailPrimary: client.referrers[1].email.primary,
+            emailSecondary: client.referrers[1].email.secondary,
+            phonePrimary: client.referrers[1].phone.primary,
+            phoneSecondary: client.referrers[1].phone.secondary,
+        }
+    }
+    var uploadedDocs = {};
+    if (client.docs) {
+        uploadedDocs = {
+            docI20: client.docs.find(
+                doc => doc.name == 'I-20'),
+            docAdmissionLetter: client.docs.find(
+                doc => doc.name == 'Admission Letter'),
+            docPassport: client.docs.find(
+                doc => doc.name == 'Passport'),
+            docVisa: client.docs.find(
+                doc => doc.name == 'Visa'),
+            docResume: client.docs.find(
+                doc => doc.name == 'Resume'),
+            docMMNAApplication: client.docs.find(
+                doc => doc.name == 'MMNA Application'),
+            docReference1: client.docs.find(
+                doc => doc.name == 'Reference 1'),
+            docReference2: client.docs.find(
+                doc => doc.name == 'Reference 2'),
+        }
+    }
     return {
         applicant: {
             salutation: client.applicant.name.saluation,
@@ -138,47 +185,12 @@ function toServer(client) {
             address: client.info.university.address,
         },
         referrers: {
-            referrer1: {
-                salutation: client.referrers[0].name.salutation,
-                firstName: client.referrers[0].name.first,
-                middleName: client.referrers[0].name.middle,
-                lastName: client.referrers[0].name.last,
-                emailPrimary: client.referrers[0].email.primary,
-                emailSecondary: client.referrers[0].email.secondary,
-                phonePrimary: client.referrers[0].phone.primary,
-                phoneSecondary: client.referrers[0].phone.secondary,
-            },
-            referrer2: {
-                salutation: client.referrers[1].name.salutation,
-                firstName: client.referrers[1].name.first,
-                middleName: client.referrers[1].name.middle,
-                lastName: client.referrers[1].name.last,
-                emailPrimary: client.referrers[1].email.primary,
-                emailSecondary: client.referrers[1].email.secondary,
-                phonePrimary: client.referrers[1].phone.primary,
-                phoneSecondary: client.referrers[1].phone.secondary,
-            },
+            referrer1: referrer1,
+            referrer2: referrer2,
         },
         previousSchools: client.info.prevEducation,
         writeups: client.info.writeups,
-        uploadedDocs: {
-            docI20: client.docs.find(
-                doc => doc.name == 'I-20'),
-            docAdmissionLetter: client.docs.find(
-                doc => doc.name == 'Admission Letter'),
-            docPassport: client.docs.find(
-                doc => doc.name == 'Passport'),
-            docVisa: client.docs.find(
-                doc => doc.name == 'Visa'),
-            docResume: client.docs.find(
-                doc => doc.name == 'Resume'),
-            docMMNAApplication: client.docs.find(
-                doc => doc.name == 'MMNA Application'),
-            docReference1: client.docs.find(
-                doc => doc.name == 'Reference 1'),
-            docReference2: client.docs.find(
-                doc => doc.name == 'Reference 2'),
-        }
+        uploadedDocs: uploadedDocs,
     };
 }
 

@@ -9,7 +9,6 @@ var callback = require('./callback');
 
 // Save ApplicationMaterial
 router.post('/', function(req, res){
-    console.log("Save new");
     saveNewApplication(req, res);
 });
 

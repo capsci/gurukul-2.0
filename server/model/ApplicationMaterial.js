@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 
 const applicationMaterialSchema = new mongoose.Schema({
     applicant: {
+        salutation: {
+            type: String,
+            required: false,
+            trim: true,
+        },
         firstName: {
             type: String,
             required: true,
@@ -140,7 +145,7 @@ const applicationMaterialSchema = new mongoose.Schema({
     courseDetails: {
         school: {
             type: String,
-            required: true,
+            required: false,
             trim: true,
         },
         name: {
@@ -209,7 +214,7 @@ const applicationMaterialSchema = new mongoose.Schema({
             },
             firstName: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
             middleName: {
@@ -293,7 +298,7 @@ const applicationMaterialSchema = new mongoose.Schema({
             },
             firstName: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
             middleName: {
@@ -393,7 +398,7 @@ const applicationMaterialSchema = new mongoose.Schema({
         {
             question: {
                 type: String,
-                required: true,
+                required: false,
                 trim: true,
             },
             answer: {
