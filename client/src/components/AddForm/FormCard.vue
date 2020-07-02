@@ -16,7 +16,7 @@
             {{ errors }}
         </v-alert>
         <v-card-text v-if="ready" style="height: 700px">
-            <v-form ref="applicationForm">
+            <v-form ref="applicationForm" >
                 <v-container>
                     <v-row>
                         <v-item-group
@@ -149,13 +149,28 @@
             <v-btn
                 color="blue darken-1"
                 text
-                @click="closeDialog">
+                :disabled="selectedSection == 0"
+                @click="selectedSection -= 1" >
+                Prev
+            </v-btn>
+            <v-btn
+                color="blue darken-1"
+                text
+                :disabled="selectedSection == ( Object.keys(formSections).length - 1)"
+                @click="selectedSection += 1" >
+                Next
+            </v-btn>
+            <v-btn
+                color="blue darken-1"
+                text
+                @click="closeDialog" >
                 Close
             </v-btn>
             <v-btn
                 color="blue darken-1"
                 text
-                @click="saveApplication">
+                :disabled="Object.keys(formSections).length != Object.keys(visitedSections).length"
+                @click="saveApplication" >
                 Save
             </v-btn>
         </v-card-actions>
@@ -182,6 +197,11 @@ export default {
         PreviousSchoolDetailsForm,
         WriteupForm,
         AddictionalDocsForm
+    },
+    watch : {
+        selectedSection: function (value) {
+            this.visitedSections[value] = 1;
+        },
     },
     data() {
         return {
@@ -221,6 +241,7 @@ export default {
                 }
             },
             selectedSection: 0,
+            visitedSections: {},
             errors: "",
         }
     },
@@ -258,6 +279,7 @@ export default {
             this.$store.commit('SET_APPLICATION', application);
             this.ready = true;
         }
+        this.visitedSections[this.selectedSection] = 1;
     },
 }
 </script>
