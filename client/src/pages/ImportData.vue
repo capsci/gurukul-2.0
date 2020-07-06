@@ -4,8 +4,28 @@
             :headers="headers"
             :items="gs_data"
             height="500"
+            :search="filterString"
+            :custom-filter="customFilter"
             item-key="applicationTime">
             <!-- TODO : v-slot:top with search filter -->
+            <template v-slot:top>
+                <v-row class="text-center">
+                    <v-col cols="4" />
+                    <v-col>
+                        <v-text-field
+                            v-model="filters.applicantName"
+                            label="Applicant Name"
+                            append-icon="mdi-account-search" />
+                    </v-col>
+                    <v-col cols="2">
+                            <v-select
+                                v-model="filters.applicationState"
+                                :items="applicationStates"
+                                label="Application Status" />
+                    </v-col>
+                    <v-col cols="4" />
+                </v-row>
+            </template>
             <template #item.fullName="{ item }">
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -146,10 +166,21 @@ export default {
                     sortable: false, width:"10%"},
             ]
         },
+        filterString: function() {
+            // Since v-data-table 'search' only takes string
+            //    and we need to filter on multiple values
+            return this.filters.applicationState + '+'
+                + this.filters.applicantName;
+        }
     },
     data: function(){
         return {
             gs_data: [],
+            applicationStates: ['All', 'Added', 'Pending'],
+            filters: {
+                applicationState: 'All',
+                applicantName: '',
+            },
         }
     },
     methods: {
@@ -170,6 +201,20 @@ export default {
         },
         closeDialog: function(item) {
             item.showDialog = false;
+        },
+        customFilter: function( value, search, item) {
+            if ( (item.applicationId)
+                && this.filters.applicationState=='Pending') {
+                    return false;
+            }
+            if ( !(item.applicationId)
+                && this.filters.applicationState=='Added') {
+                    return false;
+            }
+
+            var lc_fullName = item.fullName.toLowerCase();
+            var lc_searchName = this.filters.applicantName.toLowerCase();
+            return lc_fullName.indexOf(lc_searchName) != -1;
         }
     },
     mounted: function() {
