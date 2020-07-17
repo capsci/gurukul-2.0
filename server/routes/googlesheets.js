@@ -11,6 +11,7 @@ var callback = require('./callback');
 router.get('/', function (req, res, next) {
     GSheetsRow
         .find()
+        .populate('applicationId')
         .exec(function(error, data) {
             callback.find(error, data, res);
         });

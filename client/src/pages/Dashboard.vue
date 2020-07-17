@@ -1,5 +1,5 @@
 <template>
-    <v-content class="container">
+    <v-main class="container">
         <v-data-table
             :headers="headers"
             :items="myData"
@@ -107,7 +107,7 @@
                 </td>
             </template>
         </v-data-table>
-    </v-content>
+    </v-main>
 </template>
 
 <script>
@@ -156,7 +156,7 @@ export default {
     },
     methods: {
         getData: function() {
-            api.applicationMaterial
+            api.application
                 .findAll()
                 .then(response => {
                     this.entries = response.data;

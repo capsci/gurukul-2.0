@@ -8,7 +8,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var googlesheetsRouter = require('./routes/googlesheets');
-var applicationMaterialRouter = require('./routes/applicationMaterial');
+var applicationRouter = require('./routes/application');
 
 var cors = require('cors');
 
@@ -30,7 +30,7 @@ app.use('/', indexRouter);
 app.use('/googlesheets', googlesheetsRouter);
 
 // Models
-app.use('/applicationMaterial', applicationMaterialRouter);
+app.use('/application', applicationRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

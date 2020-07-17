@@ -1,5 +1,5 @@
 <template>
-    <v-content class="container">
+    <v-main class="container">
         <h1>Welcome to Gurukul!</h1>
         <br><br><br><br>
         <div>
@@ -15,5 +15,5 @@
                 Dashboard
             </v-btn>
         </div>
-    </v-content>
+    </v-main>
 </template>

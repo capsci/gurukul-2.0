@@ -56,7 +56,7 @@ class Application {
     */
     setFromSavedData(applicationId) {
         this.applicationId = applicationId;
-        return api.applicationMaterial.findById(applicationId)
+        return api.application.findById(applicationId)
             .then(response => {
                 var clientFormat = translate.application
                     .toClient(response.data);
@@ -106,7 +106,7 @@ class Application {
 
     save() {
         if (this.applicationId) {
-            return api.applicationMaterial
+            return api.application
                 .update(
                     this.googleRow.applicationId,
                     translate.application.toServer(this) )
@@ -116,7 +116,7 @@ class Application {
                 });
         }
         else {
-            return api.applicationMaterial
+            return api.application
                 .addNew(
                     translate.application.toServer(this) )
                 .then(response => {

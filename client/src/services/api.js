@@ -5,7 +5,7 @@ const serverUrl = 'http://localhost:3000';
 
 const googleDataUrl = serverUrl + '/googlesheets';
 
-const applicationMaterialUrl = serverUrl + '/applicationMaterial';
+const applicationUrl = serverUrl + '/application';
 
 const googleData = {
     getGoogleData: function() {
@@ -13,40 +13,40 @@ const googleData = {
             .get(
                 googleDataUrl);
     },
-    addApplication: function(googleRowId, applicationMaterialId) {
+    addApplication: function(googleRowId, applicationId) {
         return axios
             .post(
                 googleDataUrl + '/application/' + googleRowId,
-                {id: applicationMaterialId});
+                {id: applicationId});
     },
 }
 
-const applicationMaterial = {
-    update: function(applicationMaterialId, applicationMaterial) {
+const application = {
+    update: function(applicationId, application) {
         return axios
             .post(
-                applicationMaterialUrl + "/" + applicationMaterialId,
-                applicationMaterial);
+                applicationUrl + "/" + applicationId,
+                application);
     },
-    addNew: function(applicationMaterial) {
+    addNew: function(application) {
         return axios
             .post(
-                applicationMaterialUrl,
-                applicationMaterial);
+                applicationUrl,
+                application);
     },
-    findById: function(applicationMaterialId) {
+    findById: function(applicationId) {
         return axios
             .get(
-                applicationMaterialUrl + "/" + applicationMaterialId);
+                applicationUrl + "/" + applicationId);
     },
     findAll: function() {
         return axios
             .get(
-                applicationMaterialUrl + "/all");
+                applicationUrl + "/all");
     },
 };
 
 export default Object.freeze({
     googleData: googleData,
-    applicationMaterial: applicationMaterial,
+    application: application,
 });

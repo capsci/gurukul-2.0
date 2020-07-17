@@ -3,22 +3,22 @@
 var express = require('express');
 var router = express.Router();
 
-var ApplicationMaterial = require('./../model/ApplicationMaterial');
-var MMNA = require('./../model/MMNA');
+var Application = require('./../model/Application');
+// var MMNA = require('./../model/MMNA');
 var callback = require('./callback');
 
-// Save ApplicationMaterial
+// Save Application
 router.post('/', function(req, res){
     saveNewApplication(req, res);
 });
 
-// Save ApplicationMaterial
+// Save Application
 router.post('/:id', function(req, res){
     var applicationId = req.params.id;
     try {
         if (applicationId) {
             console.log("Update Existing Application");
-            updateExistingApplicationMaterial(req, res);
+            updateExistingApplication(req, res);
         }
         else {
             console.log("Adding New Application")
@@ -32,29 +32,29 @@ router.post('/:id', function(req, res){
 
 // Find by ID
 router.get('/:id', function(req, res) {
-    ApplicationMaterial
+    Application
         .findById(req.params.id)
-        .exec( function(error, applicationMaterial) {
-            callback.find(error, applicationMaterial, res);
+        .exec( function(error, application) {
+            callback.find(error, application, res);
         });
 });
 
 async function saveNewApplication(request, response) {
-    const applicationMaterial = ApplicationMaterial(request.body);
-    var savedApplicationMaterial = await applicationMaterial.save();
-    const mmna = MMNA({
-        applicationMaterialRef: savedApplicationMaterial._id,
-    })
-    await mmna.save();
-    callback.data(savedApplicationMaterial._id, response);
+    const application = Application(request.body);
+    var savedApplication = await application.save();
+    // const mmna = MMNA({
+    //     applicationRef: savedApplication._id,
+    // })
+//    await mmna.save();
+    callback.data(savedApplication._id, response);
 }
 
-async function updateExistingApplicationMaterial(request, response) {
+async function updateExistingApplication(request, response) {
     var query = {_id: request.params.id};
-    const applicationMaterial = ApplicationMaterial(request.body);
-    ApplicationMaterial
+    const application = Application(request.body);
+    Application
         .findByIdAndUpdate(request.params.id,
-            applicationMaterial,
+            application,
             {new: false})
         .exec(function(error, data) {
             callback.find(error, data, response);

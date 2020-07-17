@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const applicationMaterialSchema = new mongoose.Schema({
+const applicationSchema = new mongoose.Schema({
     applicant: {
         salutation: {
             type: String,
@@ -205,176 +205,90 @@ const applicationMaterialSchema = new mongoose.Schema({
             }
         },
     },
-    referrers: {
-        referrer1: {
-            salutation: {
+    referrers: [{
+        salutation: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        firstName: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        middleName: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        lastName: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        emailPrimary: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        emailSecondary: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        phonePrimary: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        phoneSecondary: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        position: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        organization: {
+            type: String,
+            required: false,
+            trim: true,
+        },
+        address: {
+            line1: {
                 type: String,
                 required: false,
                 trim: true,
             },
-            firstName: {
+            line2: {
                 type: String,
                 required: false,
                 trim: true,
             },
-            middleName: {
+            city: {
                 type: String,
                 required: false,
                 trim: true,
             },
-            lastName: {
+            zipcode: {
                 type: String,
                 required: false,
                 trim: true,
             },
-            emailPrimary: {
+            state: {
                 type: String,
                 required: false,
                 trim: true,
             },
-            emailSecondary: {
+            country: {
                 type: String,
                 required: false,
                 trim: true,
-            },
-            phonePrimary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            phoneSecondary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            position: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            organization: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            address: {
-                line1: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                line2: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                city: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                zipcode: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                state: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                country: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
             },
         },
-        referrer2: {
-            salutation: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            firstName: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            middleName: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            lastName: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            emailPrimary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            emailSecondary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            phonePrimary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            phoneSecondary: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            position: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            organization: {
-                type: String,
-                required: false,
-                trim: true,
-            },
-            address: {
-                line1: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                line2: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                city: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                zipcode: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                state: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-                country: {
-                    type: String,
-                    required: false,
-                    trim: true,
-                },
-            },
-        },
-    },
+    }],
     previousSchools: [
         {
             name: {
@@ -444,4 +358,4 @@ const applicationMaterialSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('ApplicationMaterial', applicationMaterialSchema, 'ApplicationMaterial');
+module.exports = mongoose.model('Application', applicationSchema, 'Application');

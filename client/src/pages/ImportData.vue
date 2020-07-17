@@ -1,5 +1,5 @@
 <template>
-    <v-content class="container">
+    <v-main class="container">
         <v-data-table
             :headers="headers"
             :items="gs_data"
@@ -135,7 +135,7 @@
                 </td>
             </template>
         </v-data-table>
-    </v-content>
+    </v-main>
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 <template>
     <v-app :style="{background: $vuetify.theme.themes.light.background}">
-        <v-content>
+        <v-main>
             <component :is="layout">
                 <router-view />
             </component>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 

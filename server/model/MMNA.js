@@ -3,41 +3,39 @@
 const mongoose = require('mongoose');
 
 const mmnaSchema = new mongoose.Schema({
-    applicantRef: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: false, // TODO: After finalizing applicant schema
-        ref: 'ApplicationMaterial',
-    },
-    applicationMaterialRef: {
+    applicationRef: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'ApplicationMaterial',
+        ref: 'Application',
     },
-    // Format Spring/Fall 20xx
-    semester: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    applicationStatus: {
-        type: String,
-        required: false,
-        trim: true,
-    },
-    status: {
-        referrer1: {
+    // Applicable values: Not Provided, Pending, Accepted, Rejected
+    docs: {
+        i20: {
             type: String,
-            required: false,
             trim: true,
         },
-        referrer2: {
+        visa: {
             type: String,
-            required: false,
             trim: true,
         },
-        applicationMaterial: {
+        admissionLetter: {
             type: String,
-            required: false,
+            trim: true,
+        },
+        referrers: [{
+            type: String,
+            trim: true,
+        }],
+        passport: {
+            type: String,
+            trim: true,
+        },
+        mmnaApplication: {
+            type: String,
+            trim: true,
+        },
+        passport: {
+            type: String,
             trim: true,
         },
     },
@@ -45,14 +43,17 @@ const mmnaSchema = new mongoose.Schema({
         granted: {
             type: Number,
             required: false,
-            trim: true,
         },
-        pending: {
+        repayed: {
             type: Number,
             required: false,
-            trim: true,
         },
     },
+    // Submitted, Under Review, Accepted, Rejected
+    application: {
+        type: String,
+        required: true,
+    }
 });
 
 module.exports = mongoose.model('MMNA', mmnaSchema, 'MMNA');
