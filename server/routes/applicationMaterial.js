@@ -3,8 +3,8 @@
 var express = require('express');
 var router = express.Router();
 
-var ApplicationMaterial = require('./../../model/ApplicationMaterial');
-var MMNA = require('./../../model/MMNA');
+var ApplicationMaterial = require('./../model/ApplicationMaterial');
+var MMNA = require('./../model/MMNA');
 var callback = require('./callback');
 
 // Save ApplicationMaterial

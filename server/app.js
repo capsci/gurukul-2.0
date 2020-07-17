@@ -7,10 +7,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var googlesheetsRouter = require('./routes/googlesheets/index');
-var applicationMaterialRouter = require('./routes/model/applicationMaterial');
-var referrerRouter = require('./routes/model/referrer');
-var schoolRouter = require('./routes/model/school');
+var googlesheetsRouter = require('./routes/googlesheets');
+var applicationMaterialRouter = require('./routes/applicationMaterial');
 
 var cors = require('cors');
 
@@ -33,8 +31,6 @@ app.use('/googlesheets', googlesheetsRouter);
 
 // Models
 app.use('/applicationMaterial', applicationMaterialRouter);
-app.use('/referrer', referrerRouter);
-app.use('/school', schoolRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -3,9 +3,9 @@
 var express = require('express');
 var router = express.Router();
 
-var GSheetsData = require('./../../modules/application/GSheetsData');
-var GSheetsRow = require('./../../model/GSheetsRow');
-var callback = require('./../model/callback');
+var GSheetsData = require('./../modules/application/GSheetsData');
+var GSheetsRow = require('./../model/GSheetsRow');
+var callback = require('./callback');
 
 /* GET data from Google Sheets. */
 router.get('/', function (req, res, next) {
