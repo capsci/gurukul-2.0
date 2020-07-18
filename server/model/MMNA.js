@@ -3,40 +3,50 @@
 const mongoose = require('mongoose');
 
 const mmnaSchema = new mongoose.Schema({
-    applicationRef: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Application',
-    },
-    // Applicable values: Not Provided, Pending, Accepted, Rejected
-    docs: {
-        i20: {
-            type: String,
-            trim: true,
+    status: {
+        // Applicable values: Not Provided, To Be Reviewed, Accepted, Rejected
+        docs: {
+            i20: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
+            visa: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
+            admissionLetter: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
+            referrers: [{
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            }],
+            passport: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
+            mmnaApplication: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
+            passport: {
+                type: String,
+                trim: true,
+                default: 'Not Provided',
+            },
         },
-        visa: {
+        // Submitted, Under Review, Accepted, Rejected
+        application: {
             type: String,
-            trim: true,
-        },
-        admissionLetter: {
-            type: String,
-            trim: true,
-        },
-        referrers: [{
-            type: String,
-            trim: true,
-        }],
-        passport: {
-            type: String,
-            trim: true,
-        },
-        mmnaApplication: {
-            type: String,
-            trim: true,
-        },
-        passport: {
-            type: String,
-            trim: true,
+            required: true,
+            default: 'Under Review',
         },
     },
     amount: {
@@ -49,11 +59,18 @@ const mmnaSchema = new mongoose.Schema({
             required: false,
         },
     },
-    // Submitted, Under Review, Accepted, Rejected
-    application: {
-        type: String,
+    applicationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Application',
         required: true,
     }
 });
+
+mmnaSchema.methods.setStatus = function(application) {
+    var docs = application.uploadedDocs;
+    if (docs.docI20) {
+        this.status.docs.i20 = "To Be Reviewed"
+    }
+}
 
 module.exports = mongoose.model('MMNA', mmnaSchema, 'MMNA');

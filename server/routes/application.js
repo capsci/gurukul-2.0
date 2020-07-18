@@ -4,8 +4,8 @@ var express = require('express');
 var router = express.Router();
 
 var Application = require('./../model/Application');
-// var MMNA = require('./../model/MMNA');
 var callback = require('./callback');
+const MMNA = require('../model/MMNA');
 
 // Save Application
 router.post('/', function(req, res){
@@ -42,10 +42,11 @@ router.get('/:id', function(req, res) {
 async function saveNewApplication(request, response) {
     const application = Application(request.body);
     var savedApplication = await application.save();
-    // const mmna = MMNA({
-    //     applicationRef: savedApplication._id,
-    // })
-//    await mmna.save();
+    const mmna = MMNA({
+        applicationId: savedApplication._id,
+    })
+    mmna.setStatus(savedApplication);
+    await mmna.save();
     callback.data(savedApplication._id, response);
 }
 

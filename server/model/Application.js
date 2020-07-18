@@ -356,6 +356,11 @@ const applicationSchema = new mongoose.Schema({
             required: false,
         },
     },
+    gSheetsRowId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GSheetsRow',
+        required: true,
+    },
 });
 
 module.exports = mongoose.model('Application', applicationSchema, 'Application');

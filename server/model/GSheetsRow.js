@@ -62,10 +62,6 @@ const gSheetsRowSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    applicationId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Application',
-    }
 });
 
 module.exports = mongoose.model('GSheetsRow', gSheetsRowSchema, 'GSheetsRow');
